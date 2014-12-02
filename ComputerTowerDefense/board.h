@@ -34,21 +34,26 @@ class Board {
     int m_money;
     int m_health;
     void removeBug(Bug *b);
+
     void addBug();
+    void removeBug(Bug *b);
+
     Bug *findBug(int x, int y);
+
     void removeProjectile(Projectile *p);
-
-  public:
-    void printBugs();
-    void printTowerLocations();
-
-    void addPath();
+    Projectile *moveProjectile(Projectile *p);  
+    
     bool containsPath(int x, int y);
 
     int moveBugs();
+    
+    bool buyTower();
+    void placeTower(Tower *t, int x, int y);
 
-    Projectile *moveProjectile(Projectile *p);
-    void moveProjectiles();
+    void addPath();
+  public:
+    int moveBugs();
+    
     void attackBug(Bug *bug, int attack);
     void attack();
     
@@ -56,9 +61,18 @@ class Board {
     int getHealth() { return m_health; };
 
     // change to buy each specific tower and spell
+    void moveProjectiles();
+
+    void printBugs();
+    void printTowerLocations();
+
+    bool enoughMoney();
+    void buyNTower(int x, int y);
+    void buyETower(int x, int y);
+    void buyWTower(int x, int y);
+    void buySTower(int x, int y);   
     vector<Tower*> getTowers();
-    Tower *buyTower();
-    void placeTower(Tower *t, int x, int y);
+
     void buySpell();
     void playSpell();
 
