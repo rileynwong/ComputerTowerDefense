@@ -146,10 +146,10 @@ void PrintBoard(vector< vector<char> > *GameScreen) {
 void PrintStats(Board *GameBoard) {
   cout << "Stats:" << endl;
   cout << "\tBits:   " << GameBoard->getMoney()  << endl;
-  cout << "\tHealth: " << GameBoard->getHealth() << endl;
+//  cout << "\tHealth: " << GameBoard->getHealth() << endl;
 }
 
-bool PrintMenu() {
+bool PrintMenu(Board *GameBoard) {
   int input = DO_NOTHING;
   // towers
   cout << endl << "Do something fun: " << endl;
@@ -161,7 +161,7 @@ bool PrintMenu() {
   while (input != DO_NOTHING) {
     switch(input) {
       case BUY:
-        PrintSubMenu();
+        PrintSubMenu(GameBoard);
         return true;
       case EXIT:
         return false;
@@ -189,8 +189,9 @@ void PrintSubContents() {
 
 }
 
-void PrintSubMenu() {
+void PrintSubMenu(Board *GameBoard) {
   int input = DO_NOTHING;
+  int x, y;
 
   // 1. print contents
   PrintSubContents();
@@ -201,15 +202,43 @@ void PrintSubMenu() {
   while(input != DO_NOTHING) {
     switch(input) {
       case 0: // return to main menu
-        PrintMenu();
+//        PrintMenu();
         break;
       case 1: // buy stuff
+        cout << "x coordinate: " << endl;
+        cin >> x;
+        cout << "y coordinate: " << endl;
+        cin >> y;
+
+        GameBoard->buyNTower(x, y);
+
         break;
       case 2:
+        cout << "x coordinate: " << endl;
+        cin >> x;
+        cout << "y coordinate: " << endl;
+        cin >> y;
+
+        GameBoard->buyETower(x, y);
+
         break;
       case 3:
+        cout << "x coordinate: " << endl;
+        cin >> x;
+        cout << "y coordinate: " << endl;
+        cin >> y;
+
+        GameBoard->buySTower(x, y);
+
         break;
       case 4:
+        cout << "x coordinate: " << endl;
+        cin >> x;
+        cout << "y coordinate: " << endl;
+        cin >> y;
+
+        GameBoard->buyWTower(x, y);
+
         break;
     }
     input = DO_NOTHING;
@@ -224,9 +253,15 @@ void InBounds(int *x) {
   if(*x < MAX_VAL) *x = MAX_VAL;
 }
 
+void GameOver() {
+  cout << "YOU LOSE BOOOO" << endl;
+  // free memory
+  exit(0);
+}
 
-void Refresh(vector< vector<char> > *GameScreen, Board *GameBoard) {
-  int i, j;
+
+void Refresh(vector< vector<char> > *GameScreen, Board *GameBoard, int count) {
+  int i, j, lose;
 
   // 1. Update and set pieces
 
@@ -235,7 +270,16 @@ void Refresh(vector< vector<char> > *GameScreen, Board *GameBoard) {
   DrawInitA(GameScreen);
   DrawInitB(GameScreen);
 
-  GameBoard->moveBugs();
+  lose = GameBoard->moveBugs();
+  if(lose) {
+    GameOver();
+  }
+
+  if(count % 4 == 0) {
+    GameBoard->attack();
+  } else {
+    GameBoard->moveProjectiles();
+  }
 
   // set pieces (bugs, towers, projectiles) for the board
   vector< vector< int > > pieces = GameBoard->getPieces();
@@ -248,15 +292,19 @@ void Refresh(vector< vector<char> > *GameScreen, Board *GameBoard) {
           break;
         case PROJECTILE:
           // TODO check projectile direction
-          GameScreen->at(i).at(j) = 'v';
+            GameScreen->at(i).at(j) = '^';
           break;
         case BUG:
           // TODO check bug type
           GameScreen->at(i).at(j) = '*';
           break;
       }
+
+      count++;
 		}
 	}
+
+
 
   // 2. Draw board
 

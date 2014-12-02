@@ -17,7 +17,7 @@ using namespace std;
 
 int main() {
 
-  int input, curr, score = 0;
+  int input, curr, count, score = 0;
   bool submenu = false, playing = false;
   clock_t start;
   Board *GameBoard = new Board();
@@ -50,9 +50,10 @@ int main() {
   playing = true;
   start = clock();
   curr = start;
+  count = 0;
 
-  Refresh(&GameScreen, GameBoard);
-  PrintMenu();
+  Refresh(&GameScreen, GameBoard, count);
+  PrintMenu(GameBoard);
 
   while(playing) {
     start = clock();
@@ -63,15 +64,15 @@ int main() {
       curr = start;
 
       if (playing) {
-        Refresh(&GameScreen, GameBoard); // redraw the board
+        Refresh(&GameScreen, GameBoard, count++); // redraw the board
       }
 
       if(submenu) { 
-        PrintSubMenu(); 
+        PrintSubMenu(GameBoard); 
         // TODO: fix this later
       }
       else { 
-        playing = PrintMenu();
+        playing = PrintMenu(GameBoard);
       }
 
       // if(GameBoard->getHealth() < 0) { GameOver(); }

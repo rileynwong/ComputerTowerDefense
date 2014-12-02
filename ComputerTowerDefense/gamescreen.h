@@ -29,9 +29,9 @@ void DrawInitB(vector< vector<char> > *GameScreen);
 // print stuff
 void PrintBoard(vector< vector<char> > *GameScreen);
 void PrintStats(Board *GameBoard);
-bool PrintMenu();
+bool PrintMenu(Board *GameBoard);
 void PrintSubContents();
-void PrintSubMenu();
+void PrintSubMenu(Board *GameBoard);
 void PrintScore(int score);
 void PrintHealth(int health);
 
@@ -39,7 +39,7 @@ void PrintHealth(int health);
 //void Shoot(vector< vector<char> > *GameScreen, int dir, int startX, int startY, 
   //                                                      int endX,   int endY);
 
-void Refresh(vector< vector<char> > *GameScreen, Board *GameBoard);
+void Refresh(vector< vector<char> > *GameScreen, Board *GameBoard, int count);
 // void GameOver();
 
 #endif /* GS_H */
