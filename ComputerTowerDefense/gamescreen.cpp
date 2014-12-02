@@ -124,14 +124,12 @@ void DrawInitB(vector< vector<char> > *GameScreen) {
 }
 
 void PrintBoard(vector< vector<char> > *GameScreen) {
+  int row, col;
+
   cout << endl;
   cout << "    \\\\\\\\\\  COMPUTER TOWER DEFENSE aw yeah /////" << endl << endl;
 
-  DrawInitA(GameScreen);
-  DrawInitB(GameScreen);
-
   // draw board
-  int row, col;
 
   cout << "   0 2 4 6 810 2 4 6 820 2 4 6 830 2 4 6 840 2 4 6 8" << endl;
   for(row = 0; row < VEC_L; row++) {
@@ -146,23 +144,24 @@ void PrintBoard(vector< vector<char> > *GameScreen) {
 }
 
 void PrintStats(Board *GameBoard) {
+  cout << "Stats:" << endl;
   cout << "\tBits:   " << GameBoard->getMoney()  << endl;
-  cout << "\tHealth: " << GameBoard->getHealth() << endl;
+//  cout << "\tHealth: " << GameBoard->getHealth() << endl;
 }
 
-bool PrintMenu() {
+bool PrintMenu(Board *GameBoard) {
   int input = DO_NOTHING;
   // towers
   cout << endl << "Do something fun: " << endl;
   cout << "\t0 - Buy Towers" << endl;
-  cout << "\t1 - Exit" << endl;
-  cout << "\t2 - Do nothing" << endl;
+  cout << "\t1 - Do nothing" << endl;
+  cout << "\t2 - Exit" << endl;
 
   cin >> input;
   while (input != DO_NOTHING) {
     switch(input) {
       case BUY:
-        PrintSubMenu();
+        PrintSubMenu(GameBoard);
         return true;
       case EXIT:
         return false;
@@ -190,28 +189,56 @@ void PrintSubContents() {
 
 }
 
-void PrintSubMenu() {
+void PrintSubMenu(Board *GameBoard) {
   int input = DO_NOTHING;
+  int x, y;
 
   // 1. print contents
   PrintSubContents();
 
   // 2. handle input
-  
   cin >> input;
 
   while(input != DO_NOTHING) {
     switch(input) {
       case 0: // return to main menu
-        PrintMenu();
+//        PrintMenu();
         break;
       case 1: // buy stuff
+        cout << "x coordinate: " << endl;
+        cin >> x;
+        cout << "y coordinate: " << endl;
+        cin >> y;
+
+        GameBoard->buyNTower(x, y);
+
         break;
       case 2:
+        cout << "x coordinate: " << endl;
+        cin >> x;
+        cout << "y coordinate: " << endl;
+        cin >> y;
+
+        GameBoard->buyETower(x, y);
+
         break;
       case 3:
+        cout << "x coordinate: " << endl;
+        cin >> x;
+        cout << "y coordinate: " << endl;
+        cin >> y;
+
+        GameBoard->buySTower(x, y);
+
         break;
       case 4:
+        cout << "x coordinate: " << endl;
+        cin >> x;
+        cout << "y coordinate: " << endl;
+        cin >> y;
+
+        GameBoard->buyWTower(x, y);
+
         break;
     }
     input = DO_NOTHING;
@@ -226,35 +253,64 @@ void InBounds(int *x) {
   if(*x < MAX_VAL) *x = MAX_VAL;
 }
 
-void Shoot(vector< vector<char> > *GameScreen, int dir, int startX, int startY, 
-                                                        int endX,   int endY) {
-  InBounds(&startX);
-  InBounds(&startY);
-  InBounds(&endX);
-  InBounds(&endY);
-
-  // direction - an enum w/ switch case?
-  switch(dir) {
-    case 0: // north ^
-      while(startX) {
-
-      }
-
-      break;
-    case 1: // east >
-      break;
-    case 2: // south v
-      break;
-    case 3: // west <
-      break;
-  }
-
-  // stop when you hit a game object or edge
-
+void GameOver() {
+  cout << "YOU LOSE BOOOO" << endl;
+  // free memory
+  exit(0);
 }
 
-void Refresh(vector< vector<char> > *GameScreen, Board *GameBoard) {
-  //GameBoard->moveBugs();
+
+void Refresh(vector< vector<char> > *GameScreen, Board *GameBoard, int count) {
+  int i, j, lose;
+
+  // 1. Update and set pieces
+
+  // board base
+
+  DrawInitA(GameScreen);
+  DrawInitB(GameScreen);
+
+  lose = GameBoard->moveBugs();
+  if(lose) {
+    GameOver();
+  }
+
+  if(count % 4 == 0) {
+    GameBoard->attack();
+  } else {
+    GameBoard->moveProjectiles();
+  }
+
+  // set pieces (bugs, towers, projectiles) for the board
+  vector< vector< int > > pieces = GameBoard->getPieces();
+	for (i = 0; i < (int) pieces.size(); i++) {
+		for (j = 0; j < (int) pieces.at(i).size(); j++) {
+      switch(pieces.at(i).at(j)) {
+        case TOWER:
+          // TODO check tower type
+          GameScreen->at(i).at(j) = 'I';
+          break;
+        case PROJECTILE:
+          // TODO check projectile direction
+            GameScreen->at(i).at(j) = '^';
+          break;
+        case BUG:
+          // TODO check bug type
+          GameScreen->at(i).at(j) = '*';
+          break;
+      }
+
+      count++;
+		}
+	}
+
+
+
+  // 2. Draw board
+
+  PrintBoard(GameScreen); 
+  PrintStats(GameBoard);
+  
 }
 
 
