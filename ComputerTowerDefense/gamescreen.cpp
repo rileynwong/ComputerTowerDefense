@@ -150,48 +150,71 @@ void PrintStats(Board *GameBoard) {
   cout << "\tHealth: " << GameBoard->getHealth() << endl;
 }
 
-void PrintMenu() {
+bool PrintMenu() {
+  int input = DO_NOTHING;
   // towers
   cout << endl << "Do something fun: " << endl;
-  cout << "\t0 - Buy Towers and Spells" << endl;
+  cout << "\t0 - Buy Towers" << endl;
   cout << "\t1 - Exit" << endl;
+  cout << "\t2 - Do nothing" << endl;
 
+  cin >> input;
+  while (input != DO_NOTHING) {
+    switch(input) {
+      case BUY:
+        PrintSubMenu();
+        return true;
+      case EXIT:
+        return false;
+      case NOTHING:
+        return true;
+    }
+  }
+  return false;
 }
 
 void PrintSubContents() {
   // towers
   cout << "\tTOWERS:" << endl;
-  cout << "\t\t0 - baby tower: i" << endl;
-  cout << "\t\t1 - meta tower: I" << endl;
+  cout << "\t\t1 - North Shooting tower: i" << endl;
+  cout << "\t\t2 - East Shooting tower: i" << endl;
+  cout << "\t\t3 - South Shooting tower: i" << endl;
+  cout << "\t\t4 - West Shooting tower: i" << endl;
   cout << endl;
 
   // spells
-  cout << "\tSPELLS:" << endl;
-  cout << "\t\t2 - spell 1" << endl;
-  cout << endl;
+  // cout << "\tSPELLS:" << endl;
+  // cout << "\t\t2 - spell 1" << endl;
+  // cout << endl;
   cout << "\t0 - back to main menu" << endl;
 
 }
 
 void PrintSubMenu() {
-  int input = 5;
+  int input = DO_NOTHING;
 
   // 1. print contents
   PrintSubContents();
 
   // 2. handle input
   
-//  cin >> input;
+  cin >> input;
 
-  while(input != EXIT) {
+  while(input != DO_NOTHING) {
     switch(input) {
       case 0: // return to main menu
         PrintMenu();
         break;
       case 1: // buy stuff
         break;
+      case 2:
+        break;
+      case 3:
+        break;
+      case 4:
+        break;
     }
-
+    input = DO_NOTHING;
     // Refresh(&GameScreen);
 
   }
