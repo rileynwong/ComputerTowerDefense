@@ -25,7 +25,7 @@ int Tower::getYPosition() {
   return m_y;
 }
 
-int Tower::setAttack(int attack) {
+void Tower::setAttack(int attack) {
   //TODO: error checking
   m_attack = attack;
 }

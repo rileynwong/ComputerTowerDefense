@@ -45,7 +45,7 @@ void Bug::takeDamage(int damage) {
     //TODO: figure this part out
   }
   if (damage > m_health) {
-    die();
+    //die();
     return;
   }
   else m_health -= damage;

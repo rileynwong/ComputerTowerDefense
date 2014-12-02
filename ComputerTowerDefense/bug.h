@@ -10,7 +10,9 @@
 #ifndef BUG_H
 #define BUG_H
 
-#define DEF_ATTACK 1
+#include <vector>
+
+#define DEF_HEALTH 1
 #define DEF_REWARD 1
 #define DEF_X_START 0
 #define DEF_Y_START 0
@@ -39,7 +41,7 @@ class Bug {
     void takeDamage(int damage);
     void move();
 
-    Bug(int attack = DEF_ATTACK, int reward = DEF_REWARD, 
+    Bug(int health = DEF_HEALTH, int reward = DEF_REWARD, 
       int x = DEF_X_START, int y = DEF_Y_START);
 };
 

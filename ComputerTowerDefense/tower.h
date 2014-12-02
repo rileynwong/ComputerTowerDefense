@@ -27,7 +27,7 @@ class Tower {
     void setYPosition(int y);
     int getXPosition();
     int getYPosition();
-    int setAttack();
+    int getAttack();
 
     Tower(int attack = DEF_ATTACK, 
       int x = DEF_X, int y = DEF_Y);
