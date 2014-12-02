@@ -124,6 +124,8 @@ void DrawInitB(vector< vector<char> > *GameScreen) {
 }
 
 void PrintBoard(vector< vector<char> > *GameScreen) {
+  int row, col;
+
   cout << endl;
   cout << "    \\\\\\\\\\  COMPUTER TOWER DEFENSE aw yeah /////" << endl << endl;
 
@@ -131,7 +133,6 @@ void PrintBoard(vector< vector<char> > *GameScreen) {
   DrawInitB(GameScreen);
 
   // draw board
-  int row, col;
 
   cout << "   0 2 4 6 810 2 4 6 820 2 4 6 830 2 4 6 840 2 4 6 8" << endl;
   for(row = 0; row < VEC_L; row++) {

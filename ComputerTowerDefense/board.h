@@ -21,6 +21,7 @@ using namespace std;
 #define NO_OBJECT     0
 #define TOWER         1
 #define PROJECTILE    2
+#define BUG           3
 
 class Board {
   private:
@@ -33,7 +34,6 @@ class Board {
 
     int m_money;
     int m_health;
-    void removeBug(Bug *b);
 
     void addBug();
     void removeBug(Bug *b);
@@ -45,8 +45,6 @@ class Board {
     
     bool containsPath(int x, int y);
 
-    int moveBugs();
-    
     bool buyTower();
     void placeTower(Tower *t, int x, int y);
 
