@@ -35,12 +35,15 @@ class Bug {
 
   public:
 
+    void printBug();
     void setXPosition(int x);
     void setYPosition(int y);
     int getXPosition();
     int getYPosition();
-    void takeDamage(int damage);
-    void move();
+    int getHealth();
+    int getMoveNum();
+    int takeDamage(int damage);
+    int move();
 
     Bug(int health = DEF_HEALTH, int reward = DEF_REWARD, 
       int x = DEF_X_START, int y = DEF_Y_START);

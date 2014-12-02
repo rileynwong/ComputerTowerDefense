@@ -19,7 +19,7 @@ class Board {
     int m_money;
   public:
     void addBug();
-    void moveBugs();
+    int moveBugs();
     void attack();
 
     // change to buy each specific tower and spell

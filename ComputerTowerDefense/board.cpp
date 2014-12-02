@@ -14,13 +14,19 @@ void Board::addBug() {
 	cout << "bug made" << endl;
 	m_bugs.push_back(newBug);
 	for (int i = 0; i < (int) m_bugs.size(); i++) {
-		cout << "bug" << endl;	}
+		m_bugs.at(i).printBug();
+	}
 }
 
-void Board::moveBugs() {
+int Board::moveBugs() {
 	for (int i = 0; i < (int) m_bugs.size(); i++) {
-		m_bugs.at(i).move();
+		if (m_bugs.at(i).move() == 1) {
+			m_bugs.at(i).printBug();
+			return 1;
+		}
+		m_bugs.at(i).printBug();
 	}
+	return 0;
 }
 
 

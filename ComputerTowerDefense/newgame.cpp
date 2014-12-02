@@ -11,4 +11,9 @@ int main() {
 	cout << "tower made" << endl;
 
 	board.addBug();
+	int lose = 0;
+	while (lose != 1) {
+		lose = board.moveBugs();
+	}
+	cout << "I lost!" << endl;
 }

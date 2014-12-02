@@ -41,18 +41,27 @@ int Bug::getYPosition() {
   return m_y;
 }
 
-void Bug::takeDamage(int damage) {
+int Bug::getHealth() {
+	return m_health;
+}
+
+int Bug::getMoveNum() {
+	return m_move_num;
+}
+
+int Bug::takeDamage(int damage) {
   if (damage < 0) {
     //TODO: figure this part out
   }
   if (damage > m_health) {
     //die();
-    return;
+    return 1;
   }
-  else m_health -= damage;
+  m_health -= damage;
+  return 0;
 }
 
-void Bug::move() {
+int Bug::move() {
   direction next = m_movements[m_move_num];
   switch(next) {
     case N:
@@ -70,15 +79,27 @@ void Bug::move() {
   }
   m_move_num ++;
   if (m_move_num >= (int) m_movements.size()) {
-    //TODO: Lost the game
+    return 1;
   }
-  //TODO: move the thing
-  //TODO: Increment move_num
+  return 0;
 }
 
 void Bug::setMovements() {
-	vector< direction > movements(4, E);
+	vector< direction > movements(6, E);
 	m_movements = movements;
+	m_movements.at(2) = N;
+	m_movements.at(3) = S;
+	m_movements.at(4) = N;
+	m_movements.at(5) = W;
+}
+
+void Bug::printBug() {
+	cout << "bug: ";
+	cout << m_x << " ";
+	cout << m_y << " ";
+	cout << m_health << " ";
+	cout << m_move_num;
+	cout << endl;
 }
 
 Bug::Bug(int health, int reward, int x, int y) {
