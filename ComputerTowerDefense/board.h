@@ -17,12 +17,15 @@ using namespace std;
 #define START_MONEY 5
 #define GAME_WIDTH 10
 #define PATH_LENGTH 3
+#define NO_OBJECT 0
+#define TOWER 1
+#define PROJECTILE 2
 
 class Board {
   private:
     vector<Bug*> m_bugs;
     vector<Tower> m_towers; 
-    vector< vector< bool > > m_towerPlacement;
+    vector< vector< int > > m_towerPlacement;
     vector<int> m_pathXCoords;
     vector<int> m_pathYCoords;
     vector<Bug*> m_bugPlacement;

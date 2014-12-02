@@ -55,6 +55,7 @@ void Board::attack() {
 	for (int i = 0; i < (int) m_towers.size(); i++) {
 		// find bugs that will be attacked
 		// do damage
+		direction dir = m_towers.at(i).getDirAttack();
 
 		if (m_bugs.at(0)->takeDamage(m_towers.at(i).getAttack()) == 1) {
 			cout << "bug died" << endl;
@@ -92,12 +93,12 @@ void Board::placeTower(Tower *t, int x, int y) {
 		// TODO: deal with invalid position
 	}
 
-	if (m_towerPlacement.at(y).at(x) || containsPath(x, y)) {
+	if (m_towerPlacement.at(y).at(x) == 1 || containsPath(x, y)) {
 		// TODO: deal with invalid position
 	}
 
 	else {
-		m_towerPlacement.at(y).at(x) = true;
+		m_towerPlacement.at(y).at(x) = 1;
 		t->setXPosition(x);
 		t->setYPosition(y);
 	}
@@ -114,11 +115,14 @@ void Board::printBugs() {
 void Board::printTowerLocations() {
 	for (int i = 0; i < (int) m_towerPlacement.size(); i++) {
 		for (int j = 0; j < (int) m_towerPlacement.at(i).size(); j++) {
-			if (!m_towerPlacement.at(i).at(j)) {
+			if (m_towerPlacement.at(i).at(j) == 0) {
 				cout << "-" << " ";
 			}
-			else {
+			else if (m_towerPlacement.at(i).at(j) == 1) {
 				cout << 't' << " ";
+			}
+			else {
+				cout << '.' << " ";
 			}
 		}
 		cout << endl;

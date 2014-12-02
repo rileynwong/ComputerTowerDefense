@@ -18,8 +18,6 @@
 #define DEF_Y_START 2
 #define POS_INTERVAL 10
 
-enum direction {N, S, E, W};
-
 class Bug {
   private:
     int m_x;

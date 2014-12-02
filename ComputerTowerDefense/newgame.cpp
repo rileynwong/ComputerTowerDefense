@@ -14,8 +14,7 @@ int main() {
 	board.placeTower(t, 6, 1);
 	cout << endl << endl;
 	board.printTowerLocations();
-
-	// board.addBug();
+	
 
 	int lose = 0;
 	while (lose != 1) {
