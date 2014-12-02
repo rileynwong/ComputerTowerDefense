@@ -6,10 +6,11 @@
 
 using namespace std;
 #include "tower.h"
+#include <iostream>
 
 void Tower::setXPosition(int x) {
-  //TODO: Check bounds
-  m_x = x;
+  	// TODO: Check bounds
+	m_x = x;
 }
 
 void Tower::setYPosition(int y) {
@@ -35,10 +36,10 @@ int Tower::getAttack() {
 }
 
 Tower::Tower(int attack, int x, int y) {
-  m_attack = DEF_ATTACK;
-  m_x = DEF_X;
-  m_y = DEF_Y;
-  setAttack(attack);
-  setXPosition(x);
-  setYPosition(y);
+	m_attack = DEF_ATTACK;
+	m_x = DEF_X;
+	m_y = DEF_Y;
+	setAttack(attack);
+	setXPosition(x);
+	setYPosition(y);
 }
