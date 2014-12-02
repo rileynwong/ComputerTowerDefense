@@ -80,12 +80,10 @@ class Board {
     
     void attackBug(Bug *bug, int attack);
     void attack();
+    void moveProjectiles();
     
     int getMoney() { return m_money; };
     int getHealth() { return m_health; };
-
-    // change to buy each specific tower and spell
-    void moveProjectiles();
 
     void printBugs();
     void printTowerLocations();

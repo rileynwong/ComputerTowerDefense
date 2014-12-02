@@ -22,32 +22,22 @@ void Board::addBug() {
 }
 
 int Board::moveBugs() {
-	cout << "move bugs" << endl;
 	if (m_bugPlacement.at(PATH_LENGTH - 1)) {
-		cout << "here" << endl;
 		m_towerPlacement.at(m_pathYCoords.at(PATH_LENGTH - 1)).at(m_pathXCoords.at(PATH_LENGTH - 1)) = BUG;
 		return 1;
 	}
 	for (int i = PATH_LENGTH - 1; i > 0; i--) {
-		cout << "i: " << i << endl;
 		m_bugPlacement.at(i) = m_bugPlacement.at(i - 1);
 		Bug *bug = m_bugPlacement.at(i);
 
 		if (bug) {
-			cout << "in here" << endl;
-
 			bug->setXPosition(m_pathXCoords.at(i));
 			bug->setYPosition(m_pathYCoords.at(i));
 			bug->printBug();
 			m_towerPlacement.at(bug->getYPosition()).at(bug->getXPosition()) = BUG;
-
 		}
 		else {
-			cout << "here" << endl;
-			cout << "this x and y: " << m_pathXCoords.at(i) << " " << m_pathYCoords.at(i) << endl;
 			m_towerPlacement.at(m_pathYCoords.at(i)).at(m_pathXCoords.at(i)) = NO_OBJECT;	
-		cout << "here" << endl;
-			
 		}
 	}
 	addBug();
