@@ -3,6 +3,9 @@
 main: main.o bug.o tower.o board.o gamescreen.o projectile.o
 	g++ -g -Wall -o main main.o bug.o tower.o board.o gamescreen.o projectile.o
 
+newgame: bug.o tower.o board.o newgame.o projectile.o
+	g++ -g -Wall -o newgame bug.o tower.o board.o newgame.o projectile.o
+
 main.o: main.cpp
 	g++ -g -Wall -c main.cpp
 
@@ -28,4 +31,4 @@ run:
 	./main
 
 clean:
-	rm -f *.o *~ newgame
+	rm -f *.o *~ newgame main
