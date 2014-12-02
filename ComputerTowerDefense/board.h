@@ -32,30 +32,39 @@ class Board {
     vector<Projectile*> m_projectiles;
 
     int m_money;
-    void removeBug(Bug *b);
-    void addBug();
-    Bug *findBug(int x, int y);
-    void removeProjectile(Projectile *p);
 
-  public:
-    void printBugs();
-    void printTowerLocations();
+    void addBug();
+    void removeBug(Bug *b);
+
+    Bug *findBug(int x, int y);
+
+    void removeProjectile(Projectile *p);
+    Projectile *moveProjectile(Projectile *p);  
+    
+    bool containsPath(int x, int y);
+    
+    bool buyTower();
+    void placeTower(Tower *t, int x, int y);
 
     void addPath();
-    bool containsPath(int x, int y);
-
-    
+  public:
     int moveBugs();
-
-    Projectile *moveProjectile(Projectile *p);
-    void moveProjectiles();
+    
     void attackBug(Bug *bug, int attack);
     void attack();
     
-    // change to buy each specific tower and spell
+    void moveProjectiles();
+
+    void printBugs();
+    void printTowerLocations();
+
+    bool enoughMoney();
+    void buyNTower(int x, int y);
+    void buyETower(int x, int y);
+    void buyWTower(int x, int y);
+    void buySTower(int x, int y);   
     vector<Tower*> getTowers();
-    Tower *buyTower();
-    void placeTower(Tower *t, int x, int y);
+
     void buySpell();
     void playSpell();
 

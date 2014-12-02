@@ -9,6 +9,10 @@ using namespace std;
 #include <vector>
 #include <iostream>
 
+/*****
+Create and Move Bugs
+*****/
+
 void Board::addBug() {
 	Bug *newBug = new Bug;
 
@@ -39,6 +43,11 @@ int Board::moveBugs() {
 	addBug();
 	return 0;
 }
+
+
+/*****
+Attack and Kill Bugs
+*****/
 
 void Board::removeBug(Bug *b) {
 	for (int i = 0; i < (int) m_bugPlacement.size(); i++) {
@@ -86,6 +95,10 @@ void Board::attack() {
 	}
 }
 
+/*****
+Move/Remove Projectiles
+*****/
+
 void Board::removeProjectile(Projectile *p) {
 	vector<Projectile*> projList;
 	bool removed = false;
@@ -104,7 +117,6 @@ void Board::removeProjectile(Projectile *p) {
 		}
 	}
 	m_projectiles = projList;
-	cout << "size: " << (int) m_projectiles.size() << endl;
 }
 
 Projectile *Board::moveProjectile(Projectile *p) {
@@ -162,19 +174,10 @@ void Board::moveProjectiles() {
 	}
 }
 
-// change to buy each specific tower and spell
-Tower *Board::buyTower() {
-	// check if you have enough money
-	// spend money
-	if (m_money < COST_TOWER) {
-		//TODO: some sort of error checking
-	}
 
-	m_money -= COST_TOWER;
-	Tower *tower = new Tower;
-	m_towers.push_back(tower);
-	return tower;
-}
+/*****
+Buying Towers
+*****/
 
 bool Board::containsPath(int x, int y) {
 	for (int i = 0; i < PATH_LENGTH; i++) {
@@ -201,9 +204,76 @@ void Board::placeTower(Tower *t, int x, int y) {
 	}
 }
 
+bool Board::enoughMoney() {
+	return m_money >= COST_TOWER;
+}
+
+bool Board::buyTower() {
+	if (m_money >= COST_TOWER) {
+		m_money -= COST_TOWER;
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+
+void Board::buyNTower(int x, int y) {
+	if (buyTower()) {
+		Tower *tower = new Tower(DEF_ATTACK, DEF_MULT_DIR,
+			N, DEF_RADIUS, x, y);
+		m_towers.push_back(tower);
+		placeTower(tower, x, y);
+	}
+	else {
+		// Error out
+	}
+}
+
+void Board::buyETower(int x, int y) {
+	if (buyTower()) {
+		Tower *tower = new Tower(DEF_ATTACK, DEF_MULT_DIR,
+			E, DEF_RADIUS, x, y);
+		m_towers.push_back(tower);
+		placeTower(tower, x, y);
+	}
+	else {
+		// Error out
+	}
+}
+
+void Board::buySTower(int x, int y) {
+	if (buyTower()) {
+		Tower *tower = new Tower(DEF_ATTACK, DEF_MULT_DIR,
+			S, DEF_RADIUS, x, y);
+		m_towers.push_back(tower);
+		placeTower(tower, x, y);
+	}
+	else {
+		// Error out
+	}
+}
+
+void Board::buyWTower(int x, int y) {
+	if (buyTower()) {
+		Tower *tower = new Tower(DEF_ATTACK, DEF_MULT_DIR,
+			W, DEF_RADIUS, x, y);
+		m_towers.push_back(tower);
+		placeTower(tower, x, y);
+	}
+	else {
+		// Error out
+	}
+}
+
 vector<Tower*> Board::getTowers() {
 	return m_towers;
 }
+
+
+/*****
+Print things for debugging
+*****/
 
 void Board::printBugs() {	
 	vector<Bug*> bugs = m_bugPlacement;
@@ -213,6 +283,7 @@ void Board::printBugs() {
 		}
 	}
 }
+
 
 void Board::printTowerLocations() {
 	for (int i = 0; i < (int) m_towerPlacement.size(); i++) {
@@ -232,6 +303,7 @@ void Board::printTowerLocations() {
 		}
 		cout << endl;
 	}
+	cout << endl;
 }
 
 

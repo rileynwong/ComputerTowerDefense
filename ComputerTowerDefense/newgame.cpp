@@ -6,8 +6,9 @@ using namespace std;
 
 int main() {
 	Board board;
-	Tower *t = board.buyTower();
-	board.placeTower(t, 1, 3);
+	if (board.enoughMoney()) {
+		board.buyWTower(1, 3);
+	}
 	cout << endl << endl;
 
 	//while (lose != 1) {
@@ -34,9 +35,6 @@ int main() {
 
 	board.attack();
 	board.printTowerLocations();
-
-
-	cout << "I lost!" << endl;
 
 	return 0;
 	// cout << "attacking" << endl;

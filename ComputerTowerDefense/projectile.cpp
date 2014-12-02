@@ -55,28 +55,24 @@ int Projectile::move() {
 		case N:
 			m_y--;
 			if (m_y < 0) {
-				cout << "neg y" << endl;
 				return 1;
 			}
 			break;
 		case E:
 			m_x++;
 			if (m_x > GAME_WIDTH) {
-				cout << "pos x" << endl;
 				return 1;
 			}
 			break;
 		case S:
 			m_y++;
 			if (m_y > GAME_WIDTH) {
-				cout << "pos y" << endl;
 				return 1;
 			}
 			break;
 		case W:
 			m_x--;
 			if (m_x < 0) {
-				cout << "neg x" << endl;
 				return 1;
 			}
 			break;
