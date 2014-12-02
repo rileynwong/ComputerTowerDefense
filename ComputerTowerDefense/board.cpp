@@ -323,37 +323,30 @@ void Board::addPath() {
 		if (i < PATH_TEN) {
 			m_pathXCoords.at(i) = i;
 			m_pathYCoords.at(i) = PATH_SEVEN;
-			cout << i << " " << i << " " << PATH_SEVEN << endl;
 		}
 		else if (i < PATH_FIFTEEN) {
 			m_pathXCoords.at(i) = PATH_NINE;
-			m_pathYCoords.at(i) = i - PATH_THREE;
-			cout << i << " " << 9 << " " << PATH_THREE << endl;
+			m_pathYCoords.at(i) = i - PATH_TWO;
 		}
 		else if (i < PATH_TWENTY_NINE) {
 			m_pathXCoords.at(i) = i - PATH_FIVE;
 			m_pathYCoords.at(i) = PATH_TWELVE;
-			cout << i << " " << i - 5 << " " << 12 << endl;
 		}
 		else if (i < PATH_THIRTY_SEVEN) {
 			m_pathXCoords.at(i) = PATH_TWENTY_THREE;
 			m_pathYCoords.at(i) = PATH_FOURTY - i;
-			cout << i << " " << 23 << " " << 40 - i << endl;
 		}
 		else if (i < PATH_FIFTY_FOUR) {
 			m_pathXCoords.at(i) = i - PATH_THIRTEEN;
 			m_pathYCoords.at(i) = PATH_FOUR;
-			cout << i << " " << i - 13 << " " << 4 << endl;
 		}
 		else if (i < PATH_SIXTY) {
 			m_pathXCoords.at(i) = PATH_FOURTY;
-			m_pathYCoords.at(i) = i - PATH_FIFTY_ONE;
-			cout << i << " " << 40 << " " << i - 51 << endl;
+			m_pathYCoords.at(i) = i - PATH_FOURTY_NINE;
 		}
 		else {
 			m_pathXCoords.at(i) = i - PATH_NINETEEN;
 			m_pathYCoords.at(i) = PATH_TEN;
-			cout << i << " " << i - 19 << " " << 10 << endl;
 		}
 	}
 }
