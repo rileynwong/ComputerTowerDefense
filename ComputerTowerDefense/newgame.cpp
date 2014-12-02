@@ -11,17 +11,26 @@ int main() {
 	cout << "buying tower" << endl;
 	Tower *t = board.buyTower();
 	cout << "placing tower" << endl;
-	board.placeTower(t, 6, 1);
+	board.placeTower(t, 1, 3);
 	cout << endl << endl;
-	board.printTowerLocations();
+
 	
 
 	int lose = 0;
-	while (lose != 1) {
-		lose = board.moveBugs();
-	}
+	//while (lose != 1) {
+		// lose = board.moveBugs();
+	//}
+	lose = board.moveBugs();
+	board.attack();
+
+	board.printTowerLocations();
+
+	board.attack();
+
+	board.printTowerLocations();
 	cout << "I lost!" << endl;
 
+	return 0;
 	// cout << "attacking" << endl;
 	// board.attack();
 
