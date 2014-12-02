@@ -147,6 +147,7 @@ void PrintBoard(vector< vector<char> > *GameScreen) {
 }
 
 void PrintStats(Board *GameBoard) {
+  cout << "Stats:" << endl;
   cout << "\tBits:   " << GameBoard->getMoney()  << endl;
   cout << "\tHealth: " << GameBoard->getHealth() << endl;
 }
@@ -198,7 +199,6 @@ void PrintSubMenu() {
   PrintSubContents();
 
   // 2. handle input
-  
   cin >> input;
 
   while(input != DO_NOTHING) {
@@ -227,35 +227,40 @@ void InBounds(int *x) {
   if(*x < MAX_VAL) *x = MAX_VAL;
 }
 
-void Shoot(vector< vector<char> > *GameScreen, int dir, int startX, int startY, 
-                                                        int endX,   int endY) {
-  InBounds(&startX);
-  InBounds(&startY);
-  InBounds(&endX);
-  InBounds(&endY);
-
-  // direction - an enum w/ switch case?
-  switch(dir) {
-    case 0: // north ^
-      while(startX) {
-
-      }
-
-      break;
-    case 1: // east >
-      break;
-    case 2: // south v
-      break;
-    case 3: // west <
-      break;
-  }
-
-  // stop when you hit a game object or edge
-
-}
 
 void Refresh(vector< vector<char> > *GameScreen, Board *GameBoard) {
-  //GameBoard->moveBugs();
+  int i, j;
+
+  // 1. Update and set pieces
+
+  GameBoard->moveBugs();
+
+  // set pieces (bugs, towers, projectiles) for the board
+  vector< vector< int > > pieces = GameBoard->getPieces();
+	for (i = 0; i < (int) pieces.size(); i++) {
+		for (j = 0; j < (int) pieces.at(i).size(); j++) {
+      switch(pieces.at(i).at(j)) {
+        case TOWER:
+          // TODO check tower type
+          GameScreen->at(i).at(j) = 'I';
+          break;
+        case PROJECTILE:
+          // TODO check projectile direction
+          GameScreen->at(i).at(j) = 'v';
+          break;
+        case BUG:
+          // TODO check bug type
+          GameScreen->at(i).at(j) = '*';
+          break;
+      }
+		}
+	}
+
+  // 2. Draw board
+  // board base
+  PrintBoard(GameScreen); 
+  PrintStats(GameBoard);
+  
 }
 
 

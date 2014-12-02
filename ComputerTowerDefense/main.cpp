@@ -19,7 +19,7 @@ int main() {
 
   int input, curr, score = 0;
   bool submenu = false, playing = false;
-  clock_t start, timePassed, secondsPassed;
+  clock_t start;
   Board *GameBoard = new Board();
   vector< vector<char> > GameScreen(VEC_L, vector<char>(VEC_W, '.'));
 
@@ -51,6 +51,8 @@ int main() {
   start = clock();
   curr = start;
 
+  Refresh(&GameScreen, GameBoard);
+
   while(playing) {
     start = clock();
 
@@ -59,8 +61,9 @@ int main() {
 //      cout << "1 second later..." << endl; 
       curr = start;
 
-      PrintBoard(&GameScreen);
-      PrintStats(GameBoard);
+      if (playing) {
+        Refresh(&GameScreen, GameBoard); // redraw the board
+      }
 
       if(submenu) { 
         PrintSubMenu(); 
@@ -70,9 +73,6 @@ int main() {
         playing = PrintMenu();
       }
 
-      if (playing) {
-        Refresh(&GameScreen, GameBoard); // redraw the board
-      }
       // if(GameBoard->getHealth() < 0) { GameOver(); }
 
     }

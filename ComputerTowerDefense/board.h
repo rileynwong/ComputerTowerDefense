@@ -57,6 +57,8 @@ class Board {
     int getMoney() { return m_money; };
     int getHealth() { return m_health; };
 
+    vector< vector< int > > getPieces() { return m_towerPlacement; };
+
     // change to buy each specific tower and spell
     void moveProjectiles();
 
