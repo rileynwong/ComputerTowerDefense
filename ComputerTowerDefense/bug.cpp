@@ -49,10 +49,6 @@ int Bug::getReward() {
 	return m_reward;
 }
 
-int Bug::getMoveNum() {
-	return m_move_num;
-}
-
 int Bug::takeDamage(int damage) {
   if (damage < 0) {
     //TODO: figure this part out
@@ -66,49 +62,15 @@ int Bug::takeDamage(int damage) {
   return 0;
 }
 
-int Bug::move() {
-  direction next = m_movements[m_move_num];
-  switch(next) {
-    case N:
-      m_y += POS_INTERVAL;
-      break;
-    case E:
-      m_x += POS_INTERVAL;
-      break;
-    case S:
-      m_y -= POS_INTERVAL;
-      break;
-    case W:
-      m_x -= POS_INTERVAL;
-      break;
-  }
-  m_move_num ++;
-  if (m_move_num >= (int) m_movements.size()) {
-    return 1;
-  }
-  return 0;
-}
-
-void Bug::setMovements() {
-	vector< direction > movements(6, E);
-	m_movements = movements;
-	m_movements.at(2) = N;
-	m_movements.at(3) = S;
-	m_movements.at(4) = N;
-	m_movements.at(5) = W;
-}
-
 void Bug::printBug() {
 	cout << "bug: ";
 	cout << m_x << " ";
 	cout << m_y << " ";
-	cout << m_health << " ";
-	cout << m_move_num;
+	//cout << m_health << " ";
 	cout << endl;
 }
 
 Bug::Bug(int health, int reward, int x, int y) {
-	m_move_num = 0;
 	m_health = DEF_HEALTH;
 	m_x = DEF_X_START;
 	m_y = DEF_Y_START;
@@ -117,5 +79,4 @@ Bug::Bug(int health, int reward, int x, int y) {
 	setHealth(health);
 	setXPosition(x);
 	setYPosition(y);
-	setMovements();
 }

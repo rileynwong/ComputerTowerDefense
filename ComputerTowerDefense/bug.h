@@ -15,7 +15,7 @@
 #define DEF_HEALTH 1
 #define DEF_REWARD 1
 #define DEF_X_START 0
-#define DEF_Y_START 0
+#define DEF_Y_START 2
 #define POS_INTERVAL 10
 
 enum direction {N, S, E, W};
@@ -25,9 +25,7 @@ class Bug {
     int m_x;
     int m_y;
     int m_health;
-    int m_move_num;
     int m_reward;
-    std::vector< direction > m_movements;
 
     void setHealth(int health);
     void setReward(int reward);
@@ -42,7 +40,6 @@ class Bug {
     int getYPosition();
     int getHealth();
     int getReward();
-    int getMoveNum();
     int takeDamage(int damage);
     int move();
 

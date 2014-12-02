@@ -9,40 +9,46 @@ using namespace std;
 #include <vector>
 #include <iostream>
 
-vector<Bug> Board::getBugs() {
+vector<Bug*> Board::getBugs() {
 	return m_bugs;
 }
 
 void Board::addBug() {
-	Bug newBug;
+	Bug *newBug = new Bug;
 	m_bugs.push_back(newBug);
-	for (int i = 0; i < (int) m_bugs.size(); i++) {
-		m_bugs.at(i).printBug();
-	}
+
+	m_bugPlacement.at(0) = newBug;
 }
 
 int Board::moveBugs() {
-	for (int i = 0; i < (int) m_bugs.size(); i++) {
-		if (m_bugs.at(i).move() == 1) {
-			m_bugs.at(i).printBug();
-			return 1;
-		}
-		m_bugs.at(i).printBug();
+	cout << "move bugs" << endl;
+	if (m_bugPlacement.at(PATH_LENGTH - 1)) {
+		return 1;
 	}
+	for (int i = PATH_LENGTH - 1; i > 0; i--) {
+		m_bugPlacement.at(i) = m_bugPlacement.at(i - 1);
+		if (m_bugPlacement.at(i)) {
+			m_bugPlacement.at(i)->setXPosition(m_pathXCoords.at(i));
+			m_bugPlacement.at(i)->setYPosition(m_pathYCoords.at(i));
+			m_bugPlacement.at(i)->printBug();
+		}
+	}
+	addBug();
 	return 0;
 }
 
+// TODO: THIS IS IN BAD SHAPE AND SHOULD BE FIXED
 void Board::removeBug(Bug *b) {
-	vector < Bug > listBugs;
-	for (int i = 0; i < (int) m_bugs.size(); i++) {
-		cout << "i: " << i << endl;
+	// vector < Bug > listBugs;
+	// for (int i = 0; i < (int) m_bugs.size(); i++) {
+	// 	cout << "i: " << i << endl;
 		
-		if (b != &(m_bugs.at(i))) {
-			cout << "bug not removed" << endl;
-			listBugs.push_back(m_bugs.at(i));
-		}
-	}
-	m_bugs = listBugs;
+	// 	if (b != &(m_bugs.at(i))) {
+	// 		cout << "bug not removed" << endl;
+	// 		listBugs.push_back(m_bugs.at(i));
+	// 	}
+	// }
+	// m_bugs = listBugs;
 }
 
 void Board::attack() {
@@ -50,10 +56,10 @@ void Board::attack() {
 		// find bugs that will be attacked
 		// do damage
 
-		if (m_bugs.at(0).takeDamage(m_towers.at(i).getAttack()) == 1) {
+		if (m_bugs.at(0)->takeDamage(m_towers.at(i).getAttack()) == 1) {
 			cout << "bug died" << endl;
-			m_money += m_bugs.at(0).getReward();
-			removeBug(&(m_bugs.at(0)));
+			m_money += m_bugs.at(0)->getReward();
+			removeBug(m_bugs.at(0));
 		}
 	}
 }
@@ -65,10 +71,20 @@ Tower *Board::buyTower() {
 	if (m_money < COST_TOWER) {
 		//TODO: some sort of error checking
 	}
+
 	m_money -= COST_TOWER;
 	Tower *tower = new Tower;
 	m_towers.push_back(*tower);
 	return tower;
+}
+
+bool Board::containsPath(int x, int y) {
+	for (int i = 0; i < PATH_LENGTH; i++) {
+		if (x == m_pathXCoords.at(i) && y == m_pathYCoords.at(i)) {
+			return true;
+		}
+	}
+	return false;
 }
 
 void Board::placeTower(Tower *t, int x, int y) {
@@ -76,12 +92,12 @@ void Board::placeTower(Tower *t, int x, int y) {
 		// TODO: deal with invalid position
 	}
 
-	if (m_tower_placement.at(y).at(x)) {
+	if (m_towerPlacement.at(y).at(x) || containsPath(x, y)) {
 		// TODO: deal with invalid position
 	}
 
 	else {
-		m_tower_placement.at(y).at(x) = true;
+		m_towerPlacement.at(y).at(x) = true;
 		t->setXPosition(x);
 		t->setYPosition(y);
 	}
@@ -89,16 +105,16 @@ void Board::placeTower(Tower *t, int x, int y) {
 
 
 void Board::printBugs() {	
-	vector<Bug> bugs = getBugs();
+	vector<Bug*> bugs = getBugs();
 	for (int i = 0; i < (int) bugs.size(); i++) {
-		bugs.at(i).printBug();
+		bugs.at(i)->printBug();
 	}
 }
 
 void Board::printTowerLocations() {
-	for (int i = 0; i < (int) m_tower_placement.size(); i++) {
-		for (int j = 0; j < (int) m_tower_placement.at(i).size(); j++) {
-			if (!m_tower_placement.at(i).at(j)) {
+	for (int i = 0; i < (int) m_towerPlacement.size(); i++) {
+		for (int j = 0; j < (int) m_towerPlacement.at(i).size(); j++) {
+			if (!m_towerPlacement.at(i).at(j)) {
 				cout << "-" << " ";
 			}
 			else {
@@ -113,27 +129,26 @@ vector<Tower> Board::getTowers() {
 	return m_towers;
 }
 
-Board::Board() {
-	m_money = START_MONEY;
-	m_tower_placement.resize(GAME_WIDTH);
-
-	for (int i = 0; i < GAME_WIDTH; i++) {
-		m_tower_placement.at(i).resize(GAME_WIDTH, false);
+void Board::addPath() {
+	for (int i = 0; i < 3; i++) {
+		m_pathXCoords.at(i) = i;
+		m_pathYCoords.at(i) = 2;
 	}
-	//addPath();
 }
 
-// void Board::addPath() {
-// 	for (int i = 0; i < 3; i++) {
-// 		m_tower_placement.at(1).at(i) = new GameObject(true);
-// 	}
-// 	for (int i = 2; i < 7; i++) {
-// 		m_tower_placement.at(i).at(2) = new GameObject(true);
-// 	}
-// 	for (int i = 3; i < 10; i++) {
-// 		m_tower_placement.at(6).at(i) = new GameObject(true);
-// 	}
-// }
+Board::Board() {
+	m_money = START_MONEY;
+	m_towerPlacement.resize(GAME_WIDTH);
+
+	for (int i = 0; i < GAME_WIDTH; i++) {
+		m_towerPlacement.at(i).resize(GAME_WIDTH, false);
+	}
+	m_pathXCoords.resize(PATH_LENGTH);
+	m_pathYCoords.resize(PATH_LENGTH);
+	m_bugPlacement.resize(PATH_LENGTH);
+
+	addPath();
+}
 
 
 /**************************
