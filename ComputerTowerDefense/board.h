@@ -16,10 +16,11 @@
 using namespace std;
 
 #define START_MONEY 5
-#define PATH_LENGTH 3
+#define PATH_LENGTH 5
 #define NO_OBJECT 0
 #define TOWER 1
 #define PROJECTILE 2
+#define BUG 3
 
 class Board {
   private:

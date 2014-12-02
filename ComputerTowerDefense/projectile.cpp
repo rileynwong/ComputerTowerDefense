@@ -96,7 +96,6 @@ Projectile::Projectile(int x, int y, int attack, direction dir, int distance) {
 	m_dir = DIR_ATTACK;
 	m_distance = DEF_DIST;
 
-	cout << "x and y: " << x << " " << y << endl;
 	setAttack(attack);
 	setXPosition(x);
 	setYPosition(y);

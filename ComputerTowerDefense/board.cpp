@@ -13,39 +13,46 @@ void Board::addBug() {
 	Bug *newBug = new Bug;
 
 	m_bugPlacement.at(0) = newBug;
+	m_towerPlacement.at(newBug->getYPosition()).at(newBug->getXPosition()) = BUG;
 }
 
 int Board::moveBugs() {
 	cout << "move bugs" << endl;
 	if (m_bugPlacement.at(PATH_LENGTH - 1)) {
+		m_towerPlacement.at(m_pathYCoords.at(PATH_LENGTH - 1)).at(m_pathXCoords.at(PATH_LENGTH - 1)) = BUG;
 		return 1;
 	}
 	for (int i = PATH_LENGTH - 1; i > 0; i--) {
 		m_bugPlacement.at(i) = m_bugPlacement.at(i - 1);
-		if (m_bugPlacement.at(i)) {
-			m_bugPlacement.at(i)->setXPosition(m_pathXCoords.at(i));
-			m_bugPlacement.at(i)->setYPosition(m_pathYCoords.at(i));
-			m_bugPlacement.at(i)->printBug();
+		Bug *bug = m_bugPlacement.at(i);
+		if (bug) {
+			bug->setXPosition(m_pathXCoords.at(i));
+			bug->setYPosition(m_pathYCoords.at(i));
+			bug->printBug();
+			m_towerPlacement.at(bug->getYPosition()).at(bug->getXPosition()) = BUG;
+
+		}
+		else {
+			m_towerPlacement.at(m_pathYCoords.at(i)).at(m_pathXCoords.at(i)) = NO_OBJECT;	
 		}
 	}
 	addBug();
 	return 0;
 }
 
-// TODO: THIS IS IN BAD SHAPE AND SHOULD BE FIXED
 void Board::removeBug(Bug *b) {
-	// vector < Bug > listBugs;
-	// for (int i = 0; i < (int) m_bugs.size(); i++) {
-	// 	cout << "i: " << i << endl;
-		
-	// 	if (b != &(m_bugs.at(i))) {
-	// 		cout << "bug not removed" << endl;
-	// 		listBugs.push_back(m_bugs.at(i));
-	// 	}
-	// }
-	// m_bugs = listBugs;
+	for (int i = 0; i < (int) m_bugPlacement.size(); i++) {
+		Bug *bug = m_bugPlacement.at(i);
+		if (bug->getXPosition() == b->getXPosition() &&
+			bug->getYPosition() == b->getYPosition()) {
+			cout << "bug removed" << endl;
+			m_bugPlacement.at(i) = NULL;
 
-	// TODO: destroy bug
+			m_towerPlacement.at(bug->getYPosition()).at(bug->getXPosition()) = NO_OBJECT;
+			// TODO: destroy bug
+			return;
+		}
+	}
 }
 
 Bug *Board::findBug(int x, int y) {
@@ -68,8 +75,6 @@ void Board::attackBug(Bug *bug, int attack) {
 void Board::attack() {
 	for (int i = 0; i < (int) m_towers.size(); i++) {
 		Tower *t = m_towers.at(i);
-		cout << "tower: " << t->getXPosition() << " " << t->getYPosition() << endl;
-
 		Projectile *p = new Projectile(t->getXPosition(), t->getYPosition(), 
 			t->getAttack(), t->getDirAttack(), t->getRadius());
 		m_projectiles.push_back(p);
@@ -83,7 +88,20 @@ void Board::attack() {
 }
 
 void Board::removeProjectile(Projectile *p) {
-
+	vector<Projectile*> projList;
+	for (int i = 0; i < (int) m_projectiles.size(); i++) {
+		Projectile *proj = m_projectiles.at(i);
+		if (proj->getXPosition() != p->getXPosition() ||
+			proj->getYPosition() != p->getYPosition()) {
+			
+			projList.push_back(proj);
+		}
+		else {
+			// TODO: destroy bug
+			cout << "proj removed" << endl;
+		}
+	}
+	m_projectiles = projList;
 }
 
 void Board::moveProjectile(Projectile *p) {
@@ -104,8 +122,15 @@ void Board::moveProjectile(Projectile *p) {
 	x = p->getXPosition();
 	y = p->getYPosition();
 
-	if (m_towerPlacement.at(y).at(x) != NO_OBJECT) {
-		// TODO: deal with invalid position
+	if (m_towerPlacement.at(y).at(x) == BUG) {
+		Bug *bug = findBug(x, y);
+		if (bug) {
+			attackBug(bug, p->getAttack());
+			cout << "remove projectile there" << endl;
+			removeProjectile(p);
+		}
+	}
+	else if (m_towerPlacement.at(y).at(x) != NO_OBJECT) {
 		cout << "remove projectile here" << endl;
 		removeProjectile(p);
 	}
@@ -115,12 +140,7 @@ void Board::moveProjectile(Projectile *p) {
 		m_towerPlacement.at(y).at(x) = PROJECTILE;
 	}
 
-	Bug *bug = findBug(x, y);
-	if (bug) {
-		attackBug(bug, p->getAttack());
-		cout << "remove projectile there" << endl;
-		removeProjectile(p);
-	}
+	
 }
 
 
@@ -194,6 +214,9 @@ void Board::printTowerLocations() {
 			else if (m_towerPlacement.at(i).at(j) == PROJECTILE){
 				cout << '.' << " ";
 			}
+			else if (m_towerPlacement.at(i).at(j) == BUG) {
+				cout << '*' << " ";
+			}
 		}
 		cout << endl;
 	}
@@ -201,7 +224,7 @@ void Board::printTowerLocations() {
 
 
 void Board::addPath() {
-	for (int i = 0; i < 3; i++) {
+	for (int i = 0; i < PATH_LENGTH; i++) {
 		m_pathXCoords.at(i) = i;
 		m_pathYCoords.at(i) = 2;
 	}
