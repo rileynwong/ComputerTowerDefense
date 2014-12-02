@@ -4,15 +4,19 @@
 */
 
 #include <iostream>
-#include <time.h>
+#include <cstdio>
+#include <ctime>
+#include <stdio.h>
+#include <iomanip>
+#include <iostream>
 
 #include "board.h"
 #include "gamescreen.h"
 
+#define BUY     0
+#define EXIT    1
+
 using namespace std;
-
-
-
 
 void DrawInitA(vector< vector<char> > *GameScreen) {
   int i;
@@ -121,8 +125,54 @@ void DrawInitB(vector< vector<char> > *GameScreen) {
 
 }
 
+void PrintMenu() {
+  // towers
+  cout << "0 - Buy Towers and Spells" << endl;
+  cout << "1 - Exit" << endl;
+
+}
+
+void PrintSubMenu() {
+  int input;
+
+  // print submenu contents
+  // towers
+  cout << "TOWERS:" << endl;
+
+
+  cout << endl;
+
+  // spells
+  cout << "SPELLS:" << endl;
+
+
+
+  cout << endl;
+  cout << "0 - back to main menu" << endl;
+
+  cin >> input;
+
+  while(input != EXIT) {
+    switch(input) {
+      case 0: // return to main menu
+        PrintMenu();
+        break;
+      case 1: // buy stuff
+        break;
+    }
+
+    // Refresh(&GameScreen);
+
+  }
+
+}
 
 int main() {
+
+  int input, curr;
+  bool playing = false;
+  clock_t start, timePassed, secondsPassed;
+
 	Board board;
 	cout << "board made" << endl;
 	Tower tower;
@@ -133,28 +183,61 @@ int main() {
 	while (lose != 1) {
 		lose = board.moveBugs();
 	}
-	cout << "I lost!" << endl;
+	cout << "I lost!" << endl << endl;
 
-  vector< vector<char> > GameScreen(VEC_L, vector<char>(VEC_W, '.')); // malloc?
+  vector< vector<char> > GameScreen(VEC_L, vector<char>(VEC_W, '.'));
   DrawInitA(&GameScreen);
   DrawInitB(&GameScreen);
 
+  // draw board
   int row, col;
+
+  cout << "   0 2 4 6 810 2 4 6 820 2 4 6 830 2 4 6 840 2 4 6 8" << endl;
   for(row = 0; row < VEC_L; row++) {
-      for(col = 0; col < VEC_W; col++) {
+    cout << setw(2) << right << row << " ";
+    for(col = 0; col < VEC_W; col++) {
         cout << GameScreen.at(row).at(col);
     }
     cout << endl;
   }
 
+  cout << endl;
 
+  PrintMenu();
+//  cin >> input;
 /*
-  // while(!exit) {}
-  Refresh(GameScreen);
+  while(input != EXIT) {
+    switch(input) {
+      case 0: // buying stuff
+        cout << endl;
+        PrintSubMenu();
+        playing = false;
+        break;
+      case 1: // exit
+        // TODO free memory and stuff
+        cout << endl << "Bye!" << endl;
+        exit(0);
+        break;
+    }
 
-  // Exit(GameScreen); // destroy malloc
+    // Refresh(&GameScreen);
 
+  }
 */
+
+  /* WAVE 1 */
+  playing = true;
+  start = clock();
+  curr = start;
+
+  while(playing) {
+    start = clock();
+
+    if(((start - curr)/(double) 1000000) >= 1) {
+      cout << "1 second later..." << endl; 
+      curr = start;
+    }
+  }
 
 
   return 0;
