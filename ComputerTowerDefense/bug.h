@@ -10,7 +10,6 @@
 #ifndef BUG_H
 #define BUG_H
 
-#include "gameObject.h"
 #include <vector>
 
 #define DEF_HEALTH 1

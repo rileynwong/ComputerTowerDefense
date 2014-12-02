@@ -118,7 +118,6 @@ Board::Board() {
 	m_tower_placement.resize(GAME_WIDTH);
 
 	for (int i = 0; i < GAME_WIDTH; i++) {
-		GameObject newGameObject; 
 		m_tower_placement.at(i).resize(GAME_WIDTH, false);
 	}
 	//addPath();
