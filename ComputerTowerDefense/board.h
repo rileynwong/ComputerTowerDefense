@@ -70,6 +70,7 @@ class Board {
     Projectile *moveProjectile(Projectile *p);  
     
     bool containsPath(int x, int y);
+    
     bool buyTower();
     void placeTower(Tower *t, int x, int y);
 
@@ -79,14 +80,15 @@ class Board {
     
     void attackBug(Bug *bug, int attack);
     void attack();
+
+    vector< vector< int > > getPieces() {
+      return m_towerPlacements;
+    };
+    
+    void moveProjectiles();
     
     int getMoney() { return m_money; };
     int getHealth() { return m_health; };
-
-    vector< vector< int > > getPieces() { return m_towerPlacement; };
-
-    // change to buy each specific tower and spell
-    void moveProjectiles();
 
     void printBugs();
     void printTowerLocations();

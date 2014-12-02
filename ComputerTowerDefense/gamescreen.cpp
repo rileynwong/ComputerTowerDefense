@@ -7,6 +7,7 @@
 #include <iostream>
 #include <cstdio>
 #include <ctime>
+#include <cstdlib>
 #include <stdio.h>
 #include <iomanip>
 #include <iostream>
