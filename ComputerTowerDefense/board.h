@@ -9,7 +9,6 @@
 #define BOARD_H
 
 #include <vector>
-#include "gameObject.h"
 #include "bug.h"
 #include "tower.h"
 
