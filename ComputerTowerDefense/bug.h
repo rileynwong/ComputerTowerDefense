@@ -28,7 +28,7 @@ class Bug {
     int m_health;
     int m_move_num;
     int m_reward;
-    vector< direction > m_movements;
+    std::vector< direction > m_movements;
 
     void setHealth(int health);
     void setReward(int reward);

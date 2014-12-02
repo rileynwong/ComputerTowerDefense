@@ -13,8 +13,11 @@
 #include "bug.h"
 #include "tower.h"
 
+using namespace std;
+
 #define START_MONEY 5
 #define GAME_WIDTH 10
+
 
 class Board {
   private:

@@ -4,7 +4,7 @@
    Description: 
 */
 
-using namespace std;
+#include <stdlib.h>
 #include "tower.h"
 #include <iostream>
 
@@ -36,10 +36,10 @@ int Tower::getAttack() {
 }
 
 Tower::Tower(int attack, int x, int y) {
-	m_attack = DEF_ATTACK;
-	m_x = DEF_X;
-	m_y = DEF_Y;
-	setAttack(attack);
-	setXPosition(x);
-	setYPosition(y);
+  m_attack = DEF_ATTACK;
+  m_x = DEF_X;
+  m_y = DEF_Y;
+  setAttack(attack);
+  setXPosition(x);
+  setYPosition(y);
 }
