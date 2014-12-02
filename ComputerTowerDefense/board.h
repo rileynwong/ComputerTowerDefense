@@ -44,7 +44,6 @@ class Board {
     Projectile *moveProjectile(Projectile *p);  
     
     bool containsPath(int x, int y);
-
     bool buyTower();
     void placeTower(Tower *t, int x, int y);
 

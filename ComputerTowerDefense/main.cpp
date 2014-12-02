@@ -24,9 +24,9 @@ int main() {
   vector< vector<char> > GameScreen(VEC_L, vector<char>(VEC_W, '.'));
 
 
-//  cin >> input;
-/*
-  while(input != EXIT) {
+//cin >> input;
+
+  /*while(input != EXIT) {
     switch(input) {
       case 0: // buying stuff
         cout << endl;
@@ -37,14 +37,14 @@ int main() {
       case 1: // exit
         // TODO free memory and stuff
         cout << endl << "Bye!" << endl;
-        exit(0);
-        break;zf
+        return 0;
+        break;
     }
 
     // Refresh(&GameScreen);
 
-  }
-*/
+  }*/
+
 
   /* Game Start */
   playing = true;
@@ -62,11 +62,17 @@ int main() {
       PrintBoard(&GameScreen);
       PrintStats(GameBoard);
 
-      if(submenu) { PrintSubMenu(); }
-      else { PrintMenu(); }
+      if(submenu) { 
+        PrintSubMenu(); 
+        // TODO: fix this later
+      }
+      else { 
+        playing = PrintMenu();
+      }
 
-      Refresh(&GameScreen, GameBoard); // redraw the board
-
+      if (playing) {
+        Refresh(&GameScreen, GameBoard); // redraw the board
+      }
       // if(GameBoard->getHealth() < 0) { GameOver(); }
 
     }

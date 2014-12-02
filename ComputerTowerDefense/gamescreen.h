@@ -13,10 +13,12 @@
 #define VEC_L 15
 #define VEC_W 50
 
-#define BUY       0
-#define EXIT      1
-#define MIN_VAL   0
-#define MAX_VAL   50
+#define BUY        0
+#define EXIT       1
+#define MIN_VAL    0
+#define MAX_VAL    50
+#define DO_NOTHING 5
+#define NOTHING    2
 
 using namespace std;
 
@@ -27,7 +29,7 @@ void DrawInitB(vector< vector<char> > *GameScreen);
 // print stuff
 void PrintBoard(vector< vector<char> > *GameScreen);
 void PrintStats(Board *GameBoard);
-void PrintMenu();
+bool PrintMenu();
 void PrintSubContents();
 void PrintSubMenu();
 void PrintScore(int score);
