@@ -24,7 +24,7 @@ class Board {
 
     // change to buy each specific tower and spell
     void buyTower();
-    void placeTower();
+    void placeTower(Tower t, int x, int y);
     void buySpell();
     void playSpell();
 

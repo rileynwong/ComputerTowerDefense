@@ -6,6 +6,7 @@
 
 using namespace std;
 #include "bug.h"
+#include <iostream>
 
 void Bug::setHealth(int health) {
   if (health < 0) {
@@ -75,7 +76,13 @@ void Bug::move() {
   //TODO: Increment move_num
 }
 
+void Bug::setMovements() {
+	vector< direction > movements(4, E);
+	m_movements = movements;
+}
+
 Bug::Bug(int health, int reward, int x, int y) {
+	m_move_num = 0;
 	m_health = DEF_HEALTH;
 	m_x = DEF_X_START;
 	m_y = DEF_Y_START;
@@ -84,4 +91,5 @@ Bug::Bug(int health, int reward, int x, int y) {
 	setHealth(health);
 	setXPosition(x);
 	setYPosition(y);
+	setMovements();
 }

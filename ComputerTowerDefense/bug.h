@@ -31,6 +31,7 @@ class Bug {
 
     void setHealth(int health);
     void setReward(int reward);
+    void setMovements();
 
   public:
 
