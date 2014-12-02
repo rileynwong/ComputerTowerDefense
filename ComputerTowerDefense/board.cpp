@@ -6,16 +6,12 @@
 
 using namespace std;
 #include "board.h"
+#include "projectile.h"
 #include <vector>
 #include <iostream>
 
-vector<Bug*> Board::getBugs() {
-	return m_bugs;
-}
-
 void Board::addBug() {
 	Bug *newBug = new Bug;
-	m_bugs.push_back(newBug);
 
 	m_bugPlacement.at(0) = newBug;
 }
@@ -49,18 +45,89 @@ void Board::removeBug(Bug *b) {
 	// 	}
 	// }
 	// m_bugs = listBugs;
+
+	// TODO: destroy bug
+}
+
+Bug *Board::findBug(int x, int y) {
+	for (int i = 0; i < PATH_LENGTH; i++) {
+		if (x == m_pathXCoords.at(i) && y == m_pathYCoords.at(i)) {
+			return m_bugPlacement.at(i);
+		}
+	}
+	return NULL;
+}
+
+void Board::attackBug(Bug *bug, int attack) {
+	if (bug->takeDamage(attack) == 1) {
+		cout << "bug died" << endl;
+		m_money += bug->getReward();
+		removeBug(bug);
+	}
 }
 
 void Board::attack() {
 	for (int i = 0; i < (int) m_towers.size(); i++) {
-		// find bugs that will be attacked
-		// do damage
+		Tower *t = m_towers.at(i);
+		cout << "tower: " << t->getXPosition() << " " << t->getYPosition() << endl;
 
-		if (m_bugs.at(0)->takeDamage(m_towers.at(i).getAttack()) == 1) {
-			cout << "bug died" << endl;
-			m_money += m_bugs.at(0)->getReward();
-			removeBug(m_bugs.at(0));
-		}
+		Projectile *p = new Projectile(t->getXPosition(), t->getYPosition(), 
+			t->getAttack(), t->getDirAttack(), t->getRadius());
+		m_projectiles.push_back(p);
+
+		p->printProjectile();
+
+		moveProjectiles();
+		// Advance projectile one step?? 
+		// - depends on the order of things
+	}
+}
+
+void Board::removeProjectile(Projectile *p) {
+
+}
+
+void Board::moveProjectile(Projectile *p) {
+	cout << "move projectile" << endl;
+	int x = p->getXPosition();
+	int y = p->getYPosition();
+	if (m_towerPlacement.at(y).at(x) == PROJECTILE) {
+		cout << "prep remove projectile" << endl;
+		m_towerPlacement.at(y).at(x) = NO_OBJECT;
+	}
+
+	if (p->move() != 0) {
+		cout << "remove projectile" << endl;
+		removeProjectile(p);
+		return;
+	}
+	p->printProjectile();
+	x = p->getXPosition();
+	y = p->getYPosition();
+
+	if (m_towerPlacement.at(y).at(x) != NO_OBJECT) {
+		// TODO: deal with invalid position
+		cout << "remove projectile here" << endl;
+		removeProjectile(p);
+	}
+
+	else {
+		cout << "place projectile" << endl;
+		m_towerPlacement.at(y).at(x) = PROJECTILE;
+	}
+
+	Bug *bug = findBug(x, y);
+	if (bug) {
+		attackBug(bug, p->getAttack());
+		cout << "remove projectile there" << endl;
+		removeProjectile(p);
+	}
+}
+
+
+void Board::moveProjectiles() {
+	for (int i = 0; i < (int) m_projectiles.size(); i++) {
+		moveProjectile(m_projectiles.at(i));
 	}
 }
 
@@ -74,7 +141,7 @@ Tower *Board::buyTower() {
 
 	m_money -= COST_TOWER;
 	Tower *tower = new Tower;
-	m_towers.push_back(*tower);
+	m_towers.push_back(tower);
 	return tower;
 }
 
@@ -92,42 +159,47 @@ void Board::placeTower(Tower *t, int x, int y) {
 		// TODO: deal with invalid position
 	}
 
-	if (m_towerPlacement.at(y).at(x) || containsPath(x, y)) {
+	if (m_towerPlacement.at(y).at(x) == TOWER || containsPath(x, y)) {
 		// TODO: deal with invalid position
 	}
 
 	else {
-		m_towerPlacement.at(y).at(x) = true;
+		m_towerPlacement.at(y).at(x) = TOWER;
 		t->setXPosition(x);
 		t->setYPosition(y);
 	}
 }
 
+vector<Tower*> Board::getTowers() {
+	return m_towers;
+}
 
 void Board::printBugs() {	
-	vector<Bug*> bugs = getBugs();
-	for (int i = 0; i < (int) bugs.size(); i++) {
-		bugs.at(i)->printBug();
+	vector<Bug*> bugs = m_bugPlacement;
+	for (int i = 0; i < (int) m_bugPlacement.size(); i++) {
+		if (m_bugPlacement.at(i)) {
+			m_bugPlacement.at(i)->printBug();
+		}
 	}
 }
 
 void Board::printTowerLocations() {
 	for (int i = 0; i < (int) m_towerPlacement.size(); i++) {
 		for (int j = 0; j < (int) m_towerPlacement.at(i).size(); j++) {
-			if (!m_towerPlacement.at(i).at(j)) {
+			if (m_towerPlacement.at(i).at(j) == NO_OBJECT) {
 				cout << "-" << " ";
 			}
-			else {
+			else if (m_towerPlacement.at(i).at(j) == TOWER) {
 				cout << 't' << " ";
+			}
+			else if (m_towerPlacement.at(i).at(j) == PROJECTILE){
+				cout << '.' << " ";
 			}
 		}
 		cout << endl;
 	}
 }
 
-vector<Tower> Board::getTowers() {
-	return m_towers;
-}
 
 void Board::addPath() {
 	for (int i = 0; i < 3; i++) {
@@ -138,6 +210,7 @@ void Board::addPath() {
 
 Board::Board() {
 	m_money = START_MONEY;
+  m_health = START_HEALTH;
 	m_towerPlacement.resize(GAME_WIDTH);
 
 	for (int i = 0; i < GAME_WIDTH; i++) {
@@ -149,7 +222,6 @@ Board::Board() {
 
 	addPath();
 }
-
 
 /**************************
  * handle later 

@@ -1,4 +1,3 @@
-
 /* File: bug.h
    Author: Samy Lanka
    PennKey: lankas
@@ -17,8 +16,6 @@
 #define DEF_X_START 0
 #define DEF_Y_START 2
 #define POS_INTERVAL 10
-
-enum direction {N, S, E, W};
 
 class Bug {
   private:
