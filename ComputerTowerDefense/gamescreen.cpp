@@ -129,9 +129,6 @@ void PrintBoard(vector< vector<char> > *GameScreen) {
   cout << endl;
   cout << "    \\\\\\\\\\  COMPUTER TOWER DEFENSE aw yeah /////" << endl << endl;
 
-  DrawInitA(GameScreen);
-  DrawInitB(GameScreen);
-
   // draw board
 
   cout << "   0 2 4 6 810 2 4 6 820 2 4 6 830 2 4 6 840 2 4 6 8" << endl;
@@ -157,8 +154,8 @@ bool PrintMenu() {
   // towers
   cout << endl << "Do something fun: " << endl;
   cout << "\t0 - Buy Towers" << endl;
-  cout << "\t1 - Exit" << endl;
-  cout << "\t2 - Do nothing" << endl;
+  cout << "\t1 - Do nothing" << endl;
+  cout << "\t2 - Exit" << endl;
 
   cin >> input;
   while (input != DO_NOTHING) {
@@ -233,6 +230,11 @@ void Refresh(vector< vector<char> > *GameScreen, Board *GameBoard) {
 
   // 1. Update and set pieces
 
+  // board base
+
+  DrawInitA(GameScreen);
+  DrawInitB(GameScreen);
+
   GameBoard->moveBugs();
 
   // set pieces (bugs, towers, projectiles) for the board
@@ -257,7 +259,7 @@ void Refresh(vector< vector<char> > *GameScreen, Board *GameBoard) {
 	}
 
   // 2. Draw board
-  // board base
+
   PrintBoard(GameScreen); 
   PrintStats(GameBoard);
   

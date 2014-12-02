@@ -52,11 +52,12 @@ int main() {
   curr = start;
 
   Refresh(&GameScreen, GameBoard);
+  PrintMenu();
 
   while(playing) {
     start = clock();
 
-    if(((start - curr)/(double) CLOCKS_PER_SEC) >= 1) {
+//    if(((start - curr)/(double) CLOCKS_PER_SEC) >= 1) {
       // one second has passed 
 //      cout << "1 second later..." << endl; 
       curr = start;
@@ -75,7 +76,7 @@ int main() {
 
       // if(GameBoard->getHealth() < 0) { GameOver(); }
 
-    }
+//    }
   }
 
 
