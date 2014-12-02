@@ -14,8 +14,7 @@
 #define DEF_HEALTH 1
 #define DEF_REWARD 1
 #define DEF_X_START 0
-#define DEF_Y_START 2
-#define POS_INTERVAL 10
+#define DEF_Y_START 7
 
 class Bug {
   private:

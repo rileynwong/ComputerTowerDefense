@@ -5,7 +5,9 @@ using namespace std;
 #include <iostream>
 
 int main() {
+	cout << "creating board" << endl;
 	Board board;
+	cout << "buying tower" << endl;
 	if (board.enoughMoney()) {
 		board.buyWTower(1, 3);
 	}
@@ -15,6 +17,7 @@ int main() {
 		// lose = board.moveBugs();
 	//}
 	board.moveBugs();
+	cout << "print" << endl;
 	board.printTowerLocations();
 
 	board.moveBugs();
