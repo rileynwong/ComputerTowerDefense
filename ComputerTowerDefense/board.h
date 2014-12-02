@@ -23,7 +23,7 @@ using namespace std;
 #define PROJECTILE    2
 #define BUG           3
 
-#define PATH_THREE 3
+#define PATH_TWO 2
 #define PATH_FOUR 4
 #define PATH_FIVE 5
 #define PATH_SIX 6
@@ -42,7 +42,7 @@ using namespace std;
 #define PATH_THIRTY_SEVEN 37
 #define PATH_FOURTY 40
 #define PATH_FOURTY_FOUR 44
-#define PATH_FIFTY_ONE 51
+#define PATH_FOURTY_NINE 49
 #define PATH_FIFTY_FOUR 54
 #define PATH_SIXTY 60
 
