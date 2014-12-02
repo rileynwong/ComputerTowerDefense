@@ -11,12 +11,23 @@
 #include <iostream>
 
 #include "board.h"
-#include "gamescreen.h"
+//#include "gamescreen.h"
 
-#define BUY     0
-#define EXIT    1
+#define BUY       0
+#define EXIT      1
+#define MIN_VAL   0
+#define MAX_VAL   50
 
 using namespace std;
+
+/* File:    
+   Author: Nancy Wong
+   Desc:
+*/
+
+#include "gamescreen.h"
+#include <vector>
+
 
 void DrawInitA(vector< vector<char> > *GameScreen) {
   int i;
@@ -127,30 +138,36 @@ void DrawInitB(vector< vector<char> > *GameScreen) {
 
 void PrintMenu() {
   // towers
-  cout << "0 - Buy Towers and Spells" << endl;
-  cout << "1 - Exit" << endl;
+  cout << endl << "Do something fun: " << endl;
+  cout << "\t0 - Buy Towers and Spells" << endl;
+  cout << "\t1 - Exit" << endl;
+
+}
+
+void PrintSubContents() {
+  // towers
+  cout << "\tTOWERS:" << endl;
+  cout << "\t\t0 - baby tower: i" << endl;
+  cout << "\t\t1 - meta tower: I" << endl;
+  cout << endl;
+
+  // spells
+  cout << "\tSPELLS:" << endl;
+  cout << "\t\t2 - spell 1" << endl;
+  cout << endl;
+  cout << "\t0 - back to main menu" << endl;
 
 }
 
 void PrintSubMenu() {
-  int input;
+  int input = 5;
 
-  // print submenu contents
-  // towers
-  cout << "TOWERS:" << endl;
+  // 1. print contents
+  PrintSubContents();
 
-
-  cout << endl;
-
-  // spells
-  cout << "SPELLS:" << endl;
-
-
-
-  cout << endl;
-  cout << "0 - back to main menu" << endl;
-
-  cin >> input;
+  // 2. handle input
+  
+//  cin >> input;
 
   while(input != EXIT) {
     switch(input) {
@@ -167,23 +184,51 @@ void PrintSubMenu() {
 
 }
 
+void InBounds(int *x) {
+  if(*x < MIN_VAL) *x = MIN_VAL;
+  if(*x < MAX_VAL) *x = MAX_VAL;
+}
+
+void Shoot(vector< vector<char> > *GameScreen, int dir, int startX, int startY, 
+                                                        int endX,   int endY) {
+  InBounds(&startX);
+  InBounds(&startY);
+  InBounds(&endX);
+  InBounds(&endY);
+
+  // direction - an enum w/ switch case?
+  switch(dir) {
+    case 0: // north ^
+      while(startX) {
+
+      }
+
+      break;
+    case 1: // east >
+      break;
+    case 2: // south v
+      break;
+    case 3: // west <
+      break;
+  }
+
+  // stop when you hit a game object or edge
+
+}
+
+void Refresh(vector< vector<int> > *GameScreen) {
+}
+
+
+
 int main() {
 
-  int input, curr;
+  int input, curr, score = 0;
   bool playing = false;
   clock_t start, timePassed, secondsPassed;
 
-	Board board;
-	cout << "board made" << endl;
-	Tower tower;
-	cout << "tower made" << endl;
-
-	board.addBug();
-	int lose = 0;
-	while (lose != 1) {
-		lose = board.moveBugs();
-	}
-	cout << "I lost!" << endl << endl;
+  cout << endl;
+  cout << "    \\\\\\\\\\  COMPUTER TOWER DEFENSE aw yeah /////" << endl << endl;
 
   vector< vector<char> > GameScreen(VEC_L, vector<char>(VEC_W, '.'));
   DrawInitA(&GameScreen);
@@ -204,6 +249,7 @@ int main() {
   cout << endl;
 
   PrintMenu();
+//  PrintSubMenu();
 //  cin >> input;
 /*
   while(input != EXIT) {
@@ -225,17 +271,19 @@ int main() {
   }
 */
 
-  /* WAVE 1 */
+  /* Game Start */
   playing = true;
   start = clock();
   curr = start;
 
+  
+
   while(playing) {
     start = clock();
 
-    if(((start - curr)/(double) 1000000) >= 1) {
+    if(((start - curr)/(double) CLOCKS_PER_SEC) >= 1) {
       // one second has passed 
-      cout << "1 second later..." << endl; 
+//      cout << "1 second later..." << endl; 
       curr = start;
     }
   }

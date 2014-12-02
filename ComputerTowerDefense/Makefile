@@ -1,7 +1,7 @@
 
 
 main: main.o bug.o tower.o board.o gamescreen.o
-	g++ -g -Wall main.o bug.o tower.o board.o gamescreen.o -o main
+	g++ -g -Wall -o main main.o bug.o tower.o board.o gamescreen.o
 
 main.o : main.cpp
 	g++ -g -Wall -c main.cpp

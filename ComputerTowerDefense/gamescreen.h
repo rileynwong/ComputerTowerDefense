@@ -5,13 +5,23 @@
 
 #ifndef GS_H
 #define GS_H
+
 #include <vector>
 
 #define VEC_L 15
 #define VEC_W 50
 
-void DrawInit();
-void DrawInit(vector< vector<char> > *GameScreen);
-void Refresh(vector< vector<char> > *GameScreen);
+// draw the board
+void DrawInitA(vector< vector<char> > *GameScreen);
+void DrawInitB(vector< vector<char> > *GameScreen);
+
+// print stuff
+void PrintMenu();
+void PrintSubContents();
+void PrintSubMenu();
+
+// other stuff
+void Shoot(vector< vector<char> > *GameScreen, int dir, int startX, int startY, 
+                                                        int endX,   int endY);
 
 #endif /* GS_H */
