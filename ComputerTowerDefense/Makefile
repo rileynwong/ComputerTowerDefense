@@ -1,12 +1,12 @@
 
 
-main: main.o bug.o tower.o board.o gamescreen.o
-	g++ -g -Wall main.o bug.o tower.o board.o gamescreen.o -o main
+main: main.o bug.o tower.o board.o gamescreen.o projectile.o
+	g++ -g -Wall -o main main.o bug.o tower.o board.o gamescreen.o projectile.o
 
 main.o : main.cpp
 	g++ -g -Wall -c main.cpp
 
-gamescreen.o : gamescreen.cpp
+gamescreen.o : gamescreen.cpp gamescreen.h
 	g++ -g -Wall -c gamescreen.cpp
 
 newgame.o: newgame.cpp
@@ -14,6 +14,9 @@ newgame.o: newgame.cpp
 
 board.o: board.cpp board.h
 	g++ -g -Wall -c board.cpp
+
+projectile.o: projectile.cpp projectile.h
+	g++ -g -Wall -c projectile.cpp
 
 bug.o: bug.cpp bug.h
 	g++ -g -Wall -c bug.cpp

@@ -15,12 +15,12 @@
 
 using namespace std;
 
-#define START_MONEY 5
-#define PATH_LENGTH 5
-#define NO_OBJECT 0
-#define TOWER 1
-#define PROJECTILE 2
-#define BUG 3
+#define START_MONEY   5
+#define START_HEALTH  100
+#define PATH_LENGTH   3
+#define NO_OBJECT     0
+#define TOWER         1
+#define PROJECTILE    2
 
 class Board {
   private:
@@ -32,6 +32,8 @@ class Board {
     vector<Projectile*> m_projectiles;
 
     int m_money;
+    int m_health;
+    void removeBug(Bug *b);
 
     void addBug();
     void removeBug(Bug *b);
@@ -42,6 +44,8 @@ class Board {
     Projectile *moveProjectile(Projectile *p);  
     
     bool containsPath(int x, int y);
+
+    int moveBugs();
     
     bool buyTower();
     void placeTower(Tower *t, int x, int y);
@@ -53,6 +57,10 @@ class Board {
     void attackBug(Bug *bug, int attack);
     void attack();
     
+    int getMoney() { return m_money; };
+    int getHealth() { return m_health; };
+
+    // change to buy each specific tower and spell
     void moveProjectiles();
 
     void printBugs();

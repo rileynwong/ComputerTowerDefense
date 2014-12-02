@@ -6,6 +6,7 @@
 
 using namespace std;
 #include "board.h"
+#include "projectile.h"
 #include <vector>
 #include <iostream>
 
@@ -316,6 +317,7 @@ void Board::addPath() {
 
 Board::Board() {
 	m_money = START_MONEY;
+  m_health = START_HEALTH;
 	m_towerPlacement.resize(GAME_WIDTH);
 
 	for (int i = 0; i < GAME_WIDTH; i++) {
@@ -327,7 +329,6 @@ Board::Board() {
 
 	addPath();
 }
-
 
 /**************************
  * handle later 
