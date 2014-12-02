@@ -49,7 +49,7 @@ int Projectile::getYPosition() {
 
 int Projectile::move() {
 	if (m_distance <= 0) {
-		// TODO: how is this destroyed
+		return 2;
 	}
 	switch(m_dir) {
 		case N:
@@ -96,7 +96,6 @@ Projectile::Projectile(int x, int y, int attack, direction dir, int distance) {
 	m_dir = DIR_ATTACK;
 	m_distance = DEF_DIST;
 
-	cout << "x and y: " << x << " " << y << endl;
 	setAttack(attack);
 	setXPosition(x);
 	setYPosition(y);

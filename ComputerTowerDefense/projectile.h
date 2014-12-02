@@ -11,7 +11,7 @@
 
 #include "tower.h"
 #define GAME_WIDTH 10
-#define DEF_DIST 1
+#define DEF_DIST 2
 #define DEF_X_PROJ 0
 #define DEF_Y_PROJ 0
 

@@ -47,7 +47,7 @@ class Board {
 
     int moveBugs();
 
-    void moveProjectile(Projectile *p);
+    Projectile *moveProjectile(Projectile *p);
     void moveProjectiles();
     void attackBug(Bug *bug, int attack);
     void attack();
