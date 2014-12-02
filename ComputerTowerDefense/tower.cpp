@@ -4,7 +4,7 @@
    Description: 
 */
 
-using namespace std;
+#include <stdlib.h>
 #include "tower.h"
 
 void Tower::setXPosition(int x) {

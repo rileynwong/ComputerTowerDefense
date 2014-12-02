@@ -12,6 +12,8 @@
 #include "bug.h"
 #include "tower.h"
 
+using namespace std;
+
 class Board {
   private:
     vector< Bug > m_bugs;
