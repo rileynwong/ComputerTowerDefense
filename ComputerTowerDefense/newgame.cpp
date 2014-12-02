@@ -6,7 +6,6 @@ using namespace std;
 
 int main() {
 	Board board;
-	board.printTowerLocations();
 	Tower *t = board.buyTower();
 	board.placeTower(t, 1, 3);
 	cout << endl << endl;
@@ -18,17 +17,22 @@ int main() {
 	board.printTowerLocations();
 
 	board.moveBugs();
+	//board.attack();
+	board.printTowerLocations();
+
+	board.moveBugs();
+	board.printTowerLocations();
+
+	//board.moveBugs();
 	board.attack();
 	board.printTowerLocations();
 
-	board.moveBugs();
-	board.printTowerLocations();
-
-	board.moveBugs();
+	//board.moveBugs();
 	board.attack();
-	board.printTowerLocations();
+	board.attack();
+		board.printTowerLocations();
 
-	board.moveBugs();
+	board.attack();
 	board.printTowerLocations();
 
 

@@ -75,11 +75,10 @@ void Board::attackBug(Bug *bug, int attack) {
 void Board::attack() {
 	for (int i = 0; i < (int) m_towers.size(); i++) {
 		Tower *t = m_towers.at(i);
+		//cout << "proj created: " << t->getXPosition() << " " << t->getYPosition()<< endl;
 		Projectile *p = new Projectile(t->getXPosition(), t->getYPosition(), 
 			t->getAttack(), t->getDirAttack(), t->getRadius());
 		m_projectiles.push_back(p);
-
-		p->printProjectile();
 
 		moveProjectiles();
 		// Advance projectile one step?? 
@@ -89,36 +88,41 @@ void Board::attack() {
 
 void Board::removeProjectile(Projectile *p) {
 	vector<Projectile*> projList;
+	bool removed = false;
 	for (int i = 0; i < (int) m_projectiles.size(); i++) {
 		Projectile *proj = m_projectiles.at(i);
-		if (proj->getXPosition() != p->getXPosition() ||
+		if (removed ||
+			proj->getXPosition() != p->getXPosition() ||
 			proj->getYPosition() != p->getYPosition()) {
 			
 			projList.push_back(proj);
 		}
 		else {
-			// TODO: destroy bug
-			cout << "proj removed" << endl;
+			// TODO: destroy proj
+			removed = true;
+			//cout << "proj removed" << endl;
 		}
 	}
 	m_projectiles = projList;
+	cout << "size: " << (int) m_projectiles.size() << endl;
 }
 
-void Board::moveProjectile(Projectile *p) {
-	cout << "move projectile" << endl;
+Projectile *Board::moveProjectile(Projectile *p) {
 	int x = p->getXPosition();
 	int y = p->getYPosition();
+	//cout << "move projectile: " << x << " " << y << endl;
+
 	if (m_towerPlacement.at(y).at(x) == PROJECTILE) {
-		cout << "prep remove projectile" << endl;
+		//cout << "prep remove projectile" << endl;
 		m_towerPlacement.at(y).at(x) = NO_OBJECT;
 	}
 
 	if (p->move() != 0) {
-		cout << "remove projectile" << endl;
-		removeProjectile(p);
-		return;
+		//cout << "remove projectile" << endl;
+		return p;
 	}
-	p->printProjectile();
+	//cout << "just moved: ";
+	//p->printProjectile();
 	x = p->getXPosition();
 	y = p->getYPosition();
 
@@ -126,27 +130,35 @@ void Board::moveProjectile(Projectile *p) {
 		Bug *bug = findBug(x, y);
 		if (bug) {
 			attackBug(bug, p->getAttack());
-			cout << "remove projectile there" << endl;
-			removeProjectile(p);
+			//cout << "projectile hit bug" << endl;
+			return p;
 		}
 	}
 	else if (m_towerPlacement.at(y).at(x) != NO_OBJECT) {
-		cout << "remove projectile here" << endl;
-		removeProjectile(p);
+		//cout << "projectile hit object: " << m_towerPlacement.at(y).at(x) << endl;
+		return p;
 	}
 
 	else {
-		cout << "place projectile" << endl;
+		//cout << "place projectile" << endl;
 		m_towerPlacement.at(y).at(x) = PROJECTILE;
+		return NULL;
 	}
-
-	
+	return NULL;
 }
 
 
 void Board::moveProjectiles() {
+	vector<Projectile*> toRemove;
 	for (int i = 0; i < (int) m_projectiles.size(); i++) {
-		moveProjectile(m_projectiles.at(i));
+		Projectile *p = moveProjectile(m_projectiles.at(i));
+		if (p) {
+			toRemove.push_back(p);
+		}
+	}
+
+	for (int i = 0; i < (int) toRemove.size(); i++) {
+		removeProjectile(toRemove.at(i));
 	}
 }
 

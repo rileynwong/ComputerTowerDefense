@@ -49,7 +49,7 @@ int Projectile::getYPosition() {
 
 int Projectile::move() {
 	if (m_distance <= 0) {
-		// TODO: how is this destroyed
+		return 2;
 	}
 	switch(m_dir) {
 		case N:
