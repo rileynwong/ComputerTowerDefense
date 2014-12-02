@@ -234,6 +234,7 @@ int main() {
     start = clock();
 
     if(((start - curr)/(double) 1000000) >= 1) {
+      // one second has passed 
       cout << "1 second later..." << endl; 
       curr = start;
     }

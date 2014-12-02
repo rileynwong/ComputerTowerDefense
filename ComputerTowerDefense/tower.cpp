@@ -6,10 +6,11 @@
 
 #include <stdlib.h>
 #include "tower.h"
+#include <iostream>
 
 void Tower::setXPosition(int x) {
-  //TODO: Check bounds
-  m_x = x;
+  	// TODO: Check bounds
+	m_x = x;
 }
 
 void Tower::setYPosition(int y) {

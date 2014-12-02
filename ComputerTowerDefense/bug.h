@@ -10,6 +10,7 @@
 #ifndef BUG_H
 #define BUG_H
 
+#include "gameObject.h"
 #include <vector>
 
 #define DEF_HEALTH 1
@@ -41,6 +42,7 @@ class Bug {
     int getXPosition();
     int getYPosition();
     int getHealth();
+    int getReward();
     int getMoveNum();
     int takeDamage(int damage);
     int move();

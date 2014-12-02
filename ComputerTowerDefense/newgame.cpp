@@ -6,14 +6,23 @@ using namespace std;
 
 int main() {
 	Board board;
-	cout << "board made" << endl;
-	Tower tower;
-	cout << "tower made" << endl;
+	cout << "printing game" << endl;
+	board.printTowerLocations();
+	cout << "buying tower" << endl;
+	Tower *t = board.buyTower();
+	cout << "placing tower" << endl;
+	board.placeTower(t, 6, 1);
+	cout << endl << endl;
+	board.printTowerLocations();
+	// board.addBug();
 
-	board.addBug();
-	int lose = 0;
+	/*int lose = 0;
 	while (lose != 1) {
 		lose = board.moveBugs();
 	}
-	cout << "I lost!" << endl;
+	cout << "I lost!" << endl;*/
+	// cout << "attacking" << endl;
+	// board.attack();
+
+	// board.printBugs();
 }

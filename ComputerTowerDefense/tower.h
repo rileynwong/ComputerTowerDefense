@@ -9,6 +9,8 @@
 #ifndef TOWER_H
 #define TOWER_H
 
+#include "gameObject.h"
+
 #define COST_TOWER 5
 #define DEF_ATTACK 1
 #define DEF_X 0

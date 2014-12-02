@@ -45,6 +45,10 @@ int Bug::getHealth() {
 	return m_health;
 }
 
+int Bug::getReward() {
+	return m_reward;
+}
+
 int Bug::getMoveNum() {
 	return m_move_num;
 }
@@ -53,11 +57,12 @@ int Bug::takeDamage(int damage) {
   if (damage < 0) {
     //TODO: figure this part out
   }
-  if (damage > m_health) {
-    //die();
+  if (damage >= m_health) {
+    m_health = 0;
     return 1;
   }
   m_health -= damage;
+  cout << "took damage" << endl;
   return 0;
 }
 
