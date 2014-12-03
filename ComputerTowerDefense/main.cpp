@@ -17,9 +17,9 @@ using namespace std;
 
 int main() {
 
-  int input, curr, count, score = 0;
+  int count = 0;
   bool submenu = false, playing = false;
-  clock_t start;
+  //clock_t start;
   Board *GameBoard = new Board();
   vector< vector<char> > GameScreen(VEC_L, vector<char>(VEC_W, '.'));
 
@@ -48,20 +48,20 @@ int main() {
 
   /* Game Start */
   playing = true;
-  start = clock();
-  curr = start;
+  //start = clock();
+  //curr = start;
   count = 0;
 
   Refresh(&GameScreen, GameBoard, count);
   PrintMenu(GameBoard);
 
   while(playing) {
-    start = clock();
+    //start = clock();
 
 //    if(((start - curr)/(double) CLOCKS_PER_SEC) >= 1) {
       // one second has passed 
 //      cout << "1 second later..." << endl; 
-      curr = start;
+      //curr = start;
 
       if (playing) {
         Refresh(&GameScreen, GameBoard, count++); // redraw the board

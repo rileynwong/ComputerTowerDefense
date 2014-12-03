@@ -82,9 +82,9 @@ class Board {
     void attack();
 
     vector< vector< int > > getPieces() {
-      return m_towerPlacements;
+      return m_towerPlacement;
     };
-    
+
     void moveProjectiles();
     
     int getMoney() { return m_money; };
