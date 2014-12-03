@@ -15,7 +15,7 @@
 
 using namespace std;
 
-#define START_MONEY   5
+#define START_MONEY   20
 #define START_HEALTH  100
 #define PATH_LENGTH   69
 #define NO_OBJECT     0

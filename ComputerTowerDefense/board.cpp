@@ -33,7 +33,7 @@ int Board::moveBugs() {
 		if (bug) {
 			bug->setXPosition(m_pathXCoords.at(i));
 			bug->setYPosition(m_pathYCoords.at(i));
-			bug->printBug();
+//			bug->printBug();
 			m_towerPlacement.at(bug->getYPosition()).at(bug->getXPosition()) = BUG;
 		}
 		else {
@@ -54,7 +54,7 @@ void Board::removeBug(Bug *b) {
 		Bug *bug = m_bugPlacement.at(i);
 		if (bug->getXPosition() == b->getXPosition() &&
 			bug->getYPosition() == b->getYPosition()) {
-			cout << "bug removed" << endl;
+//			cout << "bug removed" << endl;
 			m_bugPlacement.at(i) = NULL;
 
 			m_towerPlacement.at(bug->getYPosition()).at(bug->getXPosition()) = NO_OBJECT;
@@ -75,7 +75,7 @@ Bug *Board::findBug(int x, int y) {
 
 void Board::attackBug(Bug *bug, int attack) {
 	if (bug->takeDamage(attack) == 1) {
-		cout << "bug died" << endl;
+//		cout << "bug died" << endl;
 		m_money += bug->getReward();
 		removeBug(bug);
 	}
