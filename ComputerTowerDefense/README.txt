@@ -16,8 +16,11 @@ Features:
 - Constant wave of bugs going along path
 - Killing a bug makes them go away from the game board and gives you money
 - Bug reaching the end of the path means you lose
+- Game Board redraws everytime the state changes
+- Board draws projectiles, bugs and towers at each stage
+- You win the game when you reach 50 bits
 
-Who did waht:
+Who did what:
 - Nancy: Game Display
 	- gamescreen
 	- main
