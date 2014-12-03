@@ -241,6 +241,19 @@ void PrintSubMenu(Board *GameBoard) {
 }
 
 
+void PrintWin() {
+  cout << endl;
+
+  std::cout << std::setfill ('x') << std::setw (10);
+  std::cout << 77 << std::endl;
+
+  cout << "-----------------------------------------------------" << endl;
+  cout << "                     YOU WIN" << endl;
+  cout << "-----------------------------------------------------" << endl;
+
+  exit(0);
+}
+
 void GameOver() {
   cout << endl;
 
@@ -251,7 +264,6 @@ void GameOver() {
   cout << "                     YOU LOSE" << endl;
   cout << "-----------------------------------------------------" << endl;
 
-  // TODO: free memory, decorate you lose
   exit(0);
 }
 
@@ -262,12 +274,20 @@ void SetPieces(vector< vector< int > > pieces,
 	for (i = 0; i < (int) pieces.size(); i++) {
 		for (j = 0; j < (int) pieces.at(i).size(); j++) {
       switch(pieces.at(i).at(j)) {
+          GameScreen->at(i).at(j) = '.';
+          break;
+        case PATH:
+          GameScreen->at(i).at(j) = ' ';
+          break;
         case TOWER:
           GameScreen->at(i).at(j) = 'I';
           break;
         case PROJECTILE:
           // TODO check projectile direction
             GameScreen->at(i).at(j) = '^';
+          break;
+        case PROJ_ON_PATH:
+          GameScreen->at(i).at(j) = '^';
           break;
         case BUG:
           // TODO check bug type
@@ -291,6 +311,11 @@ void Refresh(vector< vector<char> > *GameScreen, Board *GameBoard, int count) {
   lost = GameBoard->moveBugs();
   if(lost) {
     GameOver();
+  }
+
+  if(GameBoard->getMoney() >= GAME_WIN) {
+    PrintWin();
+    exit(0);
   }
 
   if(count % DELAY == 0) {

@@ -25,6 +25,8 @@ using namespace std;
 #define BUG           4
 #define PATH          5
 
+#define GAME_WIN      50
+
 #define PATH_TWO          2
 #define PATH_THREE        3
 #define PATH_FOUR         4

@@ -376,9 +376,7 @@ void Board::readPath() {
 	input.open("path.txt");
 
 	input >> m_pathLength;
-
 	input >> m_width;
-
 	input >> m_length;
 
 	m_placements.resize(m_length);
@@ -390,7 +388,6 @@ void Board::readPath() {
 	m_pathXCoords.resize(m_pathLength);
 	m_pathYCoords.resize(m_pathLength);
 	m_bugPlacement.resize(m_pathLength);
-
 
 	for(int i = 0; i < m_pathLength; i++) {
 		if (input) {
