@@ -20,7 +20,6 @@ void Bug::setReward(int reward) {
   }
 }
 
-
 void Bug::setXPosition(int x) {
   if (x > 0) {
     m_x = x; 

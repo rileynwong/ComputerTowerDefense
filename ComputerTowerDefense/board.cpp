@@ -7,6 +7,7 @@
 */
 
 using namespace std;
+#include <fstream>
 #include "board.h"
 #include "projectile.h"
 #include <vector>
@@ -33,14 +34,16 @@ Create and Move Bugs
 *****/
 
 void Board::addBug() {
-	Bug *bug = new Bug;
+	Bug *bug = new Bug(DEF_HEALTH, DEF_REWARD, m_pathXCoords.at(0), 
+					   m_pathYCoords.at(0));
 
 	m_bugPlacement.at(0) = bug;
 	m_placements.at(bug->getYPosition()).at(bug->getXPosition()) = BUG;
 }
 
+
 int Board::moveBugs() {
-	int end = PATH_LENGTH - 1;
+	int end = m_pathLength - 1;
 	if (m_bugPlacement.at(end)) {
 		m_placements.at(m_pathYCoords.at(end)).at(m_pathXCoords.at(end)) = BUG;
 		return 1;
@@ -56,7 +59,7 @@ int Board::moveBugs() {
 		}
 		else {
 			m_placements.at(m_pathYCoords.at(i))
-						.at(m_pathXCoords.at(i)) = NO_OBJECT;	
+						.at(m_pathXCoords.at(i)) = PATH;	
 		}
 	}
 	addBug();
@@ -76,7 +79,7 @@ void Board::removeBug(Bug *b) {
 			m_bugPlacement.at(i) = NULL;
 
 			m_placements.at(bug->getYPosition())
-						.at(bug->getXPosition()) = NO_OBJECT;
+						.at(bug->getXPosition()) = PATH;
 			delete(bug);
 			return;
 		}
@@ -84,7 +87,7 @@ void Board::removeBug(Bug *b) {
 }
 
 Bug *Board::findBug(int x, int y) {
-	for (int i = 0; i < PATH_LENGTH; i++) {
+	for (int i = 0; i < m_pathLength; i++) {
 		if (x == m_pathXCoords.at(i) && y == m_pathYCoords.at(i)) {
 			return m_bugPlacement.at(i);
 		}
@@ -103,7 +106,8 @@ void Board::attack() {
 	for (int i = 0; i < (int) m_towers.size(); i++) {
 		Tower *t = m_towers.at(i);
 		Projectile *p = new Projectile(t->getXPosition(), t->getYPosition(), 
-			t->getAttack(), t->getDirAttack(), t->getRadius());
+									   t->getAttack(), t->getDirAttack(), 
+									   t->getRadius(), m_width, m_length);
 		m_projectiles.push_back(p);
 
 		moveProjectiles();
@@ -134,33 +138,43 @@ void Board::removeProjectile(Projectile *p) {
 }
 
 Projectile *Board::moveProjectile(Projectile *p) {
+	Bug *bug;
+
 	int x = p->getXPosition();
 	int y = p->getYPosition();
 
 	if (m_placements.at(y).at(x) == PROJECTILE) {
 		m_placements.at(y).at(x) = NO_OBJECT;
 	}
-
+	if (m_placements.at(y).at(x) == PROJ_ON_PATH) {
+		m_placements.at(y).at(x) = PATH;
+	}
 	if (p->move() != 0) {
 		return p;
 	}
 	x = p->getXPosition();
 	y = p->getYPosition();
 
-	if (m_placements.at(y).at(x) == BUG) {
-		Bug *bug = findBug(x, y);
-		if (bug) {
-			attackBug(bug, p->getAttack());
+	switch(m_placements.at(y).at(x)) {
+		case NO_OBJECT:
+			m_placements.at(y).at(x) = PROJECTILE;
+			return NULL;
+		case TOWER:
 			return p;
-		}
-	}
-	else if (m_placements.at(y).at(x) != NO_OBJECT) {
-		return p;
-	}
-
-	else {
-		m_placements.at(y).at(x) = PROJECTILE;
-		return NULL;
+		case PROJECTILE:
+			return p;
+		case PROJ_ON_PATH:
+			return p;
+		case BUG:
+			bug = findBug(x, y);
+			if (bug) {
+				attackBug(bug, p->getAttack());
+				return p;
+			}
+			return NULL;
+		case PATH:
+			m_placements.at(y).at(x) = PROJ_ON_PATH;
+			return NULL;
 	}
 	return NULL;
 }
@@ -186,16 +200,15 @@ Buying Towers
 *****/
 
 bool Board::containsPath(int x, int y) {
-	for (int i = 0; i < PATH_LENGTH; i++) {
-		if (x == m_pathXCoords.at(i) && y == m_pathYCoords.at(i)) {
+	if (m_placements.at(y).at(x) == PATH || 
+			m_placements.at(y).at(x) == BUG) {
 			return true;
 		}
-	}
 	return false;
 }
 
 bool Board::validPosition(int x, int y) {
-	if (x < 0 || y < 0 || x >= GAME_WIDTH || y >= GAME_LENGTH) {
+	if (x < 0 || y < 0 || x >= m_width || y >= m_length) {
 		return false;
 	}
 	if (m_placements.at(y).at(x) == TOWER || containsPath(x, y)) {
@@ -340,6 +353,9 @@ void Board::printTowerLocations() {
 			else if (m_placements.at(i).at(j) == BUG) {
 				cout << '*' << " ";
 			}
+			else if (m_placements.at(i).at(j) == PATH) {
+				cout << "p" << " ";
+			}
 		}
 		cout << endl;
 	}
@@ -349,34 +365,92 @@ void Board::printTowerLocations() {
 
 void Board::addPath() {
 
-	for (int i = 0; i < PATH_LENGTH; i++) {
+	for (int i = 0; i < m_pathLength; i++) {
 		if (i < PATH_TEN) {
 			m_pathXCoords.at(i) = i;
 			m_pathYCoords.at(i) = PATH_SEVEN;
+			m_placements.at(PATH_SEVEN).at(i) = PATH;
 		}
 		else if (i < PATH_FIFTEEN) {
 			m_pathXCoords.at(i) = PATH_NINE;
 			m_pathYCoords.at(i) = i - PATH_TWO;
+			m_placements.at(i - PATH_TWO).at(PATH_NINE) = PATH;
 		}
 		else if (i < PATH_TWENTY_NINE) {
 			m_pathXCoords.at(i) = i - PATH_FIVE;
 			m_pathYCoords.at(i) = PATH_TWELVE;
+			m_placements.at(PATH_TWELVE).at(i - PATH_FIVE) = PATH;
 		}
 		else if (i < PATH_THIRTY_SEVEN) {
 			m_pathXCoords.at(i) = PATH_TWENTY_THREE;
 			m_pathYCoords.at(i) = PATH_FOURTY - i;
+			m_placements.at(PATH_FOURTY - i).at(PATH_TWENTY_THREE) = PATH;
 		}
 		else if (i < PATH_FIFTY_FOUR) {
 			m_pathXCoords.at(i) = i - PATH_THIRTEEN;
 			m_pathYCoords.at(i) = PATH_FOUR;
+			m_placements.at(PATH_FOUR).at(i - PATH_THIRTEEN) = PATH;
 		}
 		else if (i < PATH_SIXTY) {
 			m_pathXCoords.at(i) = PATH_FOURTY;
 			m_pathYCoords.at(i) = i - PATH_FOURTY_NINE;
+			m_placements.at(i - PATH_FOURTY_NINE).at(PATH_FOURTY) = PATH;
 		}
 		else {
 			m_pathXCoords.at(i) = i - PATH_NINETEEN;
 			m_pathYCoords.at(i) = PATH_TEN;
+			m_placements.at(PATH_TEN).at(i - PATH_NINETEEN) = PATH;
+		}
+	}
+}
+
+void Board::readPath() {
+	ifstream input;
+	int x;
+	int y;
+
+	input.open("path.txt");
+
+	input >> m_pathLength;
+	cout << "path length: " << m_pathLength << endl;
+
+	input >> m_width;
+	cout << "width: " << m_width << endl;
+
+	input >> m_length;
+	cout << "length: " << m_length << endl;
+
+	m_placements.resize(m_length);
+
+	for (int i = 0; i < m_length; i++) {
+		m_placements.at(i).resize(m_width, false);
+	}
+
+
+	m_pathXCoords.resize(m_pathLength);
+	m_pathYCoords.resize(m_pathLength);
+	m_bugPlacement.resize(m_pathLength);
+
+	cout << "reading path" << endl;
+
+	for(int i = 0; i < m_pathLength; i++) {
+		cout << "i: " << i << endl;
+		if (input) {
+			cout << "weoirweoir" << endl;
+			input >> x >> y;
+			cout << x << y << endl;
+			m_pathXCoords.at(i) = x;
+			cout << "sdf" << endl;
+
+			m_pathYCoords.at(i) = y;
+			cout << "qqqqq" << endl;
+
+			m_placements.at(y).at(x) = PATH;
+			cout << "afsdfasdf" << endl;
+
+		}
+		else {
+			cout << "invalid file" << endl;
 		}
 	}
 }
@@ -384,14 +458,10 @@ void Board::addPath() {
 Board::Board() {
 	m_money = START_MONEY;
   	m_health = START_HEALTH;
-	m_placements.resize(GAME_LENGTH);
+	readPath();	
+	// m_pathXCoords.resize(m_pathLength);
+	// m_pathYCoords.resize(m_pathLength);
+	// m_bugPlacement.resize(m_pathLength);
 
-	for (int i = 0; i < GAME_LENGTH; i++) {
-		m_placements.at(i).resize(GAME_WIDTH, false);
-	}
-	m_pathXCoords.resize(PATH_LENGTH);
-	m_pathYCoords.resize(PATH_LENGTH);
-	m_bugPlacement.resize(PATH_LENGTH);
-
-	addPath();
+	// addPath();
 }

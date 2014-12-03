@@ -17,7 +17,7 @@
 #define DEF_X 0
 #define DEF_Y 0
 
-enum direction {N, S, E, W};
+#include "definitions.h"
 
 class Tower {
   private:

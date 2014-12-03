@@ -10,11 +10,12 @@
 #define BUG_H
 
 #include <vector>
+#include "definitions.h"
 
 #define DEF_HEALTH 1
 #define DEF_REWARD 1
 #define DEF_X_START 0
-#define DEF_Y_START 7
+#define DEF_Y_START 0
 
 class Bug {
   private:
@@ -28,7 +29,6 @@ class Bug {
     void setMovements();
 
   public:
-
     void printBug();
     void setXPosition(int x);
     void setYPosition(int y);

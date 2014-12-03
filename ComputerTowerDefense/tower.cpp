@@ -69,7 +69,7 @@ Tower::Tower(int attack, bool multipleDirs, direction dir,
 	m_attack = DEF_ATTACK;
 	m_x = DEF_X;
 	m_y = DEF_Y;
-	m_dirAttack = DIR_ATTACK;
+	m_dirAttack = DEF_DIR;
 	m_radius = DEF_RADIUS;
 	m_multipleDirs = DEF_MULT_DIR;
 	setDirection(multipleDirs, dir);

@@ -9,6 +9,7 @@
 #define BOARD_H
 
 #include <vector>
+#include "definitions.h"
 #include "projectile.h"
 #include "bug.h"
 #include "tower.h"
@@ -17,11 +18,12 @@ using namespace std;
 
 #define START_MONEY   20
 #define START_HEALTH  100
-#define PATH_LENGTH   69
 #define NO_OBJECT     0
 #define TOWER         1
 #define PROJECTILE    2
-#define BUG           3
+#define PROJ_ON_PATH  3
+#define BUG           4
+#define PATH          5
 
 #define PATH_TWO 2
 #define PATH_FOUR 4
@@ -47,8 +49,6 @@ using namespace std;
 #define PATH_SIXTY 60
 
 
-
-
 class Board {
   private:
     vector<Tower*> m_towers; 
@@ -58,6 +58,9 @@ class Board {
     vector<Bug*> m_bugPlacement;
     vector<Projectile*> m_projectiles;
 
+    int m_width;
+    int m_length;
+    int m_pathLength;
     int m_money;
     int m_health;
 
@@ -76,6 +79,7 @@ class Board {
     void placeTower(Tower *t, int x, int y);
 
     void addPath();
+    void readPath();
 
   public:
 

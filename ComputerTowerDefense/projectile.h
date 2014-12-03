@@ -10,6 +10,8 @@
 #define PROJECTILE_H
 
 #include "tower.h"
+#include "definitions.h"
+
 #define GAME_WIDTH 50
 #define GAME_LENGTH 14
 #define DEF_DIST 2
@@ -22,6 +24,8 @@ class Projectile {
   	int m_y;
   	int m_attack;  	
   	int m_distance;
+    int m_width;
+    int m_length;
   	direction m_dir;
 
   	void setAttack(int attack);
@@ -29,6 +33,8 @@ class Projectile {
   	void setYPosition(int y);
   	void setDirection(direction dir);
   	void setDistance(int distance);
+    void setWidth(int width);
+    void setLength(int length);
 
   public: 
   	void printProjectile();
@@ -38,7 +44,8 @@ class Projectile {
   	int move();
 
   	Projectile(int x = DEF_X_PROJ, int y = DEF_Y_PROJ, int attack = DEF_ATTACK,
-  		direction dir = DIR_ATTACK, int distance = DEF_DIST);
+  		direction dir = DIR_ATTACK, int distance = DEF_DIST, 
+      int width = GAME_WIDTH, int length = GAME_LENGTH);
 };
 
 #endif

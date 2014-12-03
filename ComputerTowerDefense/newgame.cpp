@@ -9,34 +9,37 @@ int main() {
 	Board board;
 	cout << "buying tower" << endl;
 	if (board.enoughMoney()) {
-		board.buyWTower(1, 3);
+		board.buyNTower(1, 3);
 	}
 	cout << endl << endl;
 
-	//while (lose != 1) {
-		// lose = board.moveBugs();
-	//}
+	// // //while (lose != 1) {
+	// // 	// lose = board.moveBugs();
+	// // //}
 	board.moveBugs();
-	cout << "print" << endl;
-	board.printTowerLocations();
-
-	board.moveBugs();
-	//board.attack();
-	board.printTowerLocations();
+	// // cout << "print" << endl;
+	// //board.printTowerLocations();
 
 	board.moveBugs();
+	// // //board.attack();
+	// //board.printTowerLocations();
+
+	board.moveBugs();
+	// board.printTowerLocations();
+
+	board.moveBugs();
+	board.attack();
 	board.printTowerLocations();
 
-	//board.moveBugs();
+	board.moveBugs();
 	board.attack();
-	board.printTowerLocations();
 
-	//board.moveBugs();
-	board.attack();
-	board.attack();
-		board.printTowerLocations();
+	board.moveBugs();
+	// board.attack();
+	// board.attack();
+	// 	board.printTowerLocations();
 
-	board.attack();
+	// board.attack();
 	board.printTowerLocations();
 
 	return 0;

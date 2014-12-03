@@ -25,6 +25,7 @@ void Projectile::setYPosition(int y) {
 		m_y = y;
 	}
 }
+
 void Projectile::setDirection(direction dir) {
 	m_dir = dir;
 }
@@ -32,6 +33,18 @@ void Projectile::setDirection(direction dir) {
 void Projectile::setDistance(int distance) {
 	if (distance > 0) {
 		m_distance = distance;
+	}
+}
+
+void Projectile::setWidth(int width) {
+	if (width > 0) {
+		m_width = width;
+	}
+}
+
+void Projectile::setLength(int length) {
+	if (length > 0) {
+		m_length = length;
 	}
 }
 
@@ -60,13 +73,13 @@ int Projectile::move() {
 			break;
 		case E:
 			m_x++;
-			if (m_x > GAME_WIDTH) {
+			if (m_x > m_width) {
 				return 1;
 			}
 			break;
 		case S:
 			m_y++;
-			if (m_y > GAME_WIDTH) {
+			if (m_y > m_length) {
 				return 1;
 			}
 			break;
@@ -85,17 +98,21 @@ void Projectile::printProjectile() {
 	cout << "projectile: " << m_x << " " << m_y << endl;
 }
 
-Projectile::Projectile(int x, int y, int attack, direction dir, int distance) {
+Projectile::Projectile(int x, int y, int attack, direction dir, int distance,
+					   int width, int length) {
 	m_x = DEF_X_PROJ;
 	m_y = DEF_Y_PROJ;
 	m_attack = DEF_ATTACK;
 	m_dir = DIR_ATTACK;
 	m_distance = DEF_DIST;
+	m_width = GAME_WIDTH;
+	m_length = GAME_LENGTH;
 
+	setWidth(width);
+	setLength(length);
 	setAttack(attack);
 	setXPosition(x);
 	setYPosition(y);
 	setDirection(dir);
 	setDistance(distance);
 }
-
