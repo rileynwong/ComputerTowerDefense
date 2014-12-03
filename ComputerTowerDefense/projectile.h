@@ -12,11 +12,11 @@
 #include "tower.h"
 #include "definitions.h"
 
-#define GAME_WIDTH 50
+#define GAME_WIDTH  50
 #define GAME_LENGTH 14
-#define DEF_DIST 2
-#define DEF_X_PROJ 0
-#define DEF_Y_PROJ 0
+#define DEF_DIST    2
+#define DEF_X_PROJ  0
+#define DEF_Y_PROJ  0
 
 class Projectile {
   private:
@@ -42,6 +42,8 @@ class Projectile {
   	int getYPosition();
   	int getAttack();
   	int move();
+
+    direction getDirection() {return m_dir; }; 
 
   	Projectile(int x = DEF_X_PROJ, int y = DEF_Y_PROJ, int attack = DEF_ATTACK,
   		direction dir = DEF_DIR, int distance = DEF_DIST, 

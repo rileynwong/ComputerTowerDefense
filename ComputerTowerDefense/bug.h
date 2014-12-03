@@ -12,8 +12,8 @@
 #include <vector>
 #include "definitions.h"
 
-#define DEF_HEALTH 1
-#define DEF_REWARD 1
+#define DEF_HEALTH  1
+#define DEF_REWARD  1
 #define DEF_X_START 0
 #define DEF_Y_START 0
 

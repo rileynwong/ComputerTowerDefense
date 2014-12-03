@@ -9,12 +9,12 @@
 #ifndef TOWER_H
 #define TOWER_H
 
-#define COST_TOWER 5
-#define DEF_ATTACK 1
-#define DEF_MULT_DIR false
-#define DEF_RADIUS 2
-#define DEF_X 0
-#define DEF_Y 0
+#define COST_TOWER    5
+#define DEF_ATTACK    1
+#define DEF_MULT_DIR  false
+#define DEF_RADIUS    2
+#define DEF_X         0
+#define DEF_Y         0
 
 #include "definitions.h"
 

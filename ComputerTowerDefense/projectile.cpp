@@ -3,10 +3,11 @@
    PennKey: lankas
    Description: Defines all functions associated with the Projectile Object
 */
-using namespace std;
 
 #include "projectile.h"
 #include <iostream>
+
+using namespace std;
 
 void Projectile::setAttack(int attack) {
 	if (attack > 0) {

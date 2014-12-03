@@ -13,12 +13,27 @@
 #define VEC_L 15
 #define VEC_W 50
 
-#define BUY        0
-#define NOTHING    1
-#define EXIT       2
+#define BUY        1
+#define NOTHING    2
+#define EXIT       0
 #define MIN_VAL    0
 #define MAX_VAL    50
-#define DO_NOTHING 5
+
+#define MAIN       0
+#define NORTH      1
+#define EAST       2
+#define SOUTH      3 
+#define WEST       4
+ 
+#define X_MIN      0
+#define X_MAX      49
+#define Y_MIN      0
+#define Y_MAX      14
+
+#define DELAY      4
+
+#define WIDTH_1    2
+#define WIDTH_2    50
 
 using namespace std;
 
@@ -35,11 +50,7 @@ void PrintSubMenu(Board *GameBoard);
 void PrintScore(int score);
 void PrintHealth(int health);
 
-// other stuff
-//void Shoot(vector< vector<char> > *GameScreen, int dir, int startX, int startY, 
-  //                                                      int endX,   int endY);
-
 void Refresh(vector< vector<char> > *GameScreen, Board *GameBoard, int count);
-// void GameOver();
+void GameOver();
 
 #endif /* GS_H */

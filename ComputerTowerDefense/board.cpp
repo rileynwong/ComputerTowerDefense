@@ -6,12 +6,17 @@
    attack, moveProjectiles, and everything associated with buying towers
 */
 
-using namespace std;
+
 #include <fstream>
 #include "board.h"
 #include "projectile.h"
 #include <vector>
 #include <iostream>
+
+
+using namespace std;
+
+/** Create and Move Bugs **/
 
 /*****
 Accessors for the gamescreen and main
@@ -67,9 +72,7 @@ int Board::moveBugs() {
 }
 
 
-/*****
-Attack and Kill Bugs
-*****/
+/** Attack and Kill Bugs **/
 
 void Board::removeBug(Bug *b) {
 	for (int i = 0; i < (int) m_bugPlacement.size(); i++) {
@@ -114,9 +117,7 @@ void Board::attack() {
 	}
 }
 
-/*****
-Move/Remove Projectiles
-*****/
+/** Move/Remove Projectiles **/
 
 void Board::removeProjectile(Projectile *p) {
 	vector<Projectile*> projList;
@@ -137,6 +138,15 @@ void Board::removeProjectile(Projectile *p) {
 	m_projectiles = projList;
 }
 
+Projectile *Board::findProjectile(int x, int y) {
+		for (int i = 0; i < m_pathLength; i++) {
+		if (x == m_pathXCoords.at(i) && y == m_pathYCoords.at(i)) {
+			return m_projectiles.at(i);
+		}
+	}
+	return NULL;
+}
+
 Projectile *Board::moveProjectile(Projectile *p) {
 	Bug *bug;
 
@@ -152,6 +162,7 @@ Projectile *Board::moveProjectile(Projectile *p) {
 	if (p->move() != 0) {
 		return p;
 	}
+
 	x = p->getXPosition();
 	y = p->getYPosition();
 
@@ -195,9 +206,7 @@ void Board::moveProjectiles() {
 }
 
 
-/*****
-Buying Towers
-*****/
+/** Buying Towers **/
 
 bool Board::containsPath(int x, int y) {
 	if (m_placements.at(y).at(x) == PATH || 
@@ -324,10 +333,7 @@ vector<Tower*> Board::getTowers() {
 }
 
 
-/*****
-Print things for debugging
-*****/
-
+/** Print things for debugging **/
 void Board::printBugs() {	
 	vector<Bug*> bugs = m_bugPlacement;
 	for (int i = 0; i < (int) m_bugPlacement.size(); i++) {
@@ -336,7 +342,6 @@ void Board::printBugs() {
 		}
 	}
 }
-
 
 void Board::printTowerLocations() {
 	for (int i = 0; i < (int) m_placements.size(); i++) {
@@ -361,7 +366,6 @@ void Board::printTowerLocations() {
 	}
 	cout << endl;
 }
-
 
 void Board::addPath() {
 
@@ -426,27 +430,20 @@ void Board::readPath() {
 		m_placements.at(i).resize(m_width, false);
 	}
 
-
 	m_pathXCoords.resize(m_pathLength);
 	m_pathYCoords.resize(m_pathLength);
 	m_bugPlacement.resize(m_pathLength);
 
-	cout << "reading path" << endl;
 
 	for(int i = 0; i < m_pathLength; i++) {
-		cout << "i: " << i << endl;
 		if (input) {
-			cout << "weoirweoir" << endl;
 			input >> x >> y;
 			cout << x << y << endl;
 			m_pathXCoords.at(i) = x;
-			cout << "sdf" << endl;
 
 			m_pathYCoords.at(i) = y;
-			cout << "qqqqq" << endl;
 
 			m_placements.at(y).at(x) = PATH;
-			cout << "afsdfasdf" << endl;
 
 		}
 		else {
