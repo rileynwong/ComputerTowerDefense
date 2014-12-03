@@ -52,7 +52,7 @@ using namespace std;
 class Board {
   private:
     vector<Tower*> m_towers; 
-    vector< vector< int > > m_towerPlacement;
+    vector< vector< int > > m_placements;
     vector<int> m_pathXCoords;
     vector<int> m_pathYCoords;
     vector<Bug*> m_bugPlacement;
@@ -63,32 +63,29 @@ class Board {
 
     void addBug();
     void removeBug(Bug *b);
-
     Bug *findBug(int x, int y);
+    void attackBug(Bug *bug, int attack);
 
     void removeProjectile(Projectile *p);
     Projectile *moveProjectile(Projectile *p);  
     
     bool containsPath(int x, int y);
     
+    bool validPosition(int x, int y);
     bool buyTower();
     void placeTower(Tower *t, int x, int y);
 
     void addPath();
+
   public:
+
     int moveBugs();
-    
-    void attackBug(Bug *bug, int attack);
     void attack();
-
-    vector< vector< int > > getPieces() {
-      return m_towerPlacement;
-    };
-
     void moveProjectiles();
-    
-    int getMoney() { return m_money; };
-    int getHealth() { return m_health; };
+
+    vector< vector< int > > getPieces();
+    int getMoney();
+    int getHealth();
 
     void printBugs();
     void printTowerLocations();
@@ -99,9 +96,6 @@ class Board {
     void buyWTower(int x, int y);
     void buySTower(int x, int y);   
     vector<Tower*> getTowers();
-
-    void buySpell();
-    void playSpell();
 
     Board();
 };   

@@ -1,7 +1,7 @@
 /* File: tower.cpp
    Author: Samy Lanka
    PennKey: lankas
-   Description: 
+   Description:  Defines all functions associated with the Tower Object
 */
 
 #include <stdlib.h>
@@ -9,13 +9,15 @@
 #include <iostream>
 
 void Tower::setXPosition(int x) {
-  	// TODO: Check bounds
-	m_x = x;
+  	if (x > 0) {
+		m_x = x;	
+  	}
 }
 
 void Tower::setYPosition(int y) {
-  //TODO: Check bounds
-  m_y = y;
+	if (y > 0) {
+		m_y = y;	
+	}
 }
 
 int Tower::getXPosition() {
@@ -27,13 +29,15 @@ int Tower::getYPosition() {
 }
 
 void Tower::setRadius(int radius) {
-	// TODO: check bounds
-	m_radius = radius;
+	if (radius > 0) {
+		m_radius = radius;
+	}
 }
 
 void Tower::setAttack(int attack) {
-  //TODO: error checking
-  m_attack = attack;
+  if (attack > 0) {
+	m_attack = attack;
+  }
 }
 
 void Tower::setDirection(bool multipleDirs, direction dir) {

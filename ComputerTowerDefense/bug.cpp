@@ -1,7 +1,7 @@
 /* File: bug.cpp
    Author: Samy Lanka
    PennKey: lankas
-   Description:
+   Description:  Defines all functions associated with the Bug Object
 */
 
 using namespace std;
@@ -9,28 +9,28 @@ using namespace std;
 #include <iostream>
 
 void Bug::setHealth(int health) {
-  if (health < 0) {
-    //TODO: error checking?
+  if (health > 0) {
+    m_health = health;
   }
-  m_health = health;
 }
 
 void Bug::setReward(int reward) {
-  if (reward < 0) {
-    //TODO: error checking
+  if (reward > 0) {
+    m_reward = reward;
   }
-  m_reward = reward;
 }
 
 
 void Bug::setXPosition(int x) {
-  //TODO: Check bounds
-  m_x = x;
+  if (x > 0) {
+    m_x = x; 
+  }
 }
 
 void Bug::setYPosition(int y) {
-  //TODO: Check bounds
-  m_y = y;
+  if (y > 0) {
+    m_y = y; 
+  }
 }
 
 int Bug::getXPosition() {
@@ -51,7 +51,7 @@ int Bug::getReward() {
 
 int Bug::takeDamage(int damage) {
   if (damage < 0) {
-    //TODO: figure this part out
+    return 0;
   }
   if (damage >= m_health) {
     m_health = 0;
@@ -66,7 +66,6 @@ void Bug::printBug() {
 	cout << "bug: ";
 	cout << m_x << " ";
 	cout << m_y << " ";
-	//cout << m_health << " ";
 	cout << endl;
 }
 

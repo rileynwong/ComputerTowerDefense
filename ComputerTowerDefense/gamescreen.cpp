@@ -128,7 +128,7 @@ void PrintBoard(vector< vector<char> > *GameScreen) {
   int row, col;
 
   cout << endl;
-  cout << "    \\\\\\\\\\  COMPUTER TOWER DEFENSE aw yeah /////" << endl << endl;
+  cout << "    \\\\\\\\\\ COMPUTER TOWER DEFENSE aw yeah /////" << endl << endl;
 
   // draw board
 

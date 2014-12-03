@@ -1,7 +1,9 @@
 /* File: board.cpp
    Author: Samy Lanka
    PennKey: lankas
-   Description: 
+   Description: This object holds all state and performs all the interesting
+   actions on the game state. The important public functions are moveBugs, 
+   attack, moveProjectiles, and everything associated with buying towers
 */
 
 using namespace std;
@@ -11,33 +13,50 @@ using namespace std;
 #include <iostream>
 
 /*****
+Accessors for the gamescreen and main
+******/
+
+vector< vector < int > > Board::getPieces() {
+	return m_placements;
+}
+
+int Board::getMoney() {
+	return m_money;
+}
+
+int Board::getHealth() {
+	return m_health;
+}
+
+/*****
 Create and Move Bugs
 *****/
 
 void Board::addBug() {
-	Bug *newBug = new Bug;
+	Bug *bug = new Bug;
 
-	m_bugPlacement.at(0) = newBug;
-	m_towerPlacement.at(newBug->getYPosition()).at(newBug->getXPosition()) = BUG;
+	m_bugPlacement.at(0) = bug;
+	m_placements.at(bug->getYPosition()).at(bug->getXPosition()) = BUG;
 }
 
 int Board::moveBugs() {
-	if (m_bugPlacement.at(PATH_LENGTH - 1)) {
-		m_towerPlacement.at(m_pathYCoords.at(PATH_LENGTH - 1)).at(m_pathXCoords.at(PATH_LENGTH - 1)) = BUG;
+	int end = PATH_LENGTH - 1;
+	if (m_bugPlacement.at(end)) {
+		m_placements.at(m_pathYCoords.at(end)).at(m_pathXCoords.at(end)) = BUG;
 		return 1;
 	}
-	for (int i = PATH_LENGTH - 1; i > 0; i--) {
+	for (int i = end; i > 0; i--) {
 		m_bugPlacement.at(i) = m_bugPlacement.at(i - 1);
 		Bug *bug = m_bugPlacement.at(i);
 
 		if (bug) {
 			bug->setXPosition(m_pathXCoords.at(i));
 			bug->setYPosition(m_pathYCoords.at(i));
-//			bug->printBug();
-			m_towerPlacement.at(bug->getYPosition()).at(bug->getXPosition()) = BUG;
+			m_placements.at(bug->getYPosition()).at(bug->getXPosition()) = BUG;
 		}
 		else {
-			m_towerPlacement.at(m_pathYCoords.at(i)).at(m_pathXCoords.at(i)) = NO_OBJECT;	
+			m_placements.at(m_pathYCoords.at(i))
+						.at(m_pathXCoords.at(i)) = NO_OBJECT;	
 		}
 	}
 	addBug();
@@ -54,11 +73,11 @@ void Board::removeBug(Bug *b) {
 		Bug *bug = m_bugPlacement.at(i);
 		if (bug->getXPosition() == b->getXPosition() &&
 			bug->getYPosition() == b->getYPosition()) {
-//			cout << "bug removed" << endl;
 			m_bugPlacement.at(i) = NULL;
 
-			m_towerPlacement.at(bug->getYPosition()).at(bug->getXPosition()) = NO_OBJECT;
-			// TODO: destroy bug
+			m_placements.at(bug->getYPosition())
+						.at(bug->getXPosition()) = NO_OBJECT;
+			delete(bug);
 			return;
 		}
 	}
@@ -75,7 +94,6 @@ Bug *Board::findBug(int x, int y) {
 
 void Board::attackBug(Bug *bug, int attack) {
 	if (bug->takeDamage(attack) == 1) {
-//		cout << "bug died" << endl;
 		m_money += bug->getReward();
 		removeBug(bug);
 	}
@@ -84,14 +102,11 @@ void Board::attackBug(Bug *bug, int attack) {
 void Board::attack() {
 	for (int i = 0; i < (int) m_towers.size(); i++) {
 		Tower *t = m_towers.at(i);
-		//cout << "proj created: " << t->getXPosition() << " " << t->getYPosition()<< endl;
 		Projectile *p = new Projectile(t->getXPosition(), t->getYPosition(), 
 			t->getAttack(), t->getDirAttack(), t->getRadius());
 		m_projectiles.push_back(p);
 
 		moveProjectiles();
-		// Advance projectile one step?? 
-		// - depends on the order of things
 	}
 }
 
@@ -111,9 +126,8 @@ void Board::removeProjectile(Projectile *p) {
 			projList.push_back(proj);
 		}
 		else {
-			// TODO: destroy proj
+			delete(proj);
 			removed = true;
-			//cout << "proj removed" << endl;
 		}
 	}
 	m_projectiles = projList;
@@ -122,38 +136,30 @@ void Board::removeProjectile(Projectile *p) {
 Projectile *Board::moveProjectile(Projectile *p) {
 	int x = p->getXPosition();
 	int y = p->getYPosition();
-	//cout << "move projectile: " << x << " " << y << endl;
 
-	if (m_towerPlacement.at(y).at(x) == PROJECTILE) {
-		//cout << "prep remove projectile" << endl;
-		m_towerPlacement.at(y).at(x) = NO_OBJECT;
+	if (m_placements.at(y).at(x) == PROJECTILE) {
+		m_placements.at(y).at(x) = NO_OBJECT;
 	}
 
 	if (p->move() != 0) {
-		//cout << "remove projectile" << endl;
 		return p;
 	}
-	//cout << "just moved: ";
-	//p->printProjectile();
 	x = p->getXPosition();
 	y = p->getYPosition();
 
-	if (m_towerPlacement.at(y).at(x) == BUG) {
+	if (m_placements.at(y).at(x) == BUG) {
 		Bug *bug = findBug(x, y);
 		if (bug) {
 			attackBug(bug, p->getAttack());
-			//cout << "projectile hit bug" << endl;
 			return p;
 		}
 	}
-	else if (m_towerPlacement.at(y).at(x) != NO_OBJECT) {
-		//cout << "projectile hit object: " << m_towerPlacement.at(y).at(x) << endl;
+	else if (m_placements.at(y).at(x) != NO_OBJECT) {
 		return p;
 	}
 
 	else {
-		//cout << "place projectile" << endl;
-		m_towerPlacement.at(y).at(x) = PROJECTILE;
+		m_placements.at(y).at(x) = PROJECTILE;
 		return NULL;
 	}
 	return NULL;
@@ -188,17 +194,19 @@ bool Board::containsPath(int x, int y) {
 	return false;
 }
 
-void Board::placeTower(Tower *t, int x, int y) {
+bool Board::validPosition(int x, int y) {
 	if (x < 0 || y < 0 || x >= GAME_WIDTH || y >= GAME_LENGTH) {
-		// TODO: deal with invalid position
+		return false;
 	}
-
-	if (m_towerPlacement.at(y).at(x) == TOWER || containsPath(x, y)) {
-		// TODO: deal with invalid position
+	if (m_placements.at(y).at(x) == TOWER || containsPath(x, y)) {
+		return false;
 	}
+	return true;
+}
 
-	else {
-		m_towerPlacement.at(y).at(x) = TOWER;
+void Board::placeTower(Tower *t, int x, int y) {
+	if (validPosition(x, y)) {
+		m_placements.at(y).at(x) = TOWER;
 		t->setXPosition(x);
 		t->setYPosition(y);
 	}
@@ -219,6 +227,14 @@ bool Board::buyTower() {
 }
 
 void Board::buyNTower(int x, int y) {
+	while (!validPosition(x, y)) {
+		cout << x << ", " << y << " is not a valid position." << endl;
+		cout << "Please choose new coordinates." << endl;
+		cout << "x coordinate: " << endl;
+        cin >> x;
+        cout << "y coordinate: " << endl;
+        cin >> y;
+	}
 	if (buyTower()) {
 		Tower *tower = new Tower(DEF_ATTACK, DEF_MULT_DIR,
 			N, DEF_RADIUS, x, y);
@@ -226,11 +242,19 @@ void Board::buyNTower(int x, int y) {
 		placeTower(tower, x, y);
 	}
 	else {
-		// Error out
+		cout << "You don't have enough money! Go kill more bugs" << endl;
 	}
 }
 
 void Board::buyETower(int x, int y) {
+	while (!validPosition(x, y)) {
+		cout << x << ", " << y << " is not a valid position." << endl;
+		cout << "Please choose new coordinates." << endl;
+		cout << "x coordinate: " << endl;
+        cin >> x;
+        cout << "y coordinate: " << endl;
+        cin >> y;
+	}
 	if (buyTower()) {
 		Tower *tower = new Tower(DEF_ATTACK, DEF_MULT_DIR,
 			E, DEF_RADIUS, x, y);
@@ -238,11 +262,19 @@ void Board::buyETower(int x, int y) {
 		placeTower(tower, x, y);
 	}
 	else {
-		// Error out
+		cout << "You don't have enough money! Go kill more bugs" << endl;
 	}
 }
 
 void Board::buySTower(int x, int y) {
+	while (!validPosition(x, y)) {
+		cout << x << ", " << y << " is not a valid position." << endl;
+		cout << "Please choose new coordinates." << endl;
+		cout << "x coordinate: " << endl;
+        cin >> x;
+        cout << "y coordinate: " << endl;
+        cin >> y;
+	}
 	if (buyTower()) {
 		Tower *tower = new Tower(DEF_ATTACK, DEF_MULT_DIR,
 			S, DEF_RADIUS, x, y);
@@ -250,11 +282,19 @@ void Board::buySTower(int x, int y) {
 		placeTower(tower, x, y);
 	}
 	else {
-		// Error out
+		cout << "You don't have enough money! Go kill more bugs" << endl;
 	}
 }
 
 void Board::buyWTower(int x, int y) {
+	while (!validPosition(x, y)) {
+		cout << x << ", " << y << " is not a valid position." << endl;
+		cout << "Please choose new coordinates." << endl;
+		cout << "x coordinate: " << endl;
+        cin >> x;
+        cout << "y coordinate: " << endl;
+        cin >> y;
+	}
 	if (buyTower()) {
 		Tower *tower = new Tower(DEF_ATTACK, DEF_MULT_DIR,
 			W, DEF_RADIUS, x, y);
@@ -262,7 +302,7 @@ void Board::buyWTower(int x, int y) {
 		placeTower(tower, x, y);
 	}
 	else {
-		// Error out
+		cout << "You don't have enough money! Go kill more bugs" << endl;
 	}
 }
 
@@ -286,18 +326,18 @@ void Board::printBugs() {
 
 
 void Board::printTowerLocations() {
-	for (int i = 0; i < (int) m_towerPlacement.size(); i++) {
-		for (int j = 0; j < (int) m_towerPlacement.at(i).size(); j++) {
-			if (m_towerPlacement.at(i).at(j) == NO_OBJECT) {
+	for (int i = 0; i < (int) m_placements.size(); i++) {
+		for (int j = 0; j < (int) m_placements.at(i).size(); j++) {
+			if (m_placements.at(i).at(j) == NO_OBJECT) {
 				cout << "-" << " ";
 			}
-			else if (m_towerPlacement.at(i).at(j) == TOWER) {
+			else if (m_placements.at(i).at(j) == TOWER) {
 				cout << 't' << " ";
 			}
-			else if (m_towerPlacement.at(i).at(j) == PROJECTILE){
+			else if (m_placements.at(i).at(j) == PROJECTILE){
 				cout << '.' << " ";
 			}
-			else if (m_towerPlacement.at(i).at(j) == BUG) {
+			else if (m_placements.at(i).at(j) == BUG) {
 				cout << '*' << " ";
 			}
 		}
@@ -344,25 +384,14 @@ void Board::addPath() {
 Board::Board() {
 	m_money = START_MONEY;
   	m_health = START_HEALTH;
-	m_towerPlacement.resize(GAME_LENGTH);
+	m_placements.resize(GAME_LENGTH);
 
 	for (int i = 0; i < GAME_LENGTH; i++) {
-		m_towerPlacement.at(i).resize(GAME_WIDTH, false);
+		m_placements.at(i).resize(GAME_WIDTH, false);
 	}
 	m_pathXCoords.resize(PATH_LENGTH);
 	m_pathYCoords.resize(PATH_LENGTH);
 	m_bugPlacement.resize(PATH_LENGTH);
 
 	addPath();
-}
-
-/**************************
- * handle later 
- *************************/
-void Board::buySpell() {
-
-}
-
-void Board::playSpell() {
-
 }

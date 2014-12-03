@@ -1,7 +1,7 @@
 /* File: projectile.cpp
    Author: Samy Lanka
    PennKey: lankas
-   Description: 
+   Description: Defines all functions associated with the Projectile Object
 */
 using namespace std;
 
@@ -9,30 +9,30 @@ using namespace std;
 #include <iostream>
 
 void Projectile::setAttack(int attack) {
-	if (attack < 0) {
-		// TODO: handle errors
+	if (attack > 0) {
+		m_attack = attack;
 	}
-	m_attack = attack;
 }
 
 void Projectile::setXPosition(int x) {
-	//TODO: check bounds
-	m_x = x;
+	if (x > 0) {
+		m_x = x;	
+	}
 }
 
 void Projectile::setYPosition(int y) {
-	//TODO: check bounds
-	m_y = y;
+	if (y > 0) {
+		m_y = y;
+	}
 }
 void Projectile::setDirection(direction dir) {
 	m_dir = dir;
 }
 
 void Projectile::setDistance(int distance) {
-	if (distance < 0) {
-		// TODO: error
+	if (distance > 0) {
+		m_distance = distance;
 	}
-	m_distance = distance;
 }
 
 int Projectile::getAttack() {
