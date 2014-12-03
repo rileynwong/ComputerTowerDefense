@@ -103,7 +103,7 @@ Projectile::Projectile(int x, int y, int attack, direction dir, int distance,
 	m_x = DEF_X_PROJ;
 	m_y = DEF_Y_PROJ;
 	m_attack = DEF_ATTACK;
-	m_dir = DIR_ATTACK;
+	m_dir = DEF_DIR;
 	m_distance = DEF_DIST;
 	m_width = GAME_WIDTH;
 	m_length = GAME_LENGTH;

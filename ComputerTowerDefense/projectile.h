@@ -44,7 +44,7 @@ class Projectile {
   	int move();
 
   	Projectile(int x = DEF_X_PROJ, int y = DEF_Y_PROJ, int attack = DEF_ATTACK,
-  		direction dir = DIR_ATTACK, int distance = DEF_DIST, 
+  		direction dir = DEF_DIR, int distance = DEF_DIST, 
       int width = GAME_WIDTH, int length = GAME_LENGTH);
 };
 
