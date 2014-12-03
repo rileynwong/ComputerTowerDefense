@@ -60,12 +60,12 @@ using namespace std;
 
 class Board {
   private:
-    vector<Tower*> m_towers; 
+    vector<Tower*>          m_towers; 
     vector< vector< int > > m_placements;
-    vector<int> m_pathXCoords;
-    vector<int> m_pathYCoords;
-    vector<Bug*> m_bugPlacement;
-    vector<Projectile*> m_projectiles;
+    vector<int>             m_pathXCoords;
+    vector<int>             m_pathYCoords;
+    vector<Bug*>            m_bugPlacement;
+    vector<Projectile*>     m_projectiles;
 
     int m_width;
     int m_length;
@@ -87,7 +87,6 @@ class Board {
     bool buyTower();
     void placeTower(Tower *t, int x, int y);
 
-    void addPath();
     void readPath();
 
   public:

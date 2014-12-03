@@ -221,6 +221,7 @@ bool Board::validPosition(int x, int y) {
 		return false;
 	}
 	if (m_placements.at(y).at(x) == TOWER || containsPath(x, y)) {
+		cout << "there" << endl;
 		return false;
 	}
 	return true;
@@ -367,47 +368,6 @@ void Board::printTowerLocations() {
 	cout << endl;
 }
 
-void Board::addPath() {
-
-	for (int i = 0; i < m_pathLength; i++) {
-		if (i < PATH_TEN) {
-			m_pathXCoords.at(i) = i;
-			m_pathYCoords.at(i) = PATH_SEVEN;
-			m_placements.at(PATH_SEVEN).at(i) = PATH;
-		}
-		else if (i < PATH_FIFTEEN) {
-			m_pathXCoords.at(i) = PATH_NINE;
-			m_pathYCoords.at(i) = i - PATH_TWO;
-			m_placements.at(i - PATH_TWO).at(PATH_NINE) = PATH;
-		}
-		else if (i < PATH_TWENTY_NINE) {
-			m_pathXCoords.at(i) = i - PATH_FIVE;
-			m_pathYCoords.at(i) = PATH_TWELVE;
-			m_placements.at(PATH_TWELVE).at(i - PATH_FIVE) = PATH;
-		}
-		else if (i < PATH_THIRTY_SEVEN) {
-			m_pathXCoords.at(i) = PATH_TWENTY_THREE;
-			m_pathYCoords.at(i) = PATH_FOURTY - i;
-			m_placements.at(PATH_FOURTY - i).at(PATH_TWENTY_THREE) = PATH;
-		}
-		else if (i < PATH_FIFTY_FOUR) {
-			m_pathXCoords.at(i) = i - PATH_THIRTEEN;
-			m_pathYCoords.at(i) = PATH_FOUR;
-			m_placements.at(PATH_FOUR).at(i - PATH_THIRTEEN) = PATH;
-		}
-		else if (i < PATH_SIXTY) {
-			m_pathXCoords.at(i) = PATH_FOURTY;
-			m_pathYCoords.at(i) = i - PATH_FOURTY_NINE;
-			m_placements.at(i - PATH_FOURTY_NINE).at(PATH_FOURTY) = PATH;
-		}
-		else {
-			m_pathXCoords.at(i) = i - PATH_NINETEEN;
-			m_pathYCoords.at(i) = PATH_TEN;
-			m_placements.at(PATH_TEN).at(i - PATH_NINETEEN) = PATH;
-		}
-	}
-}
-
 void Board::readPath() {
 	ifstream input;
 	int x;
@@ -416,13 +376,10 @@ void Board::readPath() {
 	input.open("path.txt");
 
 	input >> m_pathLength;
-	cout << "path length: " << m_pathLength << endl;
 
 	input >> m_width;
-	cout << "width: " << m_width << endl;
 
 	input >> m_length;
-	cout << "length: " << m_length << endl;
 
 	m_placements.resize(m_length);
 
@@ -438,7 +395,6 @@ void Board::readPath() {
 	for(int i = 0; i < m_pathLength; i++) {
 		if (input) {
 			input >> x >> y;
-			cout << x << y << endl;
 			m_pathXCoords.at(i) = x;
 
 			m_pathYCoords.at(i) = y;
@@ -454,11 +410,6 @@ void Board::readPath() {
 
 Board::Board() {
 	m_money = START_MONEY;
-  	m_health = START_HEALTH;
+  m_health = START_HEALTH;
 	readPath();	
-	// m_pathXCoords.resize(m_pathLength);
-	// m_pathYCoords.resize(m_pathLength);
-	// m_bugPlacement.resize(m_pathLength);
-
-	// addPath();
 }
