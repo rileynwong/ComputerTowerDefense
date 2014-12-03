@@ -133,7 +133,7 @@ void PrintBoard(vector< vector<char> > *GameScreen) {
 
   cout << "   0 2 4 6 810 2 4 6 820 2 4 6 830 2 4 6 840 2 4 6 8" << endl;
   for(row = 0; row < VEC_L; row++) {
-    cout << setw(W) << right << row << " ";
+    cout << setw(WIDTH_1) << right << row << " ";
     for(col = 0; col < VEC_W; col++) {
         cout << GameScreen->at(row).at(col);
     }
@@ -178,10 +178,10 @@ bool PrintMenu(Board *GameBoard) {
 void PrintSubContents() {
   // towers
   cout << "\tTOWERS:" << endl;
-  cout << "\t\t1 - Shooting tower - North" << endl;
-  cout << "\t\t2 - Shooting tower - East" << endl;
-  cout << "\t\t3 - Shooting tower - South" << endl;
-  cout << "\t\t4 - Shooting tower - West" << endl;
+  cout << "\t\t1 - Shooting tower - North (5 bits)" << endl;
+  cout << "\t\t2 - Shooting tower - East  (5 bits)" << endl;
+  cout << "\t\t3 - Shooting tower - South (5 bits)" << endl;
+  cout << "\t\t4 - Shooting tower - West  (5 bits)" << endl;
   cout << "\t\t0 - back to main menu" << endl;
 
   cout << endl;
@@ -239,15 +239,16 @@ void PrintSubMenu(Board *GameBoard) {
 
 }
 
-void InBounds(int *x) {
-  if(*x < MIN_VAL) *x = MIN_VAL;
-  if(*x < MAX_VAL) *x = MAX_VAL;
-}
 
 void GameOver() {
   cout << endl;
 
-  cout << "YOU LOSE" << endl;
+  std::cout << std::setfill ('x') << std::setw (10);
+  std::cout << 77 << std::endl;
+
+  cout << "-----------------------------------------------------" << endl;
+  cout << "                     YOU LOSE" << endl;
+  cout << "-----------------------------------------------------" << endl;
 
   // TODO: free memory, decorate you lose
   exit(0);

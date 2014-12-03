@@ -37,6 +37,8 @@ class Projectile {
   	int getAttack();
   	int move();
 
+    direction getDirection() {return m_dir; }; 
+
   	Projectile(int x = DEF_X_PROJ, int y = DEF_Y_PROJ, int attack = DEF_ATTACK,
   		direction dir = DIR_ATTACK, int distance = DEF_DIST);
 };

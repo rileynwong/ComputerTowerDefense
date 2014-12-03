@@ -29,9 +29,6 @@ int main() {
   curr = start;
   count = 0;
 
-//  Refresh(&GameScreen, GameBoard, count);
-//  PrintMenu(GameBoard);
-
   while(playing) {
     start = clock();
     curr = start;

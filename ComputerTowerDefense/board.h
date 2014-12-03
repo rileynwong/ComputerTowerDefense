@@ -91,6 +91,8 @@ class Board {
 
     vector< vector< int > > getPieces() { return m_towerPlacement; };
 
+    Projectile *findProjectile(int x, int y);
+
     // change to buy each specific tower and spell
     void moveProjectiles();
 

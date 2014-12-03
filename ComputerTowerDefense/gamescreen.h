@@ -32,7 +32,8 @@
 
 #define DELAY      4
 
-#define W          2
+#define WIDTH_1    2
+#define WIDTH_2    50
 
 using namespace std;
 

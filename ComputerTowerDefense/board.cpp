@@ -3,14 +3,15 @@
    PennKey: lankas
    Description: 
 */
-
-using namespace std;
 #include "board.h"
 #include "projectile.h"
 #include <vector>
 #include <iostream>
 
+using namespace std;
+
 /** Create and Move Bugs **/
+
 void Board::addBug() {
 	Bug *newBug = new Bug;
 
@@ -108,6 +109,15 @@ void Board::removeProjectile(Projectile *p) {
 		}
 	}
 	m_projectiles = projList;
+}
+
+Projectile *Board::findProjectile(int x, int y) {
+		for (int i = 0; i < PATH_LENGTH; i++) {
+		if (x == m_pathXCoords.at(i) && y == m_pathYCoords.at(i)) {
+			return m_projectiles.at(i);
+		}
+	}
+	return NULL;
 }
 
 Projectile *Board::moveProjectile(Projectile *p) {
