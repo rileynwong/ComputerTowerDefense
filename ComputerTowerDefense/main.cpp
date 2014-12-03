@@ -17,34 +17,11 @@ using namespace std;
 
 int main() {
 
-  int input, curr, count, score = 0;
+  int curr, count;
   bool submenu = false, playing = false;
   clock_t start;
   Board *GameBoard = new Board();
   vector< vector<char> > GameScreen(VEC_L, vector<char>(VEC_W, '.'));
-
-
-//cin >> input;
-
-  /*while(input != EXIT) {
-    switch(input) {
-      case 0: // buying stuff
-        cout << endl;
-        PrintSubMenu();
-        playing = false;
-        submenu = true;
-        break;
-      case 1: // exit
-        // TODO free memory and stuff
-        cout << endl << "Bye!" << endl;
-        return 0;
-        break;
-    }
-
-    // Refresh(&GameScreen);
-
-  }*/
-
 
   /* Game Start */
   playing = true;
@@ -52,34 +29,23 @@ int main() {
   curr = start;
   count = 0;
 
-  Refresh(&GameScreen, GameBoard, count);
-  PrintMenu(GameBoard);
+//  Refresh(&GameScreen, GameBoard, count);
+//  PrintMenu(GameBoard);
 
   while(playing) {
     start = clock();
+    curr = start;
 
-//    if(((start - curr)/(double) CLOCKS_PER_SEC) >= 1) {
-      // one second has passed 
-//      cout << "1 second later..." << endl; 
-      curr = start;
+    Refresh(&GameScreen, GameBoard, count++); // redraw the board
 
-      if (playing) {
-        Refresh(&GameScreen, GameBoard, count++); // redraw the board
-      }
-
-      if(submenu) { 
-        PrintSubMenu(GameBoard); 
-        // TODO: fix this later
-      }
-      else { 
-        playing = PrintMenu(GameBoard);
-      }
-
-      // if(GameBoard->getHealth() < 0) { GameOver(); }
-
-//    }
+    if(submenu) { 
+      PrintSubMenu(GameBoard); 
+      // TODO: fix this later
+    }
+    else { 
+      playing = PrintMenu(GameBoard);
+    }
   }
-
 
   return 0;
 }

@@ -10,10 +10,7 @@ using namespace std;
 #include <vector>
 #include <iostream>
 
-/*****
-Create and Move Bugs
-*****/
-
+/** Create and Move Bugs **/
 void Board::addBug() {
 	Bug *newBug = new Bug;
 
@@ -23,7 +20,8 @@ void Board::addBug() {
 
 int Board::moveBugs() {
 	if (m_bugPlacement.at(PATH_LENGTH - 1)) {
-		m_towerPlacement.at(m_pathYCoords.at(PATH_LENGTH - 1)).at(m_pathXCoords.at(PATH_LENGTH - 1)) = BUG;
+		m_towerPlacement.at(m_pathYCoords.at(PATH_LENGTH - 1))
+                    .at(m_pathXCoords.at(PATH_LENGTH - 1)) = BUG;
 		return 1;
 	}
 	for (int i = PATH_LENGTH - 1; i > 0; i--) {
@@ -33,11 +31,12 @@ int Board::moveBugs() {
 		if (bug) {
 			bug->setXPosition(m_pathXCoords.at(i));
 			bug->setYPosition(m_pathYCoords.at(i));
-//			bug->printBug();
-			m_towerPlacement.at(bug->getYPosition()).at(bug->getXPosition()) = BUG;
+			m_towerPlacement.at(bug->getYPosition())
+                      .at(bug->getXPosition()) = BUG;
 		}
 		else {
-			m_towerPlacement.at(m_pathYCoords.at(i)).at(m_pathXCoords.at(i)) = NO_OBJECT;	
+			m_towerPlacement.at(m_pathYCoords.at(i))
+                      .at(m_pathXCoords.at(i)) = NO_OBJECT;	
 		}
 	}
 	addBug();
@@ -45,19 +44,17 @@ int Board::moveBugs() {
 }
 
 
-/*****
-Attack and Kill Bugs
-*****/
+/** Attack and Kill Bugs **/
 
 void Board::removeBug(Bug *b) {
 	for (int i = 0; i < (int) m_bugPlacement.size(); i++) {
 		Bug *bug = m_bugPlacement.at(i);
 		if (bug->getXPosition() == b->getXPosition() &&
 			bug->getYPosition() == b->getYPosition()) {
-//			cout << "bug removed" << endl;
 			m_bugPlacement.at(i) = NULL;
 
-			m_towerPlacement.at(bug->getYPosition()).at(bug->getXPosition()) = NO_OBJECT;
+			m_towerPlacement.at(bug->getYPosition())
+                      .at(bug->getXPosition()) = NO_OBJECT;
 			// TODO: destroy bug
 			return;
 		}
@@ -75,7 +72,6 @@ Bug *Board::findBug(int x, int y) {
 
 void Board::attackBug(Bug *bug, int attack) {
 	if (bug->takeDamage(attack) == 1) {
-//		cout << "bug died" << endl;
 		m_money += bug->getReward();
 		removeBug(bug);
 	}
@@ -84,20 +80,16 @@ void Board::attackBug(Bug *bug, int attack) {
 void Board::attack() {
 	for (int i = 0; i < (int) m_towers.size(); i++) {
 		Tower *t = m_towers.at(i);
-		//cout << "proj created: " << t->getXPosition() << " " << t->getYPosition()<< endl;
 		Projectile *p = new Projectile(t->getXPosition(), t->getYPosition(), 
-			t->getAttack(), t->getDirAttack(), t->getRadius());
+			                             t->getAttack(),    t->getDirAttack(), 
+                                   t->getRadius());
 		m_projectiles.push_back(p);
 
 		moveProjectiles();
-		// Advance projectile one step?? 
-		// - depends on the order of things
 	}
 }
 
-/*****
-Move/Remove Projectiles
-*****/
+/** Move/Remove Projectiles **/
 
 void Board::removeProjectile(Projectile *p) {
 	vector<Projectile*> projList;
@@ -113,7 +105,6 @@ void Board::removeProjectile(Projectile *p) {
 		else {
 			// TODO: destroy proj
 			removed = true;
-			//cout << "proj removed" << endl;
 		}
 	}
 	m_projectiles = projList;
@@ -122,19 +113,15 @@ void Board::removeProjectile(Projectile *p) {
 Projectile *Board::moveProjectile(Projectile *p) {
 	int x = p->getXPosition();
 	int y = p->getYPosition();
-	//cout << "move projectile: " << x << " " << y << endl;
 
 	if (m_towerPlacement.at(y).at(x) == PROJECTILE) {
-		//cout << "prep remove projectile" << endl;
 		m_towerPlacement.at(y).at(x) = NO_OBJECT;
 	}
 
 	if (p->move() != 0) {
-		//cout << "remove projectile" << endl;
 		return p;
 	}
-	//cout << "just moved: ";
-	//p->printProjectile();
+
 	x = p->getXPosition();
 	y = p->getYPosition();
 
@@ -142,17 +129,14 @@ Projectile *Board::moveProjectile(Projectile *p) {
 		Bug *bug = findBug(x, y);
 		if (bug) {
 			attackBug(bug, p->getAttack());
-			//cout << "projectile hit bug" << endl;
 			return p;
 		}
 	}
 	else if (m_towerPlacement.at(y).at(x) != NO_OBJECT) {
-		//cout << "projectile hit object: " << m_towerPlacement.at(y).at(x) << endl;
 		return p;
 	}
 
 	else {
-		//cout << "place projectile" << endl;
 		m_towerPlacement.at(y).at(x) = PROJECTILE;
 		return NULL;
 	}
@@ -175,9 +159,7 @@ void Board::moveProjectiles() {
 }
 
 
-/*****
-Buying Towers
-*****/
+/** Buying Towers **/
 
 bool Board::containsPath(int x, int y) {
 	for (int i = 0; i < PATH_LENGTH; i++) {
@@ -271,9 +253,7 @@ vector<Tower*> Board::getTowers() {
 }
 
 
-/*****
-Print things for debugging
-*****/
+/** Print things for debugging **/
 
 void Board::printBugs() {	
 	vector<Bug*> bugs = m_bugPlacement;
@@ -283,7 +263,6 @@ void Board::printBugs() {
 		}
 	}
 }
-
 
 void Board::printTowerLocations() {
 	for (int i = 0; i < (int) m_towerPlacement.size(); i++) {
@@ -305,7 +284,6 @@ void Board::printTowerLocations() {
 	}
 	cout << endl;
 }
-
 
 void Board::addPath() {
 
@@ -354,15 +332,4 @@ Board::Board() {
 	m_bugPlacement.resize(PATH_LENGTH);
 
 	addPath();
-}
-
-/**************************
- * handle later 
- *************************/
-void Board::buySpell() {
-
-}
-
-void Board::playSpell() {
-
 }

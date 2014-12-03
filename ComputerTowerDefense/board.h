@@ -15,39 +15,45 @@
 
 using namespace std;
 
-#define START_MONEY   20
-#define START_HEALTH  100
-#define PATH_LENGTH   69
-#define NO_OBJECT     0
-#define TOWER         1
-#define PROJECTILE    2
-#define BUG           3
+#define START_MONEY       20
+#define START_HEALTH      100
+#define PATH_LENGTH       69
+#define NO_OBJECT         0
+#define TOWER             1
+#define PROJECTILE        2
+#define BUG               3
 
-#define PATH_TWO 2
-#define PATH_FOUR 4
-#define PATH_FIVE 5
-#define PATH_SIX 6
-#define PATH_SEVEN 7
-#define PATH_EIGHT 8
-#define PATH_NINE 9
-#define PATH_TEN 10
-#define PATH_TWELVE 12
-#define PATH_THIRTEEN 13
-#define PATH_FOURTEEN 14
-#define PATH_FIFTEEN 15
-#define PATH_SEVENTEEN 17
-#define PATH_NINETEEN 19
+#define PATH_TWO          2
+#define PATH_THREE        3
+#define PATH_FOUR         4
+#define PATH_FIVE         5
+#define PATH_SIX          6
+#define PATH_SEVEN        7
+#define PATH_EIGHT        8
+#define PATH_NINE         9
+#define PATH_TEN          10
+#define PATH_ELEVEN       11
+#define PATH_TWELVE       12
+#define PATH_THIRTEEN     13
+#define PATH_FOURTEEN     14
+#define PATH_FIFTEEN      15
+#define PATH_SEVENTEEN    17
+#define PATH_NINETEEN     19
+#define PATH_TWENTY_TWO   22
 #define PATH_TWENTY_THREE 23
-#define PATH_TWENTY_NINE 29
+#define PATH_TWENTY_FOUR  24
+#define PATH_TWENTY_FIVE  25
+#define PATH_TWENTY_NINE  29
 #define PATH_THIRTY_SEVEN 37
-#define PATH_FOURTY 40
-#define PATH_FOURTY_FOUR 44
-#define PATH_FOURTY_NINE 49
-#define PATH_FIFTY_FOUR 54
-#define PATH_SIXTY 60
-
-
-
+#define PATH_THIRTY_NINE  39
+#define PATH_FOURTY       40
+#define PATH_FOURTY_ONE   41
+#define PATH_FOURTY_TWO   42
+#define PATH_FOURTY_FOUR  44
+#define PATH_FOURTY_NINE  49
+#define PATH_FIFTY        50
+#define PATH_FIFTY_FOUR   54
+#define PATH_SIXTY        60
 
 class Board {
   private:

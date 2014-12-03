@@ -22,38 +22,38 @@ void DrawInitA(vector< vector<char> > *GameScreen) {
   /* draw path */
 
   // 9 right
-  for(i = 0; i < 10; i++) {
-    GameScreen->at(7).at(i) = ' ';
+  for(i = 0; i < PATH_TEN; i++) {
+    GameScreen->at(PATH_SEVEN).at(i) = ' ';
   }
 
   // 5 down
-  for(i = 8; i < 13; i++) {
-    GameScreen->at(i).at(9) = ' ';
+  for(i = PATH_EIGHT; i < PATH_THIRTEEN; i++) {
+    GameScreen->at(i).at(PATH_NINE) = ' ';
   }
 
   // 13 right
-  for(i = 10; i < 24; i++) {
-    GameScreen->at(12).at(i) = ' ';
+  for(i = PATH_TEN; i < PATH_TWENTY_FOUR; i++) {
+    GameScreen->at(PATH_TWELVE).at(i) = ' ';
   }
 
   // 16 up
-  for(i = 4; i < 13; i++) {
-    GameScreen->at(i).at(23) = ' ';
+  for(i = PATH_FOUR; i < PATH_THIRTEEN; i++) {
+    GameScreen->at(i).at(PATH_TWENTY_THREE) = ' ';
   }
 
   // 5 right
-  for(i = 24; i < 40; i++) {
-    GameScreen->at(4).at(i) = ' ';
+  for(i = PATH_TWENTY_FOUR; i < PATH_FOURTY; i++) {
+    GameScreen->at(PATH_FOUR).at(i) = ' ';
   }
 
   // 7 down
-  for(i = 4; i < 11; i++) {
-    GameScreen->at(i).at(40) = ' ';
+  for(i = PATH_FOUR; i < PATH_ELEVEN; i++) {
+    GameScreen->at(i).at(PATH_FOURTY) = ' ';
   }
 
   // 9 right
-  for(i = 41; i < 50; i++) {
-    GameScreen->at(10).at(i) = ' ';
+  for(i = PATH_FOURTY_ONE; i < PATH_FIFTY; i++) {
+    GameScreen->at(PATH_TEN).at(i) = ' ';
   }
 
 }
@@ -63,62 +63,62 @@ void DrawInitB(vector< vector<char> > *GameScreen) {
 
   /* draw path */
   // 9 right - top
-  for(i = 0; i < 11; i++) {
-    GameScreen->at(6).at(i) = '-';
+  for(i = 0; i < PATH_ELEVEN; i++) {
+    GameScreen->at(PATH_SIX).at(i) = '-';
   }
-  for(i = 0; i < 8; i++) {
-    GameScreen->at(8).at(i) = '-';
+  for(i = 0; i < PATH_EIGHT; i++) {
+    GameScreen->at(PATH_EIGHT).at(i) = '-';
   }
 
   // 5 down
-  for(i = 6; i < 12; i++) {
-    GameScreen->at(i).at(10) = '|';
+  for(i = PATH_SIX; i < PATH_TWELVE; i++) {
+    GameScreen->at(i).at(PATH_TEN) = '|';
   }
-  for(i = 8; i < 14; i++) {
-    GameScreen->at(i).at(8) = '|';
+  for(i = PATH_EIGHT; i < PATH_FOURTEEN; i++) {
+    GameScreen->at(i).at(PATH_EIGHT) = '|';
   }
 
   // 13 right 
-  for(i = 11; i < 23; i++) {
-    GameScreen->at(11).at(i) = '-';
+  for(i = PATH_ELEVEN; i < PATH_TWENTY_THREE; i++) {
+    GameScreen->at(PATH_ELEVEN).at(i) = '-';
   }
-  for(i = 9; i < 24; i++) {
-    GameScreen->at(13).at(i) = '-';
+  for(i = PATH_NINE; i < PATH_TWENTY_FOUR; i++) {
+    GameScreen->at(PATH_THIRTEEN).at(i) = '-';
   }
 
 
   // 16 up 
-  for(i = 3; i < 12; i++) {
-    GameScreen->at(i).at(22) = '|';
+  for(i = PATH_THREE; i < PATH_TWELVE; i++) {
+    GameScreen->at(i).at(PATH_TWENTY_TWO) = '|';
   }
-  for(i = 5; i < 14; i++) {
-    GameScreen->at(i).at(24) = '|';
+  for(i = PATH_FIVE; i < PATH_FOURTEEN; i++) {
+    GameScreen->at(i).at(PATH_TWENTY_FOUR) = '|';
   }
 
   // 5 right
-  for(i = 23; i < 41; i++) {
-    GameScreen->at(3).at(i) = '-';
+  for(i = PATH_TWENTY_THREE; i < PATH_FOURTY_ONE; i++) {
+    GameScreen->at(PATH_THREE).at(i) = '-';
   }
-  for(i = 25; i < 39; i++) {
-    GameScreen->at(5).at(i) = '-';
+  for(i = PATH_TWENTY_FIVE; i < PATH_THIRTY_NINE; i++) {
+    GameScreen->at(PATH_FIVE).at(i) = '-';
   }
 
 
   // 7 down
-  for(i = 5; i < 12; i++) {
-    GameScreen->at(i).at(39) = '|';
+  for(i = PATH_FIVE; i < PATH_TWELVE; i++) {
+    GameScreen->at(i).at(PATH_THIRTY_NINE) = '|';
   }
-  for(i = 3; i < 10; i++) {
-    GameScreen->at(i).at(41) = '|';
+  for(i = PATH_THREE; i < PATH_TEN; i++) {
+    GameScreen->at(i).at(PATH_FOURTY_ONE) = '|';
   }
 
 
   // 9 right
-  for(i = 42; i < 50; i++) {
-    GameScreen->at(9).at(i) = '-';
+  for(i = PATH_FOURTY_TWO; i < PATH_FIFTY; i++) {
+    GameScreen->at(PATH_NINE).at(i) = '-';
   }
-  for(i = 40; i < 50; i++) {
-    GameScreen->at(11).at(i) = '-';
+  for(i = PATH_FOURTY; i < PATH_FIFTY; i++) {
+    GameScreen->at(PATH_ELEVEN).at(i) = '-';
   }
 
 }
@@ -126,14 +126,14 @@ void DrawInitB(vector< vector<char> > *GameScreen) {
 void PrintBoard(vector< vector<char> > *GameScreen) {
   int row, col;
 
-  cout << endl;
+  cout << endl << endl;
   cout << "    \\\\\\\\\\  COMPUTER TOWER DEFENSE aw yeah /////" << endl << endl;
 
   // draw board
 
   cout << "   0 2 4 6 810 2 4 6 820 2 4 6 830 2 4 6 840 2 4 6 8" << endl;
   for(row = 0; row < VEC_L; row++) {
-    cout << setw(2) << right << row << " ";
+    cout << setw(W) << right << row << " ";
     for(col = 0; col < VEC_W; col++) {
         cout << GameScreen->at(row).at(col);
     }
@@ -144,106 +144,97 @@ void PrintBoard(vector< vector<char> > *GameScreen) {
 }
 
 void PrintStats(Board *GameBoard) {
-  cout << "Stats:" << endl;
   cout << "\tBits:   " << GameBoard->getMoney()  << endl;
-//  cout << "\tHealth: " << GameBoard->getHealth() << endl;
 }
 
 bool PrintMenu(Board *GameBoard) {
-  int input = DO_NOTHING;
-  // towers
-  cout << endl << "Do something fun: " << endl;
-  cout << "\t0 - Buy Towers" << endl;
-  cout << "\t1 - Do nothing" << endl;
-  cout << "\t2 - Exit" << endl;
+  int input;
+
+  cout << "\tDo something fun: " << endl;
+  cout << "\t\t1 - Buy towers" << endl;
+  cout << "\t\t2 - Do nothing" << endl;
+  cout << "\t\t0 - Exit" << endl;
 
   cin >> input;
-  while (input != DO_NOTHING) {
-    switch(input) {
-      case BUY:
-        PrintSubMenu(GameBoard);
-        return true;
-      case EXIT:
-        return false;
-      case NOTHING:
-        return true;
-    }
+  while(input < EXIT | input > NOTHING) {
+      cout << "error: please enter a value between ";
+      cout << EXIT << " and " << NOTHING << "." << endl;
+      cin >> input;
   }
+
+  switch(input) {
+    case BUY:
+      PrintSubMenu(GameBoard);
+      return true;
+    case NOTHING:
+      return true;
+    case EXIT:
+      return false;
+  }
+
   return false;
 }
 
 void PrintSubContents() {
   // towers
   cout << "\tTOWERS:" << endl;
-  cout << "\t\t1 - North Shooting tower: i" << endl;
-  cout << "\t\t2 - East Shooting tower: i" << endl;
-  cout << "\t\t3 - South Shooting tower: i" << endl;
-  cout << "\t\t4 - West Shooting tower: i" << endl;
+  cout << "\t\t1 - Shooting tower - North" << endl;
+  cout << "\t\t2 - Shooting tower - East" << endl;
+  cout << "\t\t3 - Shooting tower - South" << endl;
+  cout << "\t\t4 - Shooting tower - West" << endl;
+  cout << "\t\t0 - back to main menu" << endl;
+
   cout << endl;
-
-  // spells
-  // cout << "\tSPELLS:" << endl;
-  // cout << "\t\t2 - spell 1" << endl;
-  // cout << endl;
-  cout << "\t0 - back to main menu" << endl;
-
 }
 
 void PrintSubMenu(Board *GameBoard) {
-  int input = DO_NOTHING;
-  int x, y;
+  int x, y, input;
 
   // 1. print contents
   PrintSubContents();
 
   // 2. handle input
   cin >> input;
+  while(input < MAIN | input > WEST) {
+      cout << "error: please enter a value between ";
+      cout << MAIN << " and " << WEST << "." << endl;
+      cin >> input;
+  }
 
-  while(input != DO_NOTHING) {
+  if(input != MAIN) {
+    // 3. prompt x and y coordinates
+    cout << "x coordinate: ";
+    cin >> x;
+
+    while(x < X_MIN | x > X_MAX) {
+      cout << "error: please enter a value between ";
+      cout << X_MIN << " and " << X_MAX << endl;
+      cin >> x;
+    }
+
+    cout << "y coordinate: ";
+    cin >> y;
+    while(y < Y_MIN | y > Y_MAX) {
+      cout << "error: please enter a value between ";
+      cout << Y_MIN << " and " << Y_MAX << endl;
+      cin >> y;
+    }
+
+    // 4. purchase tower
     switch(input) {
-      case 0: // return to main menu
-//        PrintMenu();
-        break;
-      case 1: // buy stuff
-        cout << "x coordinate: " << endl;
-        cin >> x;
-        cout << "y coordinate: " << endl;
-        cin >> y;
-
+      case NORTH:
         GameBoard->buyNTower(x, y);
-
         break;
-      case 2:
-        cout << "x coordinate: " << endl;
-        cin >> x;
-        cout << "y coordinate: " << endl;
-        cin >> y;
-
+      case EAST: 
         GameBoard->buyETower(x, y);
-
         break;
-      case 3:
-        cout << "x coordinate: " << endl;
-        cin >> x;
-        cout << "y coordinate: " << endl;
-        cin >> y;
-
+      case SOUTH: 
         GameBoard->buySTower(x, y);
-
         break;
-      case 4:
-        cout << "x coordinate: " << endl;
-        cin >> x;
-        cout << "y coordinate: " << endl;
-        cin >> y;
-
+      case WEST:
         GameBoard->buyWTower(x, y);
-
         break;
     }
-    input = DO_NOTHING;
-    // Refresh(&GameScreen);
-
   }
 
 }
@@ -254,35 +245,18 @@ void InBounds(int *x) {
 }
 
 void GameOver() {
-  cout << "YOU LOSE BOOOO" << endl;
-  // free memory
+  cout << endl;
+
+  cout << "YOU LOSE" << endl;
+
+  // TODO: free memory, decorate you lose
   exit(0);
 }
 
+void SetPieces(vector< vector< int > > pieces, 
+               vector< vector<char> > *GameScreen, int* count) {
+  int i, j;
 
-void Refresh(vector< vector<char> > *GameScreen, Board *GameBoard, int count) {
-  int i, j, lose;
-
-  // 1. Update and set pieces
-
-  // board base
-
-  DrawInitA(GameScreen);
-  DrawInitB(GameScreen);
-
-  lose = GameBoard->moveBugs();
-  if(lose) {
-    GameOver();
-  }
-
-  if(count % 4 == 0) {
-    GameBoard->attack();
-  } else {
-    GameBoard->moveProjectiles();
-  }
-
-  // set pieces (bugs, towers, projectiles) for the board
-  vector< vector< int > > pieces = GameBoard->getPieces();
 	for (i = 0; i < (int) pieces.size(); i++) {
 		for (j = 0; j < (int) pieces.at(i).size(); j++) {
       switch(pieces.at(i).at(j)) {
@@ -300,10 +274,34 @@ void Refresh(vector< vector<char> > *GameScreen, Board *GameBoard, int count) {
           break;
       }
 
-      count++;
+      *count++;
 		}
 	}
 
+}
+
+void Refresh(vector< vector<char> > *GameScreen, Board *GameBoard, int count) {
+  int lost;
+
+  // 1. Update and set pieces
+
+  // board base
+  DrawInitA(GameScreen);
+  DrawInitB(GameScreen);
+
+  lost = GameBoard->moveBugs();
+  if(lost) {
+    GameOver();
+  }
+
+  if(count % DELAY == 0) {
+    GameBoard->attack();
+  } else {
+    GameBoard->moveProjectiles();
+  }
+
+  // set pieces (bugs, towers, projectiles) for the board
+  SetPieces(GameBoard->getPieces(), GameScreen, &count);
 
 
   // 2. Draw board
