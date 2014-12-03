@@ -17,30 +17,22 @@ using namespace std;
 
 int main() {
 
-  int curr, count;
+  int count = 0;
   bool submenu = false, playing = false;
-  clock_t start;
+
   Board *GameBoard = new Board();
   vector< vector<char> > GameScreen(VEC_L, vector<char>(VEC_W, '.'));
 
   /* Game Start */
   playing = true;
-  start = clock();
-  curr = start;
   count = 0;
 
   while(playing) {
-    start = clock();
-    curr = start;
 
     Refresh(&GameScreen, GameBoard, count++); // redraw the board
-
+    playing = PrintMenu(GameBoard);
     if(submenu) { 
       PrintSubMenu(GameBoard); 
-      // TODO: fix this later
-    }
-    else { 
-      playing = PrintMenu(GameBoard);
     }
   }
 

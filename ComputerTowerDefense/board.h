@@ -9,19 +9,21 @@
 #define BOARD_H
 
 #include <vector>
+#include "definitions.h"
 #include "projectile.h"
 #include "bug.h"
 #include "tower.h"
 
 using namespace std;
 
-#define START_MONEY       20
-#define START_HEALTH      100
-#define PATH_LENGTH       69
-#define NO_OBJECT         0
-#define TOWER             1
-#define PROJECTILE        2
-#define BUG               3
+#define START_MONEY   20
+#define START_HEALTH  100
+#define NO_OBJECT     0
+#define TOWER         1
+#define PROJECTILE    2
+#define PROJ_ON_PATH  3
+#define BUG           4
+#define PATH          5
 
 #define PATH_TWO          2
 #define PATH_THREE        3
@@ -55,46 +57,50 @@ using namespace std;
 #define PATH_FIFTY_FOUR   54
 #define PATH_SIXTY        60
 
+
 class Board {
   private:
     vector<Tower*> m_towers; 
-    vector< vector< int > > m_towerPlacement;
+    vector< vector< int > > m_placements;
     vector<int> m_pathXCoords;
     vector<int> m_pathYCoords;
     vector<Bug*> m_bugPlacement;
     vector<Projectile*> m_projectiles;
 
+    int m_width;
+    int m_length;
+    int m_pathLength;
     int m_money;
     int m_health;
 
     void addBug();
     void removeBug(Bug *b);
-
     Bug *findBug(int x, int y);
+    void attackBug(Bug *bug, int attack);
 
     void removeProjectile(Projectile *p);
     Projectile *moveProjectile(Projectile *p);  
     
     bool containsPath(int x, int y);
+    
+    bool validPosition(int x, int y);
     bool buyTower();
     void placeTower(Tower *t, int x, int y);
 
     void addPath();
-  public:
-    int moveBugs();
-    
-    void attackBug(Bug *bug, int attack);
-    void attack();
-    
-    int getMoney() { return m_money; };
-    int getHealth() { return m_health; };
+    void readPath();
 
-    vector< vector< int > > getPieces() { return m_towerPlacement; };
+  public:
+
+    int moveBugs();
+    void attack();
 
     Projectile *findProjectile(int x, int y);
-
-    // change to buy each specific tower and spell
     void moveProjectiles();
+
+    vector< vector< int > > getPieces();
+    int getMoney();
+    int getHealth();
 
     void printBugs();
     void printTowerLocations();
@@ -105,9 +111,6 @@ class Board {
     void buyWTower(int x, int y);
     void buySTower(int x, int y);   
     vector<Tower*> getTowers();
-
-    void buySpell();
-    void playSpell();
 
     Board();
 };   

@@ -7,6 +7,7 @@
 #include <iostream>
 #include <cstdio>
 #include <ctime>
+#include <cstdlib>
 #include <stdio.h>
 #include <iomanip>
 #include <iostream>
@@ -126,8 +127,8 @@ void DrawInitB(vector< vector<char> > *GameScreen) {
 void PrintBoard(vector< vector<char> > *GameScreen) {
   int row, col;
 
-  cout << endl << endl;
-  cout << "    \\\\\\\\\\  COMPUTER TOWER DEFENSE aw yeah /////" << endl << endl;
+  cout << endl;
+  cout << "    \\\\\\\\\\ COMPUTER TOWER DEFENSE aw yeah /////" << endl << endl;
 
   // draw board
 
@@ -262,7 +263,6 @@ void SetPieces(vector< vector< int > > pieces,
 		for (j = 0; j < (int) pieces.at(i).size(); j++) {
       switch(pieces.at(i).at(j)) {
         case TOWER:
-          // TODO check tower type
           GameScreen->at(i).at(j) = 'I';
           break;
         case PROJECTILE:
@@ -284,8 +284,6 @@ void SetPieces(vector< vector< int > > pieces,
 void Refresh(vector< vector<char> > *GameScreen, Board *GameBoard, int count) {
   int lost;
 
-  // 1. Update and set pieces
-
   // board base
   DrawInitA(GameScreen);
   DrawInitB(GameScreen);
@@ -304,12 +302,9 @@ void Refresh(vector< vector<char> > *GameScreen, Board *GameBoard, int count) {
   // set pieces (bugs, towers, projectiles) for the board
   SetPieces(GameBoard->getPieces(), GameScreen, &count);
 
-
-  // 2. Draw board
-
+  // draw board
   PrintBoard(GameScreen); 
   PrintStats(GameBoard);
-  
 }
 
 
