@@ -382,7 +382,7 @@ void Board::readPath() {
 	m_placements.resize(m_length);
 
 	for (int i = 0; i < m_length; i++) {
-		m_placements.at(i).resize(m_width, false);
+		m_placements.at(i).resize(m_width, NO_OBJECT);
 	}
 
 	m_pathXCoords.resize(m_pathLength);

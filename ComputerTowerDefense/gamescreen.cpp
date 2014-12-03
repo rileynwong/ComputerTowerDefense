@@ -240,7 +240,6 @@ void PrintSubMenu(Board *GameBoard) {
 
 }
 
-
 void PrintWin() {
   cout << endl;
 
@@ -305,9 +304,6 @@ void Refresh(vector< vector<char> > *GameScreen, Board *GameBoard, int count) {
   int lost;
 
   // board base
-  DrawInitA(GameScreen);
-  DrawInitB(GameScreen);
-
   lost = GameBoard->moveBugs();
   if(lost) {
     GameOver();
