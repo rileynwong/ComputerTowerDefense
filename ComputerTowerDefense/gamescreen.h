@@ -35,6 +35,9 @@
 #define WIDTH_1    2
 #define WIDTH_2    50
 
+#define WIN        0
+#define LOSE       1
+
 using namespace std;
 
 // print stuff
@@ -46,6 +49,7 @@ void PrintScore      (int score);
 void PrintHealth     (int health);
 bool PrintMenu(Board *GameBoard);
 
+void Reprompt(Board *GameBoard);
 void Refresh(vector< vector<char> > *GameScreen, Board *GameBoard, int count);
 void GameOver();
 

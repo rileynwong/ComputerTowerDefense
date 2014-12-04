@@ -36,7 +36,7 @@ void Tower::setRadius(int radius) {
 
 void Tower::setAttack(int attack) {
   if (attack > 0) {
-	m_attack = attack;
+	  m_attack = attack;
   }
 }
 
