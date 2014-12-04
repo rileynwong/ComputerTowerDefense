@@ -17,112 +17,6 @@
 
 using namespace std;
 
-void DrawInitA(vector< vector<char> > *GameScreen) {
-  int i;
-
-  /* draw path */
-
-  // 9 right
-  for(i = 0; i < PATH_TEN; i++) {
-    GameScreen->at(PATH_SEVEN).at(i) = ' ';
-  }
-
-  // 5 down
-  for(i = PATH_EIGHT; i < PATH_THIRTEEN; i++) {
-    GameScreen->at(i).at(PATH_NINE) = ' ';
-  }
-
-  // 13 right
-  for(i = PATH_TEN; i < PATH_TWENTY_FOUR; i++) {
-    GameScreen->at(PATH_TWELVE).at(i) = ' ';
-  }
-
-  // 16 up
-  for(i = PATH_FOUR; i < PATH_THIRTEEN; i++) {
-    GameScreen->at(i).at(PATH_TWENTY_THREE) = ' ';
-  }
-
-  // 5 right
-  for(i = PATH_TWENTY_FOUR; i < PATH_FOURTY; i++) {
-    GameScreen->at(PATH_FOUR).at(i) = ' ';
-  }
-
-  // 7 down
-  for(i = PATH_FOUR; i < PATH_ELEVEN; i++) {
-    GameScreen->at(i).at(PATH_FOURTY) = ' ';
-  }
-
-  // 9 right
-  for(i = PATH_FOURTY_ONE; i < PATH_FIFTY; i++) {
-    GameScreen->at(PATH_TEN).at(i) = ' ';
-  }
-
-}
-
-void DrawInitB(vector< vector<char> > *GameScreen) {
-  int i;
-
-  /* draw path */
-  // 9 right - top
-  for(i = 0; i < PATH_ELEVEN; i++) {
-    GameScreen->at(PATH_SIX).at(i) = '-';
-  }
-  for(i = 0; i < PATH_EIGHT; i++) {
-    GameScreen->at(PATH_EIGHT).at(i) = '-';
-  }
-
-  // 5 down
-  for(i = PATH_SIX; i < PATH_TWELVE; i++) {
-    GameScreen->at(i).at(PATH_TEN) = '|';
-  }
-  for(i = PATH_EIGHT; i < PATH_FOURTEEN; i++) {
-    GameScreen->at(i).at(PATH_EIGHT) = '|';
-  }
-
-  // 13 right 
-  for(i = PATH_ELEVEN; i < PATH_TWENTY_THREE; i++) {
-    GameScreen->at(PATH_ELEVEN).at(i) = '-';
-  }
-  for(i = PATH_NINE; i < PATH_TWENTY_FOUR; i++) {
-    GameScreen->at(PATH_THIRTEEN).at(i) = '-';
-  }
-
-
-  // 16 up 
-  for(i = PATH_THREE; i < PATH_TWELVE; i++) {
-    GameScreen->at(i).at(PATH_TWENTY_TWO) = '|';
-  }
-  for(i = PATH_FIVE; i < PATH_FOURTEEN; i++) {
-    GameScreen->at(i).at(PATH_TWENTY_FOUR) = '|';
-  }
-
-  // 5 right
-  for(i = PATH_TWENTY_THREE; i < PATH_FOURTY_ONE; i++) {
-    GameScreen->at(PATH_THREE).at(i) = '-';
-  }
-  for(i = PATH_TWENTY_FIVE; i < PATH_THIRTY_NINE; i++) {
-    GameScreen->at(PATH_FIVE).at(i) = '-';
-  }
-
-
-  // 7 down
-  for(i = PATH_FIVE; i < PATH_TWELVE; i++) {
-    GameScreen->at(i).at(PATH_THIRTY_NINE) = '|';
-  }
-  for(i = PATH_THREE; i < PATH_TEN; i++) {
-    GameScreen->at(i).at(PATH_FOURTY_ONE) = '|';
-  }
-
-
-  // 9 right
-  for(i = PATH_FOURTY_TWO; i < PATH_FIFTY; i++) {
-    GameScreen->at(PATH_NINE).at(i) = '-';
-  }
-  for(i = PATH_FOURTY; i < PATH_FIFTY; i++) {
-    GameScreen->at(PATH_ELEVEN).at(i) = '-';
-  }
-
-}
 
 void PrintBoard(vector< vector<char> > *GameScreen) {
   int row, col;
@@ -157,7 +51,7 @@ bool PrintMenu(Board *GameBoard) {
   cout << "\t\t0 - Exit" << endl;
 
   cin >> input;
-  while(input < EXIT | input > NOTHING) {
+  while(input < EXIT || input > NOTHING) {
       cout << "error: please enter a value between ";
       cout << EXIT << " and " << NOTHING << "." << endl;
       cin >> input;
@@ -196,7 +90,7 @@ void PrintSubMenu(Board *GameBoard) {
 
   // 2. handle input
   cin >> input;
-  while(input < MAIN | input > WEST) {
+  while(input < MAIN || input > WEST) {
       cout << "error: please enter a value between ";
       cout << MAIN << " and " << WEST << "." << endl;
       cin >> input;
@@ -207,7 +101,7 @@ void PrintSubMenu(Board *GameBoard) {
     cout << "x coordinate: ";
     cin >> x;
 
-    while(x < X_MIN | x > X_MAX) {
+    while(x < X_MIN || x > X_MAX) {
       cout << "error: please enter a value between ";
       cout << X_MIN << " and " << X_MAX << endl;
       cin >> x;
@@ -215,7 +109,7 @@ void PrintSubMenu(Board *GameBoard) {
 
     cout << "y coordinate: ";
     cin >> y;
-    while(y < Y_MIN | y > Y_MAX) {
+    while(y < Y_MIN || y > Y_MAX) {
       cout << "error: please enter a value between ";
       cout << Y_MIN << " and " << Y_MAX << endl;
       cin >> y;
@@ -267,12 +161,13 @@ void GameOver() {
 }
 
 void SetPieces(vector< vector< int > > pieces, 
-               vector< vector<char> > *GameScreen, int* count) {
+               vector< vector<char> > *GameScreen) {
   int i, j;
 
 	for (i = 0; i < (int) pieces.size(); i++) {
 		for (j = 0; j < (int) pieces.at(i).size(); j++) {
       switch(pieces.at(i).at(j)) {
+        case NO_OBJECT:
           GameScreen->at(i).at(j) = '.';
           break;
         case PATH:
@@ -282,19 +177,15 @@ void SetPieces(vector< vector< int > > pieces,
           GameScreen->at(i).at(j) = 'I';
           break;
         case PROJECTILE:
-          // TODO check projectile direction
             GameScreen->at(i).at(j) = '^';
           break;
         case PROJ_ON_PATH:
           GameScreen->at(i).at(j) = '^';
           break;
         case BUG:
-          // TODO check bug type
           GameScreen->at(i).at(j) = '*';
           break;
       }
-
-      *count++;
 		}
 	}
 
@@ -321,7 +212,7 @@ void Refresh(vector< vector<char> > *GameScreen, Board *GameBoard, int count) {
   }
 
   // set pieces (bugs, towers, projectiles) for the board
-  SetPieces(GameBoard->getPieces(), GameScreen, &count);
+  SetPieces(GameBoard->getPieces(), GameScreen);
 
   // draw board
   PrintBoard(GameScreen); 
