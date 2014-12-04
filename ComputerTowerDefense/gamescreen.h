@@ -37,18 +37,13 @@
 
 using namespace std;
 
-// draw the board
-void DrawInitA(vector< vector<char> > *GameScreen);
-void DrawInitB(vector< vector<char> > *GameScreen);
-
 // print stuff
-void PrintBoard(vector< vector<char> > *GameScreen);
-void PrintStats(Board *GameBoard);
-bool PrintMenu(Board *GameBoard);
+void PrintBoard      (vector< vector<char> > *GameScreen);
+void PrintStats      (Board *GameBoard);
 void PrintSubContents();
-void PrintSubMenu(Board *GameBoard);
-void PrintScore(int score);
-void PrintHealth(int health);
+void PrintSubMenu    (Board *GameBoard);
+void PrintScore      (int score);
+void PrintHealth     (int health);
 
 void Refresh(vector< vector<char> > *GameScreen, Board *GameBoard, int count);
 void GameOver();

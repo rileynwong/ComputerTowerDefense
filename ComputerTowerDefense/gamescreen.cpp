@@ -17,7 +17,6 @@
 
 using namespace std;
 
-
 void PrintBoard(vector< vector<char> > *GameScreen) {
   int row, col;
 
@@ -25,7 +24,6 @@ void PrintBoard(vector< vector<char> > *GameScreen) {
   cout << "    \\\\\\\\\\ COMPUTER TOWER DEFENSE aw yeah /////" << endl << endl;
 
   // draw board
-
   cout << "   0 2 4 6 810 2 4 6 820 2 4 6 830 2 4 6 840 2 4 6 8" << endl;
   for(row = 0; row < VEC_L; row++) {
     cout << setw(WIDTH_1) << right << row << " ";
@@ -164,8 +162,8 @@ void SetPieces(vector< vector< int > > pieces,
                vector< vector<char> > *GameScreen) {
   int i, j;
 
-	for (i = 0; i < (int) pieces.size(); i++) {
-		for (j = 0; j < (int) pieces.at(i).size(); j++) {
+  for (i = 0; i < (int) pieces.size(); i++) {
+    for (j = 0; j < (int) pieces.at(i).size(); j++) {
       switch(pieces.at(i).at(j)) {
         case NO_OBJECT:
           GameScreen->at(i).at(j) = '.';
@@ -186,9 +184,8 @@ void SetPieces(vector< vector< int > > pieces,
           GameScreen->at(i).at(j) = '*';
           break;
       }
-		}
-	}
-
+    }
+  }
 }
 
 void Refresh(vector< vector<char> > *GameScreen, Board *GameBoard, int count) {
