@@ -20,11 +20,13 @@ Features:
 - Board draws projectiles, bugs and towers at each stage
 - You win the game when you reach 50 bits
 
+* We've included a mock-up of what we intended the graphics of our game to look like - ComputerTowerDefense_Mockup.png 
+
 Who did what:
 - Nancy: Game Display
 	- gamescreen
 	- main
-	- Drawing the board, taking input, making the game run and updating the state every time the user gave input
+	- Drawing the board, taking input, run game in loop and updating the state every time the user gave input
 - Samy: Game Logic
 	- board
 	- tower

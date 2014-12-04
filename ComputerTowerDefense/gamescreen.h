@@ -44,6 +44,7 @@ void PrintSubContents();
 void PrintSubMenu    (Board *GameBoard);
 void PrintScore      (int score);
 void PrintHealth     (int health);
+bool PrintMenu(Board *GameBoard);
 
 void Refresh(vector< vector<char> > *GameScreen, Board *GameBoard, int count);
 void GameOver();
