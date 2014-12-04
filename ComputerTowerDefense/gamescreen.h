@@ -40,7 +40,6 @@ using namespace std;
 // print stuff
 void PrintBoard      (vector< vector<char> > *GameScreen);
 void PrintStats      (Board *GameBoard);
-bool PrintSubMenu    (Board *GameBoard);
 void PrintSubContents();
 void PrintSubMenu    (Board *GameBoard);
 void PrintScore      (int score);

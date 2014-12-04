@@ -165,6 +165,7 @@ void SetPieces(vector< vector< int > > pieces,
 	for (i = 0; i < (int) pieces.size(); i++) {
 		for (j = 0; j < (int) pieces.at(i).size(); j++) {
       switch(pieces.at(i).at(j)) {
+        case NO_OBJECT:
           GameScreen->at(i).at(j) = '.';
           break;
         case PATH:
