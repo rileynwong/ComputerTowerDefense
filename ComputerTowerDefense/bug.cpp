@@ -50,15 +50,15 @@ int Bug::getReward() {
 
 int Bug::takeDamage(int damage) {
   if (damage < 0) {
-    return 0;
+    return NO_ERROR;
   }
   if (damage >= m_health) {
     m_health = 0;
-    return 1;
+    return ERROR;
   }
   m_health -= damage;
   cout << "took damage" << endl;
-  return 0;
+  return NO_ERROR;
 }
 
 void Bug::printBug() {

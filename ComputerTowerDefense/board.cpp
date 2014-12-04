@@ -47,7 +47,7 @@ int Board::moveBugs() {
 	// check if bug is at the end of path
 	if (m_bugPlacement.at(end)) {
 		m_placements.at(m_pathYCoords.at(end)).at(m_pathXCoords.at(end)) = BUG;
-		return 1;
+		return ERROR;
 	}
 
 	// advance each bug, starting from the end of the path to the beginning
@@ -67,7 +67,7 @@ int Board::moveBugs() {
 		}
 	}
 	addBug();
-	return 0;
+	return NO_ERROR;
 }
 
 
