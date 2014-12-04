@@ -8,12 +8,11 @@
 
 
 #include <fstream>
-#include <string>
-#include "board.h"
-#include "projectile.h"
 #include <vector>
 #include <iostream>
 
+#include "board.h"
+#include "projectile.h"
 
 using namespace std;
 
@@ -378,6 +377,13 @@ void Board::readPath(string filename) {
 
 	input.open(filename);
 
+	while(!input.good()) {
+		cout << "error: could not open file. please enter a different filename.";
+		cout << endl;
+		cin >> filename;
+		input.open(filename);
+	}
+
 	input >> m_pathLength;
 	input >> m_width;
 	input >> m_length;
@@ -410,6 +416,10 @@ void Board::readPath(string filename) {
 
 Board::Board(string filename) {
 	m_money = START_MONEY;
-  	m_health = START_HEALTH;
+  m_health = START_HEALTH;
 	readPath(filename);	
+}
+
+Board::~Board() {
+
 }

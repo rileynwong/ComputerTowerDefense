@@ -4,9 +4,10 @@
    Description:  Defines all functions associated with the Bug Object
 */
 
-using namespace std;
 #include "bug.h"
 #include <iostream>
+
+using namespace std;
 
 void Bug::setHealth(int health) {
   if (health > 0) {

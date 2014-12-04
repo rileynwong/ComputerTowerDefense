@@ -9,6 +9,8 @@
 #define BOARD_H
 
 #include <vector>
+#include <string>
+
 #include "definitions.h"
 #include "projectile.h"
 #include "bug.h"
@@ -89,7 +91,7 @@ class Board {
     bool buyTower();
     void placeTower(Tower *t, int x, int y);
 
-    void readPath();
+    void readPath(string filename);
 
   public:
 
@@ -113,7 +115,8 @@ class Board {
     void buySTower(int x, int y);   
     vector<Tower*> getTowers();
 
-    Board();
+    Board(string filename);
+    ~Board();
 };   
 
 #endif

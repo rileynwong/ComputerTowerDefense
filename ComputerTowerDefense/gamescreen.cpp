@@ -132,30 +132,46 @@ void PrintSubMenu(Board *GameBoard) {
 
 }
 
-void PrintWin() {
-  cout << endl;
+void Reprompt(Board *GameBoard) {
+  string filename;
+  char replay;
+  cout << "Play again? y/n" << endl;
+  cin >> replay;
 
-  std::cout << std::setfill ('x') << std::setw (10);
-  std::cout << 77 << std::endl;
+  while(replay != y | replay != n) {
+    cout << "error: invalid input. please type 'y' or 'n'." << endl;
+    cin >> replay;
+  }
 
-  cout << "-----------------------------------------------------" << endl;
-  cout << "                     YOU WIN" << endl;
-  cout << "-----------------------------------------------------" << endl;
+  if(replay == n) {
+    cout << "Hope you had fun!" << endl;
+    exit(0);
+  }
 
-  exit(0);
+  cout << "What map would you like to play?" << endl;
+  cin >> filename;
+
+  delete GameBoard;
+  GameBoard = NULL;
+  GameBoard = new Board(filename);
 }
 
-void GameOver() {
+void GameEnd(Board *GameBoard, int res) {
+  string result;
+
+  if(res == WIN) {
+    result = "WIN";
+  } else {
+    result = "LOSE";
+  }
+
   cout << endl;
-
-  std::cout << std::setfill ('x') << std::setw (10);
-  std::cout << 77 << std::endl;
-
   cout << "-----------------------------------------------------" << endl;
-  cout << "                     YOU LOSE" << endl;
+  cout << "                     YOU " << result << endl;
   cout << "-----------------------------------------------------" << endl;
 
-  exit(0);
+  cout << endl;
+  Reprompt(GameBoard);
 }
 
 void SetPieces(vector< vector< int > > pieces, 
@@ -194,12 +210,11 @@ void Refresh(vector< vector<char> > *GameScreen, Board *GameBoard, int count) {
   // board base
   lost = GameBoard->moveBugs();
   if(lost) {
-    GameOver();
+    GameEnd(GameBoard, LOSE);
   }
 
   if(GameBoard->getMoney() >= GAME_WIN) {
-    PrintWin();
-    exit(0);
+    GameEnd(GameBoard, WIN);
   }
 
   if(count % DELAY == 0) {

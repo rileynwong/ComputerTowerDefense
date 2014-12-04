@@ -16,11 +16,14 @@
 using namespace std;
 
 int main() {
-
+  string filename;
   int count = 0;
   bool submenu = false, playing = false;
 
-  Board *GameBoard = new Board();
+  cout << "What map would you like to play?" << endl;
+  cin >> filename;
+
+  Board *GameBoard = new Board(filename);
   vector< vector<char> > GameScreen(VEC_L, vector<char>(VEC_W, '.'));
 
   /* Game Start */
@@ -28,7 +31,6 @@ int main() {
   count = 0;
 
   while(playing) {
-
     Refresh(&GameScreen, GameBoard, count++); // redraw the board
     playing = PrintMenu(GameBoard);
     if(submenu) { 
@@ -36,6 +38,7 @@ int main() {
     }
   }
 
+  delete GameBoard;
   return 0;
 }
 
