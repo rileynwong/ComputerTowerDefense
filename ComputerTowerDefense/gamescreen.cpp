@@ -49,7 +49,7 @@ bool PrintMenu(Board *GameBoard) {
   cout << "\t\t0 - Exit" << endl;
 
   cin >> input;
-  while(input < EXIT | input > NOTHING) {
+  while(input < EXIT || input > NOTHING) {
       cout << "error: please enter a value between ";
       cout << EXIT << " and " << NOTHING << "." << endl;
       cin >> input;
@@ -88,7 +88,7 @@ void PrintSubMenu(Board *GameBoard) {
 
   // 2. handle input
   cin >> input;
-  while(input < MAIN | input > WEST) {
+  while(input < MAIN || input > WEST) {
       cout << "error: please enter a value between ";
       cout << MAIN << " and " << WEST << "." << endl;
       cin >> input;
@@ -99,7 +99,7 @@ void PrintSubMenu(Board *GameBoard) {
     cout << "x coordinate: ";
     cin >> x;
 
-    while(x < X_MIN | x > X_MAX) {
+    while(x < X_MIN || x > X_MAX) {
       cout << "error: please enter a value between ";
       cout << X_MIN << " and " << X_MAX << endl;
       cin >> x;
@@ -107,7 +107,7 @@ void PrintSubMenu(Board *GameBoard) {
 
     cout << "y coordinate: ";
     cin >> y;
-    while(y < Y_MIN | y > Y_MAX) {
+    while(y < Y_MIN || y > Y_MAX) {
       cout << "error: please enter a value between ";
       cout << Y_MIN << " and " << Y_MAX << endl;
       cin >> y;
@@ -159,11 +159,11 @@ void GameOver() {
 }
 
 void SetPieces(vector< vector< int > > pieces, 
-               vector< vector<char> > *GameScreen, int* count) {
+               vector< vector<char> > *GameScreen) {
   int i, j;
 
-	for (i = 0; i < (int) pieces.size(); i++) {
-		for (j = 0; j < (int) pieces.at(i).size(); j++) {
+  for (i = 0; i < (int) pieces.size(); i++) {
+    for (j = 0; j < (int) pieces.at(i).size(); j++) {
       switch(pieces.at(i).at(j)) {
         case NO_OBJECT:
           GameScreen->at(i).at(j) = '.';
@@ -175,7 +175,6 @@ void SetPieces(vector< vector< int > > pieces,
           GameScreen->at(i).at(j) = 'I';
           break;
         case PROJECTILE:
-          // TODO check projectile direction
             GameScreen->at(i).at(j) = '^';
           break;
         case PROJ_ON_PATH:
@@ -185,11 +184,8 @@ void SetPieces(vector< vector< int > > pieces,
           GameScreen->at(i).at(j) = '*';
           break;
       }
-
-      *count++;
-		}
-	}
-
+    }
+  }
 }
 
 void Refresh(vector< vector<char> > *GameScreen, Board *GameBoard, int count) {
@@ -213,7 +209,7 @@ void Refresh(vector< vector<char> > *GameScreen, Board *GameBoard, int count) {
   }
 
   // set pieces (bugs, towers, projectiles) for the board
-  SetPieces(GameBoard->getPieces(), GameScreen, &count);
+  SetPieces(GameBoard->getPieces(), GameScreen);
 
   // draw board
   PrintBoard(GameScreen); 

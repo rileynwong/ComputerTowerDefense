@@ -77,7 +77,7 @@ int Board::moveBugs() {
 void Board::removeBug(Bug *b) {
 	for (int i = 0; i < (int) m_bugPlacement.size(); i++) {
 		Bug *bug = m_bugPlacement.at(i);
-		if (bug->getXPosition() == b->getXPosition() &&
+		if (bug && bug->getXPosition() == b->getXPosition() &&
 			bug->getYPosition() == b->getYPosition()) {
 			m_bugPlacement.at(i) = NULL;
 
@@ -159,6 +159,7 @@ Projectile *Board::moveProjectile(Projectile *p) {
 	if (m_placements.at(y).at(x) == PROJ_ON_PATH) {
 		m_placements.at(y).at(x) = PATH;
 	}
+
 	if (p->move() != 0) {
 		return p;
 	}
@@ -221,7 +222,6 @@ bool Board::validPosition(int x, int y) {
 		return false;
 	}
 	if (m_placements.at(y).at(x) == TOWER || containsPath(x, y)) {
-		cout << "there" << endl;
 		return false;
 	}
 	return true;
@@ -259,8 +259,7 @@ void Board::buyNTower(int x, int y) {
         cin >> y;
 	}
 	if (buyTower()) {
-		Tower *tower = new Tower(DEF_ATTACK, DEF_MULT_DIR,
-			N, DEF_RADIUS, x, y);
+		Tower *tower = new Tower(DEF_ATTACK, N, DEF_RADIUS, x, y);
 		m_towers.push_back(tower);
 		placeTower(tower, x, y);
 	}
@@ -279,8 +278,7 @@ void Board::buyETower(int x, int y) {
         cin >> y;
 	}
 	if (buyTower()) {
-		Tower *tower = new Tower(DEF_ATTACK, DEF_MULT_DIR,
-			E, DEF_RADIUS, x, y);
+		Tower *tower = new Tower(DEF_ATTACK, E, DEF_RADIUS, x, y);
 		m_towers.push_back(tower);
 		placeTower(tower, x, y);
 	}
@@ -299,8 +297,7 @@ void Board::buySTower(int x, int y) {
         cin >> y;
 	}
 	if (buyTower()) {
-		Tower *tower = new Tower(DEF_ATTACK, DEF_MULT_DIR,
-			S, DEF_RADIUS, x, y);
+		Tower *tower = new Tower(DEF_ATTACK, S, DEF_RADIUS, x, y);
 		m_towers.push_back(tower);
 		placeTower(tower, x, y);
 	}
@@ -319,8 +316,7 @@ void Board::buyWTower(int x, int y) {
         cin >> y;
 	}
 	if (buyTower()) {
-		Tower *tower = new Tower(DEF_ATTACK, DEF_MULT_DIR,
-			W, DEF_RADIUS, x, y);
+		Tower *tower = new Tower(DEF_ATTACK, W, DEF_RADIUS, x, y);
 		m_towers.push_back(tower);
 		placeTower(tower, x, y);
 	}

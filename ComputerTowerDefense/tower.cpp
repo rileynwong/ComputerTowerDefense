@@ -40,8 +40,7 @@ void Tower::setAttack(int attack) {
   }
 }
 
-void Tower::setDirection(bool multipleDirs, direction dir) {
-	m_multipleDirs = multipleDirs;
+void Tower::setDirection(direction dir) {
 	m_dirAttack = dir;
 }
 
@@ -54,25 +53,16 @@ int Tower::getRadius() {
 }
 
 direction Tower::getDirAttack() {
-	if (m_multipleDirs) {
-		// TODO: handle this case
-		// TODO: have a vector of directions to return
-		m_dirNum++;
-		return m_dirAttack;
-	}
 	return m_dirAttack;
 }
 
-Tower::Tower(int attack, bool multipleDirs, direction dir, 
-	int radius, int x, int y) {
-	m_dirNum = 0;
+Tower::Tower(int attack, direction dir, int radius, int x, int y) {
 	m_attack = DEF_ATTACK;
 	m_x = DEF_X;
 	m_y = DEF_Y;
 	m_dirAttack = DEF_DIR;
 	m_radius = DEF_RADIUS;
-	m_multipleDirs = DEF_MULT_DIR;
-	setDirection(multipleDirs, dir);
+	setDirection(dir);
 	setRadius(radius);
 	setAttack(attack);
 	setXPosition(x);
