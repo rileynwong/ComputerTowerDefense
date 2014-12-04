@@ -8,9 +8,9 @@
 #ifndef DEFINITIONS_H
 #define DEFINITIONS_H
 
-#define GAME_WIDTH 50
-#define GAME_LENGTH 14
 #define DEF_DIR N
+#define ERROR 1
+#define NO_ERROR 0
 
 enum direction {N, S, E, W};
 

@@ -63,36 +63,36 @@ int Projectile::getYPosition() {
 
 int Projectile::move() {
 	if (m_distance <= 0) {
-		return 2;
+		return ERROR;
 	}
 	switch(m_dir) {
 		case N:
 			m_y--;
 			if (m_y < 0) {
-				return 1;
+				return ERROR;
 			}
 			break;
 		case E:
 			m_x++;
 			if (m_x > m_width) {
-				return 1;
+				return ERROR;
 			}
 			break;
 		case S:
 			m_y++;
 			if (m_y > m_length) {
-				return 1;
+				return ERROR;
 			}
 			break;
 		case W:
 			m_x--;
 			if (m_x < 0) {
-				return 1;
+				return ERROR;
 			}
 			break;
 	}
 	m_distance--;
-	return 0;
+	return NO_ERROR;
 }
 
 void Projectile::printProjectile() {
