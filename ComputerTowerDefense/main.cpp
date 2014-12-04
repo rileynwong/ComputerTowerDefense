@@ -20,7 +20,7 @@ int main() {
   int count = 0;
   bool submenu = false, playing = false;
 
-  cout << "What map what you like to play?" << endl;
+  cout << "What map would you like to play?" << endl;
   cin >> filename;
 
   Board *GameBoard = new Board(filename);

@@ -116,6 +116,7 @@ class Board {
     vector<Tower*> getTowers();
 
     Board(string filename);
+    ~Board();
 };   
 
 #endif

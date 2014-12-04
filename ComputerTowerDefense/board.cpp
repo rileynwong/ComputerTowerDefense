@@ -419,3 +419,7 @@ Board::Board(string filename) {
   m_health = START_HEALTH;
 	readPath(filename);	
 }
+
+Board::~Board() {
+
+}

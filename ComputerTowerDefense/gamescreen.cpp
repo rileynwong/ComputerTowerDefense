@@ -134,7 +134,21 @@ void PrintSubMenu(Board *GameBoard) {
 
 void Reprompt(Board *GameBoard) {
   string filename;
-  cout << "Play again? What map what you like to play?" << endl;
+  char replay;
+  cout << "Play again? y/n" << endl;
+  cin >> replay;
+
+  while(replay != y | replay != n) {
+    cout << "error: invalid input. please type 'y' or 'n'." << endl;
+    cin >> replay;
+  }
+
+  if(replay == n) {
+    cout << "Hope you had fun!" << endl;
+    exit(0);
+  }
+
+  cout << "What map would you like to play?" << endl;
   cin >> filename;
 
   delete GameBoard;
