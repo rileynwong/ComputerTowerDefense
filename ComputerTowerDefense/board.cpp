@@ -8,6 +8,7 @@
 
 
 #include <fstream>
+#include <string>
 #include "board.h"
 #include "projectile.h"
 #include <vector>
@@ -16,11 +17,7 @@
 
 using namespace std;
 
-/** Create and Move Bugs **/
-
-/*****
-Accessors for the gamescreen and main
-******/
+/** Accessors for the gamescreen and main **/
 
 vector< vector < int > > Board::getPieces() {
 	return m_placements;
@@ -34,9 +31,7 @@ int Board::getHealth() {
 	return m_health;
 }
 
-/*****
-Create and Move Bugs
-*****/
+/** Create and Move Bugs **/
 
 void Board::addBug() {
 	Bug *bug = new Bug(DEF_HEALTH, DEF_REWARD, m_pathXCoords.at(0), 
@@ -49,10 +44,14 @@ void Board::addBug() {
 
 int Board::moveBugs() {
 	int end = m_pathLength - 1;
+
+	// check if bug is at the end of path
 	if (m_bugPlacement.at(end)) {
 		m_placements.at(m_pathYCoords.at(end)).at(m_pathXCoords.at(end)) = BUG;
 		return 1;
 	}
+
+	// advance each bug, starting from the end of the path to the beginning
 	for (int i = end; i > 0; i--) {
 		m_bugPlacement.at(i) = m_bugPlacement.at(i - 1);
 		Bug *bug = m_bugPlacement.at(i);
@@ -62,6 +61,7 @@ int Board::moveBugs() {
 			bug->setYPosition(m_pathYCoords.at(i));
 			m_placements.at(bug->getYPosition()).at(bug->getXPosition()) = BUG;
 		}
+		// if there is no bug, it is just the path
 		else {
 			m_placements.at(m_pathYCoords.at(i))
 						.at(m_pathXCoords.at(i)) = PATH;	
@@ -77,6 +77,8 @@ int Board::moveBugs() {
 void Board::removeBug(Bug *b) {
 	for (int i = 0; i < (int) m_bugPlacement.size(); i++) {
 		Bug *bug = m_bugPlacement.at(i);
+
+		// find the bug you are removing
 		if (bug && bug->getXPosition() == b->getXPosition() &&
 			bug->getYPosition() == b->getYPosition()) {
 			m_bugPlacement.at(i) = NULL;
@@ -106,6 +108,7 @@ void Board::attackBug(Bug *bug, int attack) {
 }
 
 void Board::attack() {
+	// each tower sends out a new projectile
 	for (int i = 0; i < (int) m_towers.size(); i++) {
 		Tower *t = m_towers.at(i);
 		Projectile *p = new Projectile(t->getXPosition(), t->getYPosition(), 
@@ -124,6 +127,7 @@ void Board::removeProjectile(Projectile *p) {
 	bool removed = false;
 	for (int i = 0; i < (int) m_projectiles.size(); i++) {
 		Projectile *proj = m_projectiles.at(i);
+		// find projectile
 		if (removed ||
 			proj->getXPosition() != p->getXPosition() ||
 			proj->getYPosition() != p->getYPosition()) {
@@ -153,6 +157,7 @@ Projectile *Board::moveProjectile(Projectile *p) {
 	int x = p->getXPosition();
 	int y = p->getYPosition();
 
+	// remove projectile from the space it used to be
 	if (m_placements.at(y).at(x) == PROJECTILE) {
 		m_placements.at(y).at(x) = NO_OBJECT;
 	}
@@ -167,6 +172,7 @@ Projectile *Board::moveProjectile(Projectile *p) {
 	x = p->getXPosition();
 	y = p->getYPosition();
 
+	// look for collisions and put it in its new space
 	switch(m_placements.at(y).at(x)) {
 		case NO_OBJECT:
 			m_placements.at(y).at(x) = PROJECTILE;
@@ -331,6 +337,7 @@ vector<Tower*> Board::getTowers() {
 
 
 /** Print things for debugging **/
+
 void Board::printBugs() {	
 	vector<Bug*> bugs = m_bugPlacement;
 	for (int i = 0; i < (int) m_bugPlacement.size(); i++) {
@@ -364,12 +371,12 @@ void Board::printTowerLocations() {
 	cout << endl;
 }
 
-void Board::readPath() {
+void Board::readPath(string filename) {
 	ifstream input;
 	int x;
 	int y;
 
-	input.open("path.txt");
+	input.open(filename);
 
 	input >> m_pathLength;
 	input >> m_width;
@@ -393,16 +400,16 @@ void Board::readPath() {
 			m_pathYCoords.at(i) = y;
 
 			m_placements.at(y).at(x) = PATH;
-
 		}
 		else {
 			cout << "invalid file" << endl;
 		}
 	}
+	input.close();
 }
 
-Board::Board() {
+Board::Board(string filename) {
 	m_money = START_MONEY;
-  m_health = START_HEALTH;
-	readPath();	
+  	m_health = START_HEALTH;
+	readPath(filename);	
 }
